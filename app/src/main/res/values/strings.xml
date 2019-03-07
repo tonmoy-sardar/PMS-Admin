@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PMSAdmin</string>
+    <string name="tender_survey">TENDER SURVEY SYSTEM</string>
+
+    <string name="login_hint">Email/PhoneNo.</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Sign In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="copyright">Copyright © 2019 <a href="https://shyamsteel.com/">Shyamsteel</a>. All rights reserved.</string>
+</resources>
