@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2a3f54">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2a3f54">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_topbar_menu_profile"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:src="@drawable/profile_img" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_topbar_menu_profile"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="Santanu"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_25sdp" />
+
+        <ImageView
+            android:id="@+id/iv_cross"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:src="@drawable/close_icon" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="#536880" />
+
+        <TextView
+            android:id="@+id/tv_tender_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="Tender List"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_17sdp" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/tv_tender_list"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="#536880" />
+
+        <TextView
+            android:id="@+id/tv_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view2"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="Help"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_17sdp" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/tv_help"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="#536880" />
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view3"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="Logout"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_17sdp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

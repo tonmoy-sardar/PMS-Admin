@@ -2,9 +2,18 @@
     <string name="app_name">PMSAdmin</string>
     <string name="tender_survey">TENDER SURVEY SYSTEM</string>
 
-    <string name="login_hint">Email/PhoneNo.</string>
+    <string name="login_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Sign In</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="enter_email">Please enter your username</string>
+    <string name="enter_valid_email">Please enter your valid email id</string>
+    <string name="enter_password">Please enter your password</string>
+    <string name="no_internet">No internet connection</string>
     <string name="copyright">Copyright © 2019 <a href="https://shyamsteel.com/">Shyamsteel</a>. All rights reserved.</string>
+
+    <string name="image_compression_error_text">Image not compressed</string>
+    <string name="image_capture_cancel_text">User cancelled image process</string>
+    <string name="failed_to_capture_image_text">Sorry! Failed to process image</string>
+    <string name="permission_not_given">If you deny permission, you can not use this service. Please turn on permissions in [Setup]-> [Permission]</string>
 </resources>

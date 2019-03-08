@@ -6,4 +6,11 @@
 
     <color name="statusBarColor">#2a3f54</color>
     <color name="link_color">#0eb1f2</color>
+
+    <!--Progress Bar Color Chart-->
+    <color name="kprogresshud_default_color">#b1000000</color>
+    <color name="kprogresshud_grey_color">#449E9E9E</color>
+    <color name="popup_color">#EFEFEF</color>
+    <color name="selected_text_color">#3C6BA1</color>
+    <color name="menu_header">#0F2233</color>
 </resources>
