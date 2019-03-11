@@ -23,9 +23,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".dashboard.DashBoardActivity"></activity>
-        <activity android:name=".forgot.ForgotPasswordActivity" />
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".seconddashboard.Dashboard2Activity"></activity>
+        <activity
+            android:name=".dashboard.DashBoardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".forgot.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

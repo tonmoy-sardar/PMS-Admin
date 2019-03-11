@@ -9,17 +9,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
+import com.pmsadmin.dashboard.DashBoardActivity;
+import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.dialog.ErrorMessageDialog;
-import com.pmsadmin.forgot.ForgotPasswordActivity;
+import com.pmsadmin.dialog.ForgotPasswordDialog;
+import com.pmsadmin.login.model.LoginModel;
 import com.pmsadmin.netconnection.ConnectionDetector;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -44,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         viewBind();
         clickEvent();
         setFont();
+        et_login.setText("santanu.pal@shyamfuture.com");
+        et_password.setText("hZUgBeRBpr");
     }
 
     private void clickEvent() {
@@ -60,72 +69,80 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if (!ConnectionDetector.isConnectingToInternet(LoginActivity.this)) {
             errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.no_internet));
         } else {
+            addDataDashboard();
             callLoginApi();
         }
     }
 
+    private void addDataDashboard() {
+        DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
+    }
+
     private void callLoginApi() {
         loader.show_with_label("Loading");
+        JsonObject object = new JsonObject();
+        object.addProperty("username", et_login.getText().toString().trim());
+        object.addProperty("password", et_password.getText().toString().trim());
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register = apiInterface.call_loginApi(et_login.getText().toString().trim(),
-                et_password.getText().toString().trim());
+        final Call<ResponseBody> register = apiInterface.call_loginApi(object);
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-
-                Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
-                /*try {
-                    String responseString = response.body().string();
-                    Gson gson = new Gson();
-                    LoginModel loginModel;
+                try {
                     if (response.code() == 200) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        LoginModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);
 
-                        if (jsonObject.optInt("status") == 1) {
-                            LoginShared.setLoginToken(activity, jsonObject.optString("token"));
+                        if (jsonObject.optInt("request_status") == 1) {
+                            LoginShared.setLoginToken(LoginActivity.this, jsonObject.optString("token"));
                             loginModel = gson.fromJson(responseString, LoginModel.class);
-                            LoginShared.setLoginDataModel(activity, loginModel);
-                            MyApplication.refreshLoginDataModelFromShared(activity);
+                            LoginShared.setLoginDataModel(LoginActivity.this, loginModel);
 
                             navigateToHome();
-                        } else if (jsonObject.optInt("status") == 0) {
-                            MethodUtils.errorMsg(activity, jsonObject.optString("message"));
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            errorMsg(LoginActivity.this, jsonObject.optString("msg"));
                             et_login.setText("");
                             et_password.setText("");
                         } else {
-                            MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+                            errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
                         }
                     } else {
-                        if (loader != null && loader.isShowing())
-                            loader.dismiss();
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
                         et_login.setText("");
                         et_password.setText("");
-                        errorMsg(activity, activity.getString(R.string.error_occurred));
+                        errorMsg(LoginActivity.this, jsonObject.optString("msg"));
                     }
-
                 } catch (Exception e) {
                     et_login.setText("");
                     et_password.setText("");
-                    errorMsg(activity, activity.getString(R.string.error_occurred));
-                }*/
+                    errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-                Toast.makeText(LoginActivity.this, "Failure", Toast.LENGTH_LONG).show();
-                /*if (loader != null && loader.isShowing())
-                    loader.dismiss();
                 et_login.setText("");
                 et_password.setText("");
-                errorMsg(activity, activity.getString(R.string.error_occurred));*/
+                errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
             }
         });
+    }
+
+    private void navigateToHome() {
+        // Toast.makeText(LoginActivity.this,LoginShared.getLoginDataModel(LoginActivity.this).getUserId().toString(),Toast.LENGTH_LONG).show();
+        Intent profileIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
+        startActivity(profileIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 
     private void setFont() {
@@ -163,9 +180,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.tv_forgot:
-                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+               new ForgotPasswordDialog(LoginActivity.this).show();
                 break;
         }
     }

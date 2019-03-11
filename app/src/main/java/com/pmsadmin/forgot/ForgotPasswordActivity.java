@@ -17,15 +17,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.DashBoardActivity;
 import com.pmsadmin.dialog.ErrorMessageDialog;
 import com.pmsadmin.dialog.OpenCameraOrGalleryDialog;
 import com.pmsadmin.interfaces.OnImageSet;
+import com.pmsadmin.login.LoginActivity;
+import com.pmsadmin.networkUtils.ApiInterface;
+import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.sharedhandler.LoginShared;
+import com.pmsadmin.utils.GeneralToApp;
 import com.pmsadmin.utils.MediaUtils;
+import com.pmsadmin.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +45,11 @@ import java.util.Date;
 
 import id.zelory.compressor.Compressor;
 import id.zelory.compressor.FileUtil;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -54,6 +69,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     de.hdodenhof.circleimageview.CircleImageView iv_profile;
     Button btn_save;
     EditText et_old, et_new, et_confirm;
+    private LoadingData loader;
 
 
     @Override
@@ -62,6 +78,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_forgot_password);
 
         MethodUtils.setStickyBar(ForgotPasswordActivity.this);
+        loader = new LoadingData(ForgotPasswordActivity.this);
         viewBind();
         clickEvent();
         setFont();
@@ -302,10 +319,83 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         } else if (!et_new.getText().toString().trim().equals(et_confirm.getText().toString().trim())) {
             errorMsg(ForgotPasswordActivity.this, "Confirm password should be same with new password");
         } else {
-            Intent intent = new Intent(ForgotPasswordActivity.this, DashBoardActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+           callChangePasswordApi();
         }
+    }
+
+    private void callChangePasswordApi() {
+        loader.show_with_label("Loading");
+        JsonObject object = new JsonObject();
+        object.addProperty("old_password",et_old.getText().toString().trim());
+        object.addProperty("new_password",et_new.getText().toString().trim());
+
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_changePasswordApi("Token "
+                        + LoginShared.getLoginToken(ForgotPasswordActivity.this),
+                object);
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                try {
+                    if (response.code() == 200) {
+                        String responseString = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optInt("request_status") == 1) {
+                            et_confirm.setText("");
+                            et_new.setText("");
+                            et_old.setText("");
+                            MethodUtils.errorMsg(ForgotPasswordActivity.this, jsonObject.optString("msg"));
+                            new android.os.Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    navigateToDashboard();
+                                }
+                            }, GeneralToApp.SPLASH_WAIT_TIME);
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            MethodUtils.errorMsg(ForgotPasswordActivity.this, jsonObject.optString("msg"));
+                        } else {
+                            MethodUtils.errorMsg(ForgotPasswordActivity.this, getString(R.string.error_occurred));
+                        }
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        et_confirm.setText("");
+                        et_new.setText("");
+                        et_old.setText("");
+                        MethodUtils.errorMsg(ForgotPasswordActivity.this, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    et_confirm.setText("");
+                    et_new.setText("");
+                    et_old.setText("");
+                    MethodUtils.errorMsg(ForgotPasswordActivity.this, getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                et_confirm.setText("");
+                et_new.setText("");
+                et_old.setText("");
+                MethodUtils.errorMsg(ForgotPasswordActivity.this, getString(R.string.error_occurred));
+            }
+        });
+    }
+
+    private void navigateToDashboard() {
+        Intent profileIntent = new Intent(ForgotPasswordActivity.this, DashBoardActivity.class);
+        startActivity(profileIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 
     public void errorMsg(Context context, String msg) {

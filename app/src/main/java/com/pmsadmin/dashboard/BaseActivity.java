@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.forgot.ForgotPasswordActivity;
+import com.pmsadmin.login.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,6 +59,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     private void clickEvent() {
         img_topbar_menu.setOnClickListener(this);
         iv_cross.setOnClickListener(this);
+        tv_user_name.setOnClickListener(this);
     }
 
     public void addContentView(View view) {
@@ -122,6 +125,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 if (isDrawerOpen()) {
                     mDrawerLayout.closeDrawers();
                 }
+                break;
+            case R.id.tv_user_name:
+                Intent profileIntent = new Intent(BaseActivity.this, ForgotPasswordActivity.class);
+                startActivity(profileIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
     }
