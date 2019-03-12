@@ -2,9 +2,7 @@ package com.pmsadmin;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -15,8 +13,6 @@ import com.pmsadmin.dashboard.model.DashBoardModelImage;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.dialog.ErrorMessageDialog;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,54 +88,65 @@ public class MethodUtils {
 
     public static List<DashboardItemsModel>  addDataDashboard() {
         List<DashboardItemsModel> list=new ArrayList<>();
-        {
-            DashboardItemsModel dashboardItemsModel = new DashboardItemsModel();
-            dashboardItemsModel.setItem("Projects");
-            list.add(dashboardItemsModel);
-        }
+
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
-            dashboardItemsModel.setItem("Manpower");
-            list.add(dashboardItemsModel);
-        }
-        {
-            DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
-            dashboardItemsModel.setItem("App Surveyors");
+            dashboardItemsModel.setItem("Attendance");
+            dashboardItemsModel.setImageId(R.drawable.manpower_icon);
             list.add(dashboardItemsModel);
         }
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Plant Machinery");
+            dashboardItemsModel.setImageId(R.drawable.plantmachinery_icon);
+            list.add(dashboardItemsModel);
+        }
+        {
+            DashboardItemsModel dashboardItemsModel = new DashboardItemsModel();
+            dashboardItemsModel.setItem("Projects");
+            dashboardItemsModel.setImageId(R.drawable.projects_icon);
+            list.add(dashboardItemsModel);
+        }
+        {
+            DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
+            dashboardItemsModel.setItem("App Surveyors");
+            dashboardItemsModel.setImageId(R.drawable.appsurveyors_icon);
             list.add(dashboardItemsModel);
         }
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Vehicles");
+            dashboardItemsModel.setImageId(R.drawable.vehicles_icon);
             list.add(dashboardItemsModel);
         }
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Hiring");
+            dashboardItemsModel.setImageId(R.drawable.hirings_icon);
             list.add(dashboardItemsModel);
         }
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Vendors");
+            dashboardItemsModel.setImageId(R.drawable.vendors_icon);
             list.add(dashboardItemsModel);
         }
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Documentation");
+            dashboardItemsModel.setImageId(R.drawable.documentation_icon);
             list.add(dashboardItemsModel);
         }
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Approvals");
+            dashboardItemsModel.setImageId(R.drawable.approvals_icon);
             list.add(dashboardItemsModel);
         }
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Reports");
+            dashboardItemsModel.setImageId(R.drawable.reports_icon);
             list.add(dashboardItemsModel);
         }
 
@@ -175,12 +182,12 @@ public class MethodUtils {
             list.add(dashBoardModelImage);
         }
 
-        {
+        /*{
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
             dashBoardModelImage.setItem("MORE...");
             dashBoardModelImage.setImageId(R.drawable.more_icon);
             list.add(dashBoardModelImage);
-        }
+        }*/
         return list;
 
     }

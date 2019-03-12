@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.dashboard.model.DashBoardModelImage;
 
@@ -51,6 +52,7 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
             super(itemView);
             iv_item=itemView.findViewById(R.id.iv_item);
             tv_item=itemView.findViewById(R.id.tv_item);
+            tv_item.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }
 }

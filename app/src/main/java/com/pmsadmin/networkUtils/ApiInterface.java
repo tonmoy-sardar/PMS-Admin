@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -14,6 +15,7 @@ import retrofit2.http.PUT;
 import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
 import static com.pmsadmin.apilist.ApiList.LOGIN;
+import static com.pmsadmin.apilist.ApiList.LOGOUT;
 
 public interface ApiInterface {
 
@@ -26,4 +28,7 @@ public interface ApiInterface {
     @PUT(CHANGEPASSWORD)
     Call<ResponseBody> call_changePasswordApi(@Header("Authorization") String Bearer,
                                               @Body JsonObject object);
+
+    @GET(LOGOUT)
+    Call<ResponseBody> call_logoutApi(@Header("Authorization") String Bearer);
 }

@@ -1,29 +1,25 @@
 package com.pmsadmin.dashboard;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.pmsadmin.GridSpanSizeLookUp.GridSpanSizeLookupForListDetailsAdapter;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.dashboard.adapter.ItemsAdapter;
 import com.pmsadmin.dashboard.adapter.ItemsAdapterTiles;
-import com.pmsadmin.forgot.ForgotPasswordActivity;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
 
 public class DashBoardActivity extends BaseActivity {
     public View view;
-    RecyclerView rv_items;
-    /*RelativeLayout rl_tender,rl_pre_execution,rl_execution,rl_post_execution;
-    TextView tv_tender,tv_pre,tv_execution,tv_post;*/
+    RecyclerView rv_items,rv_child_items;
     private GridLayoutManager mLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +31,30 @@ public class DashBoardActivity extends BaseActivity {
 
         MethodUtils.setStickyBar(DashBoardActivity.this);
         setRecyclerView();
+        setRecyclerViewChild();
+    }
 
+    private void setRecyclerViewChild() {
+        ItemsAdapter adapter = new ItemsAdapter(DashBoardActivity.this, MethodUtils.addDataDashboard());
+        rv_child_items.addItemDecoration(new DividerItemDecoration(DashBoardActivity.this, LinearLayoutManager.VERTICAL) {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                // Do not draw the divider
+            }
+        });
+        LinearLayoutManager horizontalLayoutManager =
+                new LinearLayoutManager(DashBoardActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        rv_child_items.setLayoutManager(horizontalLayoutManager);
+        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 2);
+        rv_child_items.addItemDecoration(decoration);
+        rv_child_items.setAdapter(adapter);
+        /*rv_child_items.setItemAnimator(new DefaultItemAnimator());
+        mLayoutManager = new GridLayoutManager(this, 2);
+        rv_child_items.setLayoutManager(mLayoutManager);
+        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 2);
+        rv_child_items.addItemDecoration(decoration);
+        ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(DashBoardActivity.this, 2);
+        rv_child_items.addItemDecoration(itemOffset);*/
     }
 
     private void fontSet() {
@@ -47,18 +66,10 @@ public class DashBoardActivity extends BaseActivity {
 
     private void bindView() {
         rv_items=findViewById(R.id.rv_items);
-        /*rl_tender=findViewById(R.id.rl_tender);
-        rl_pre_execution=findViewById(R.id.rl_pre_execution);
-        rl_execution=findViewById(R.id.rl_execution);
-        rl_post_execution=findViewById(R.id.rl_post_execution);
-        tv_tender=findViewById(R.id.tv_tender);
-        tv_pre=findViewById(R.id.tv_pre);
-        tv_execution=findViewById(R.id.tv_execution);
-        tv_post=findViewById(R.id.tv_post);*/
+        rv_child_items=findViewById(R.id.rv_child_items);
     }
 
     private void setRecyclerView() {
-
         ItemsAdapterTiles adapter = new ItemsAdapterTiles(DashBoardActivity.this, MethodUtils.getItems());
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());

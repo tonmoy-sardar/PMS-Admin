@@ -69,13 +69,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if (!ConnectionDetector.isConnectingToInternet(LoginActivity.this)) {
             errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.no_internet));
         } else {
-            addDataDashboard();
             callLoginApi();
         }
-    }
-
-    private void addDataDashboard() {
-        DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
     }
 
     private void callLoginApi() {

@@ -11,4 +11,5 @@ public class ApiList {
     public static final String LOGIN = "login/";
     public static final String FORGOT = "forgot_password/";
     public static final String CHANGEPASSWORD = "change_password/";
+    public static final String LOGOUT = "logout/";
 }

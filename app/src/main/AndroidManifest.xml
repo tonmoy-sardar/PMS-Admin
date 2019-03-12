@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".seconddashboard.Dashboard2Activity"></activity>
+        <activity android:name=".giveattandence.GiveAttendanceActivity"></activity>
+        <activity android:name=".attendancelist.AttendanceListActivity" />
+        <activity android:name=".seconddashboard.Dashboard2Activity" />
         <activity
             android:name=".dashboard.DashBoardActivity"
             android:screenOrientation="portrait"

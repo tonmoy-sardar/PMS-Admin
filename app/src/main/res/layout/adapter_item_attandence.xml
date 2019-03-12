@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_15sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="#3c4e5c"
+        android:text="Employee Name:"/>
+
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/tv_name"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="#c6d3dc" />
+
+    <TextView
+        android:id="@+id/tv_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:paddingLeft="@dimen/_15sdp"
+        android:textColor="#3c4e5c"
+        android:textSize="@dimen/_12sdp"
+        android:text="Contact No."/>
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/tv_contact"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="#c6d3dc" />
+    <TextView
+        android:id="@+id/tv_desig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view2"
+        android:paddingLeft="@dimen/_15sdp"
+        android:textColor="#3c4e5c"
+        android:textSize="@dimen/_12sdp"
+        android:text="Designation:"/>
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/tv_desig"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="#c6d3dc" />
+    <TextView
+        android:id="@+id/tv_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view3"
+        android:paddingLeft="@dimen/_15sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="#3c4e5c"
+        android:text="Project Name"/>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/tv_project"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="#c6d3dc" />
+
+    <TextView
+        android:id="@+id/tv_attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view4"
+        android:paddingLeft="@dimen/_15sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="#3c4e5c"
+        android:text="Attendance"/>
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/tv_attendance"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="#c6d3dc" />
+
+    <LinearLayout
+        android:id="@+id/ll_buttom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view5"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ok_button"
+            android:text="Attendance All"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ok_button"
+            android:text="Details"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_10sdp"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,15 +1,19 @@
 package com.pmsadmin.dashboard.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.attendancelist.AttendanceListActivity;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 
 import java.util.List;
@@ -33,8 +37,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemsViewHolder itemsViewHolder, int i) {
-        itemsViewHolder.btn_item.setText(list.get(i).getItem());
+    public void onBindViewHolder(@NonNull ItemsViewHolder itemsViewHolder, final int i) {
+        itemsViewHolder.tv_item.setText(list.get(i).getItem());
+        itemsViewHolder.iv_item.setImageResource(list.get(i).getImageId());
+
+        itemsViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(i==0){
+                    Intent profileIntent = new Intent(activity, AttendanceListActivity.class);
+                    activity.startActivity(profileIntent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+        });
     }
 
     @Override
@@ -43,12 +59,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     }
 
     public class ItemsViewHolder extends RecyclerView.ViewHolder {
-        public Button btn_item;
 
+        ImageView iv_item;
+        TextView tv_item;
+        RelativeLayout rl_main;
         public ItemsViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
-            btn_item = itemView.findViewById(R.id.btn_item);
-            btn_item.setTypeface(MethodUtils.getNormalFont(activity));
+            iv_item=itemView.findViewById(R.id.iv_item);
+            tv_item=itemView.findViewById(R.id.tv_item);
+            rl_main=itemView.findViewById(R.id.rl_main);
+            tv_item.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }
 }
