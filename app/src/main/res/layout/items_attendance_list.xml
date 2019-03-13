@@ -9,9 +9,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
-        android:paddingTop="@dimen/_14sdp"
+        android:paddingTop="@dimen/_10sdp"
         android:paddingLeft="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tv_date_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:layout_alignParentRight="true"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:paddingRight="@dimen/_8sdp"
         android:textSize="@dimen/_15sdp"
         android:textColor="#000000"/>
     <View
@@ -19,7 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/tv_date"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
         android:background="#c6d3dc" />
 
     <TextView
@@ -27,11 +42,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view1"
-        android:paddingTop="@dimen/_5sdp"
+        android:paddingTop="@dimen/_2sdp"
         android:paddingLeft="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_2sdp"
         android:textSize="@dimen/_15sdp"
-        android:text="Login"
+        android:text="Login Time"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tv_login_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:layout_below="@+id/view1"
+        android:layout_alignParentRight="true"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:textSize="@dimen/_15sdp"
         android:textColor="#000000"/>
 
     <View
@@ -39,7 +67,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/tv_login"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
         android:background="#c6d3dc" />
 
     <TextView
@@ -47,11 +78,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view2"
-        android:paddingTop="@dimen/_5sdp"
+        android:paddingTop="@dimen/_2sdp"
         android:paddingLeft="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_14sdp"
+        android:paddingBottom="@dimen/_10sdp"
         android:textSize="@dimen/_15sdp"
-        android:text="logout"
+        android:text="Logout Time"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tv_logout_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:layout_below="@+id/view2"
+        android:layout_alignParentRight="true"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:textSize="@dimen/_15sdp"
         android:textColor="#000000"/>
 
 </RelativeLayout>

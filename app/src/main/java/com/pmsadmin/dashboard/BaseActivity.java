@@ -156,7 +156,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 logout();
                 break;
             case R.id.tv_attendance:
-                LoginShared.destroySessionTypePreference();
                 Intent logIntent = new Intent(BaseActivity.this, GiveAttendanceActivity.class);
                 startActivity(logIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

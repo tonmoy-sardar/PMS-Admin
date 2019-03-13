@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -133,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void navigateToHome() {
-        // Toast.makeText(LoginActivity.this,LoginShared.getLoginDataModel(LoginActivity.this).getUserId().toString(),Toast.LENGTH_LONG).show();
+         //Toast.makeText(LoginActivity.this,LoginShared.getLoginDataModel(LoginActivity.this).getToken().toString(), Toast.LENGTH_LONG).show();
         Intent profileIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
         startActivity(profileIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

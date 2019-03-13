@@ -23,7 +23,11 @@ public class SharedUtils {
 
 	public static final String TYPE_DEAD_ON_LOGOUT_SHARED = "TYPE_DEAD_ON_LOGOUT_SHARED";
 	public static final String KEY_SHARED_USER_DATA_MODEL = "KEY_SHARED_USER_DATA_MODEL";
+	public static final String KEY_SHARED_ATTENDANCE_LIST_MODEL = "KEY_SHARED_ATTENDANCE_LIST_MODEL";
+	public static final String KEY_SHARED_ATTENDANCE_ADD = "KEY_SHARED_ATTENDANCE_ADD";
 	public static final String KEY_SHARED_LOGIN_TOKEN= "KEY_SHARED_LOGIN_TOKEN";
+	public static final String KEY_SHARED_LOGIN_TIME= "KEY_SHARED_LOGIN_TIME";
+	public static final String KEY_SHARED_ATTENDANCE_LOGIN_TIME= "KEY_SHARED_ATTENDANCE_LOGIN_TIME";
 	public static final String KEY_SHARED_NO_DATA = "";
 
 
