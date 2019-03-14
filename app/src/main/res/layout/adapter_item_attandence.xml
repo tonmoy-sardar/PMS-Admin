@@ -1,125 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/_15sdp"
+    android:background="@drawable/adapter_report_item"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginRight="@dimen/_10sdp">
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/_15sdp"
+        android:textColor="#2d3b45"
         android:textSize="@dimen/_12sdp"
-        android:textColor="#3c4e5c"
-        android:text="Employee Name:"/>
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:text="John Doe"/>
 
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#2d3b45"
         android:layout_below="@+id/tv_name"
-        android:layout_margin="@dimen/_10sdp"
-        android:background="#c6d3dc" />
-
-    <TextView
-        android:id="@+id/tv_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view1"
-        android:paddingLeft="@dimen/_15sdp"
-        android:textColor="#3c4e5c"
         android:textSize="@dimen/_12sdp"
-        android:text="Contact No."/>
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_contact"
-        android:layout_margin="@dimen/_10sdp"
-        android:background="#c6d3dc" />
-    <TextView
-        android:id="@+id/tv_desig"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view2"
         android:paddingLeft="@dimen/_15sdp"
-        android:textColor="#3c4e5c"
-        android:textSize="@dimen/_12sdp"
-        android:text="Designation:"/>
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_desig"
-        android:layout_margin="@dimen/_10sdp"
-        android:background="#c6d3dc" />
-    <TextView
-        android:id="@+id/tv_project"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view3"
-        android:paddingLeft="@dimen/_15sdp"
-        android:textSize="@dimen/_12sdp"
-        android:textColor="#3c4e5c"
-        android:text="Project Name"/>
+        android:paddingTop="@dimen/_5sdp"
+        android:text="Log in:10:00 AM"/>
 
-    <View
-        android:id="@+id/view4"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_project"
-        android:layout_margin="@dimen/_10sdp"
-        android:background="#c6d3dc" />
-
-    <TextView
-        android:id="@+id/tv_attendance"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/iv_div"
+        android:layout_width="@dimen/_1sdp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view4"
-        android:paddingLeft="@dimen/_15sdp"
-        android:textSize="@dimen/_12sdp"
-        android:textColor="#3c4e5c"
-        android:text="Attendance"/>
-    <View
-        android:id="@+id/view5"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tv_attendance"
-        android:layout_margin="@dimen/_10sdp"
-        android:background="#c6d3dc" />
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:background="@drawable/divider"/>
 
-    <LinearLayout
-        android:id="@+id/ll_buttom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view5"
-        android:gravity="center"
+    <ImageView
+        android:id="@+id/iv_info"
+        android:layout_width="@dimen/_17sdp"
+        android:layout_height="@dimen/_17sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:orientation="horizontal">
+        android:layout_alignParentRight="true"
+        android:src="@drawable/i_icon"/>
 
-        <Button
-            android:id="@+id/btn_submit"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ok_button"
-            android:text="Attendance All"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12.03.2018"
+        android:textSize="@dimen/_12sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:textColor="#2d3b45"
+        android:paddingRight="@dimen/_15sdp"
+        android:layout_toLeftOf="@+id/iv_info"/>
 
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ok_button"
-            android:text="Details"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/_10sdp"
-            android:textAllCaps="false" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_date"
+        android:textSize="@dimen/_12sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:textColor="#2d3b45"
+        android:text="Log Out: 06:00 PM"/>
+
+    <TextView
+        android:id="@+id/tv_justification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="Somethingcfbgbfdgfgfgfdgfdgdfgdfgdfgdggfg"
+        android:textSize="@dimen/_12sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_15sdp"
+        android:layout_alignParentBottom="true"
+        android:textColor="#2d3b45"
+        android:layout_below="@+id/iv_div"/>
 
 </RelativeLayout>

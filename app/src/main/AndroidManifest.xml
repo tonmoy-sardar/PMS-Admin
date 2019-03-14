@@ -23,13 +23,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".giveattandence.GiveAttendanceActivity"></activity>
-        <activity android:name=".attendancelist.AttendanceListActivity" />
-        <activity android:name=".seconddashboard.Dashboard2Activity" />
+        <activity android:name=".filter.FilterActivity"></activity>
+        <activity
+            android:name=".giveattandence.GiveAttendanceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".attendancelist.AttendanceListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".seconddashboard.Dashboard2Activity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".dashboard.DashBoardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".forgot.ForgotPasswordActivity"
             android:screenOrientation="portrait"

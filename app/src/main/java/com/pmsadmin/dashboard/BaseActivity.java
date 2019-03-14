@@ -41,7 +41,13 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public DrawerLayout mDrawerLayout;
     public ImageButton img_topbar_menu;
     ImageView iv_cross;
-    TextView tv_user_name,tv_tender_list,tv_help,tv_logout,tv_attendance;
+    public ImageView iv_close;
+    TextView tv_user_name;
+    TextView tv_tender_list;
+    TextView tv_help;
+    TextView tv_logout;
+    TextView tv_attendance;
+    public TextView tv_universal_header;
     private LoadingData loader;
 
     @Override
@@ -73,6 +79,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         tv_help = findViewById(R.id.tv_help);
         tv_logout = findViewById(R.id.tv_logout);
         tv_attendance = findViewById(R.id.tv_attendance);
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+        iv_close = findViewById(R.id.iv_close);
     }
 
     private void clickEvent() {

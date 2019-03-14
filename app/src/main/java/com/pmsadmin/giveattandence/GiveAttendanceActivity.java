@@ -493,7 +493,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
             object.addProperty("logout_address", "");
         }
 
-        object.addProperty("approved_status",1);
+        object.addProperty("approved_status",4);
         object.addProperty("justification","");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);

@@ -36,7 +36,7 @@ public class GiveReasonDialog extends Dialog implements View.OnClickListener {
     GiveAttendanceActivity activity;
     private LoadingData loader;
     EditText et_login;
-    Button btn_reason;
+    Button btn_submit,btn_cancel;
     public GiveReasonDialog(GiveAttendanceActivity activity) {
         super(activity);
         this.activity = activity;
@@ -46,12 +46,14 @@ public class GiveReasonDialog extends Dialog implements View.OnClickListener {
     }
 
     private void setClickEvent() {
-        btn_reason.setOnClickListener(this);
+        btn_submit.setOnClickListener(this);
+        btn_cancel.setOnClickListener(this);
     }
 
     private void viewBind() {
         et_login=activity.findViewById(R.id.et_login);
-        btn_reason=activity.findViewById(R.id.btn_reason);
+        btn_submit=activity.findViewById(R.id.btn_submit);
+        btn_cancel=activity.findViewById(R.id.btn_cancel);
     }
 
     @Override
@@ -132,8 +134,11 @@ public class GiveReasonDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_reason:
+            case R.id.btn_submit:
                 logoutApi();
+                break;
+            case R.id.btn_cancel:
+                dismiss();
                 break;
         }
     }

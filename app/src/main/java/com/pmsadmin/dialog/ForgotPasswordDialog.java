@@ -50,6 +50,27 @@ public class ForgotPasswordDialog extends Dialog implements View.OnClickListener
         loader = new LoadingData(activity);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        View view = activity.getLayoutInflater().inflate(R.layout.dialog_forgot_password, null);
+        setContentView(view);
+
+        setCanceledOnTouchOutside(false);
+        setCancelable(false);
+
+        viewBind();
+        setView();
+        setFont();
+        clickEvent();
+
+        WindowManager.LayoutParams wmParams = getWindow().getAttributes();
+        wmParams.gravity = Gravity.CENTER;
+
+    }
+
     private void clickEvent() {
         btn_submit.setOnClickListener(this);
         btn_cancel.setOnClickListener(this);
@@ -88,27 +109,6 @@ public class ForgotPasswordDialog extends Dialog implements View.OnClickListener
         et_phone = findViewById(R.id.et_phone);
         btn_submit = findViewById(R.id.btn_submit);
         btn_cancel = findViewById(R.id.btn_cancel);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        View view = activity.getLayoutInflater().inflate(R.layout.dialog_forgot_password, null);
-        setContentView(view);
-
-        setCanceledOnTouchOutside(false);
-        setCancelable(false);
-
-        viewBind();
-        setView();
-        setFont();
-        clickEvent();
-
-        WindowManager.LayoutParams wmParams = getWindow().getAttributes();
-        wmParams.gravity = Gravity.CENTER;
-
     }
 
     private void setFont() {

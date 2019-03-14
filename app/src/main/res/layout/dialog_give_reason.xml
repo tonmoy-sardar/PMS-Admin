@@ -38,19 +38,35 @@
             android:textSize="@dimen/_11sdp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_reason"
+    <LinearLayout
+        android:id="@+id/ll_buttom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rl_reason"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/login_bg"
-        android:text="Submit"
-        android:textAllCaps="false"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/_20sdp" />
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ok_button"
+            android:text="Ok"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cancle_button"
+            android:text="Cancel"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_12sdp"
+            android:textAllCaps="false" />
+    </LinearLayout>
 
 </RelativeLayout>
