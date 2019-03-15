@@ -69,4 +69,10 @@ public class FilterActivity extends BaseActivity {
         rv_project=findViewById(R.id.rv_project);
         rv_designation=findViewById(R.id.rv_designation);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

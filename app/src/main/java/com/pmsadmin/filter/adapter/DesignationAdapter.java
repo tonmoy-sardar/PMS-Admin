@@ -30,7 +30,7 @@ public class DesignationAdapter extends RecyclerView.Adapter<DesignationAdapter.
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 3;
     }
 
     public class DesignationViewHolder extends RecyclerView.ViewHolder {

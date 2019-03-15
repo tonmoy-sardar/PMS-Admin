@@ -1,14 +1,13 @@
 package com.pmsadmin.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -35,27 +34,14 @@ public class GiveReasonDialog extends Dialog implements View.OnClickListener {
 
     GiveAttendanceActivity activity;
     private LoadingData loader;
-    EditText et_login;
+    EditText et_reason;
     Button btn_submit,btn_cancel;
+    TextView tv_reason;
     public GiveReasonDialog(GiveAttendanceActivity activity) {
         super(activity);
         this.activity = activity;
         loader = new LoadingData(activity);
-        viewBind();
-        setClickEvent();
     }
-
-    private void setClickEvent() {
-        btn_submit.setOnClickListener(this);
-        btn_cancel.setOnClickListener(this);
-    }
-
-    private void viewBind() {
-        et_login=activity.findViewById(R.id.et_login);
-        btn_submit=activity.findViewById(R.id.btn_submit);
-        btn_cancel=activity.findViewById(R.id.btn_cancel);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +50,30 @@ public class GiveReasonDialog extends Dialog implements View.OnClickListener {
         setContentView(view);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
+
+        viewBind(view);
+        setFont();
+        setClickEvent();
     }
+
+    private void setFont() {
+        tv_reason.setTypeface(MethodUtils.getNormalFont(activity));
+        btn_submit.setTypeface(MethodUtils.getNormalFont(activity));
+        btn_cancel.setTypeface(MethodUtils.getNormalFont(activity));
+    }
+
+    private void setClickEvent() {
+        btn_submit.setOnClickListener(this);
+        btn_cancel.setOnClickListener(this);
+    }
+
+    private void viewBind(View view) {
+        et_reason=view.findViewById(R.id.et_reason);
+        btn_submit=view.findViewById(R.id.btn_submit);
+        btn_cancel=view.findViewById(R.id.btn_cancel);
+        tv_reason=view.findViewById(R.id.tv_reason);
+    }
+
 
     private void logoutApi() {
         //loader.show_with_label("Loading");
@@ -102,6 +111,7 @@ public class GiveReasonDialog extends Dialog implements View.OnClickListener {
 
                         if (jsonObject.optInt("request_status") == 1) {
                             LoginShared.setAttendanceFirstLoginTime(activity, "0");
+                            activity.stopLocationUpdates();
                             dismiss();
                             Intent i=new Intent(activity, LoginActivity.class);
                             activity.startActivity(i);

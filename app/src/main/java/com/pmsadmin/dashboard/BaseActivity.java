@@ -67,6 +67,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         tv_help.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
         tv_logout.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
         tv_attendance.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
     }
 
     private void viewBind() {
@@ -164,6 +165,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 logout();
                 break;
             case R.id.tv_attendance:
+                if (isDrawerOpen()) {
+                    mDrawerLayout.closeDrawers();
+                }
                 Intent logIntent = new Intent(BaseActivity.this, GiveAttendanceActivity.class);
                 startActivity(logIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -202,6 +206,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                             }, GeneralToApp.SPLASH_WAIT_TIME);
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(BaseActivity.this, jsonObject.optString("msg"));
+                            new android.os.Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    navigateToLogin();
+                                }
+                            }, GeneralToApp.SPLASH_WAIT_TIME);
                         } else {
                             MethodUtils.errorMsg(BaseActivity.this, getString(R.string.error_occurred));
                         }

@@ -5,8 +5,8 @@
 
     <CheckBox
         android:id="@+id/chkbxSelectAll"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
         android:layout_centerVertical="true"
         android:background="@drawable/checkbox"
         android:layout_marginTop="@dimen/_5sdp"

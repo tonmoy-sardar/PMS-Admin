@@ -54,8 +54,8 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_10sdp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/_10sdp"
@@ -83,8 +83,8 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_10sdp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/_10sdp"
@@ -120,8 +120,8 @@
 
                     <CheckBox
                         android:id="@+id/chkbxSelectAll"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_centerVertical="true"
                         android:background="@drawable/checkbox"
                         android:button="@null"
@@ -149,8 +149,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_below="@+id/rlSelectAllCheckboxHolder"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_20sdp">
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp">
 
                 </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
@@ -183,8 +183,8 @@
 
                     <CheckBox
                         android:id="@+id/chkbxSelectAlldesig"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_centerVertical="true"
                         android:background="@drawable/checkbox"
                         android:button="@null"
@@ -212,8 +212,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_below="@+id/rlSelectAllCheckboxHolderview"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_20sdp">
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp">
 
                 </android.support.v7.widget.RecyclerView>
             </RelativeLayout>

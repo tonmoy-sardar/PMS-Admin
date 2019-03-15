@@ -52,6 +52,17 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
         }else{
             attendanceViewHolder.tv_logout_value.setText(result.get(i).getLogoutTime());
         }
+
+        if (result.get(i).getJustification()==null||result.get(i).getJustification().equalsIgnoreCase("null")
+                ||result.get(i).getJustification().equals("")){
+            attendanceViewHolder.view3.setVisibility(View.GONE);
+            attendanceViewHolder.tv_justification.setVisibility(View.GONE);
+            attendanceViewHolder.tv_justification.setText("");
+        }else{
+            attendanceViewHolder.view3.setVisibility(View.VISIBLE);
+            attendanceViewHolder.tv_justification.setVisibility(View.VISIBLE);
+            attendanceViewHolder.tv_justification.setText("Justification: "+result.get(i).getJustification());
+        }
     }
 
     @Override
@@ -61,7 +72,8 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
 
     public class AttendanceViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_date,tv_login,tv_logout,tv_date_value,tv_login_value,tv_logout_value;
+        TextView tv_date,tv_login,tv_logout,tv_date_value,tv_login_value,tv_logout_value,tv_justification;
+        View view3;
         public AttendanceViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_date=itemView.findViewById(R.id.tv_date);
@@ -70,12 +82,15 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
             tv_date_value=itemView.findViewById(R.id.tv_date_value);
             tv_login_value=itemView.findViewById(R.id.tv_login_value);
             tv_logout_value=itemView.findViewById(R.id.tv_logout_value);
+            tv_justification=itemView.findViewById(R.id.tv_justification);
+            view3=itemView.findViewById(R.id.view3);
             tv_date.setTypeface(MethodUtils.getNormalFont(activity));
             tv_login.setTypeface(MethodUtils.getNormalFont(activity));
             tv_logout.setTypeface(MethodUtils.getNormalFont(activity));
             tv_date_value.setTypeface(MethodUtils.getNormalFont(activity));
             tv_login_value.setTypeface(MethodUtils.getNormalFont(activity));
             tv_logout_value.setTypeface(MethodUtils.getNormalFont(activity));
+            tv_justification.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }
 }

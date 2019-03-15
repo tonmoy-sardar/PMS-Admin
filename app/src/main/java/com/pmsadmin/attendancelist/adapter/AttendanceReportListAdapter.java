@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.giveattandence.listattandencemodel.Result;
 
@@ -28,7 +29,7 @@ public class AttendanceReportListAdapter extends RecyclerView.Adapter<Attendance
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.adapter_item_attandence, viewGroup, false);
 
-        return new AttendanceReportListAdapter.AttendanceViewHolder(itemView);
+        return new AttendanceReportListAdapter.AttendanceViewHolder(activity,itemView);
     }
 
     @Override
@@ -72,13 +73,18 @@ public class AttendanceReportListAdapter extends RecyclerView.Adapter<Attendance
 
         TextView tv_name, tv_login, tv_date, tv_logout, tv_justification;
 
-        public AttendanceViewHolder(@NonNull View itemView) {
+        public AttendanceViewHolder(Activity activity,View itemView) {
             super(itemView);
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_login = itemView.findViewById(R.id.tv_login);
             tv_date = itemView.findViewById(R.id.tv_date);
             tv_logout = itemView.findViewById(R.id.tv_logout);
             tv_justification = itemView.findViewById(R.id.tv_justification);
+            tv_name.setTypeface(MethodUtils.getNormalFont(activity));
+            tv_login.setTypeface(MethodUtils.getNormalFont(activity));
+            tv_date.setTypeface(MethodUtils.getNormalFont(activity));
+            tv_logout.setTypeface(MethodUtils.getNormalFont(activity));
+            tv_justification.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }
 }

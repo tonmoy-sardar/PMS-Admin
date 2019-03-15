@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
 import com.pmsadmin.login.model.LoginModel;
@@ -45,6 +46,34 @@ public class LoginShared {
             loginModel = new LoginModel();
         else
             loginModel = gson.fromJson(userDataModelJson, LoginModel.class);
+
+        return loginModel;
+    }
+
+    public static void setApprovalListModel(Context context, ApprovalListModel loginModel) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(loginModel);
+        editor.putString(SharedUtils.KEY_SHARED_APPROVAL_LIST_DATA_MODEL, json);
+        editor.commit();
+    }
+
+    //
+    public static ApprovalListModel getApprovalListModel(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        ApprovalListModel loginModel = null;
+        Gson gson = new Gson();
+        String userDataModelJson = LoginShared.prefs.getString(SharedUtils.KEY_SHARED_APPROVAL_LIST_DATA_MODEL, "");
+
+        if (userDataModelJson.equals(""))
+            loginModel = new ApprovalListModel();
+        else
+            loginModel = gson.fromJson(userDataModelJson, ApprovalListModel.class);
 
         return loginModel;
     }

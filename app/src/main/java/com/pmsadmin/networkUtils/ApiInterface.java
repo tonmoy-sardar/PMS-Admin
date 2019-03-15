@@ -12,12 +12,15 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
+import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCEADD;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCELOGOUT;
 import static com.pmsadmin.apilist.ApiList.ATTENDANCELISTING;
 import static com.pmsadmin.apilist.ApiList.ATTENDANCELOCATIONUPDATE;
 import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
+import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
 import static com.pmsadmin.apilist.ApiList.LOGIN;
 import static com.pmsadmin.apilist.ApiList.LOGOUT;
@@ -44,6 +47,10 @@ public interface ApiInterface {
     @GET(ATTENDANCELISTING)
     Call<ResponseBody> call_attendanceListingApi(@Header("Authorization") String Bearer);
 
+    @GET(APPROVALLIST)
+    Call<ResponseBody> call_approvalListingApi(@Header("Authorization") String Bearer,
+                                               @Query("page") String page);
+
     @PUT(ATTANDENCELOGOUT)
     Call<ResponseBody> call_attendanceLogoutApi(@Header("Authorization") String Bearer,
                                                 @Path("attendance_id") String attendance_id,
@@ -52,4 +59,8 @@ public interface ApiInterface {
     @POST(ATTENDANCELOCATIONUPDATE)
     Call<ResponseBody> call_attendanceLocationUpdateApi(@Header("Authorization") String Bearer,
                                              @Body JsonObject object);
+
+    @GET(EMPLOYEELIST)
+    Call<ResponseBody> call_employeeListApi(@Header("Authorization") String Bearer,
+                                            @Path("employee_id") String employee_id);
 }

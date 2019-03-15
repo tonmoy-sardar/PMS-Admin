@@ -23,7 +23,7 @@
         android:layout_below="@+id/tv_name"
         android:paddingLeft="@dimen/_15sdp"
         android:paddingTop="@dimen/_5sdp"
-        android:text="Form: 15.09.2018   |   To:24.11.2018"
+        android:text="Form: 15.09.2018   |   To: 24.11.2018"
         android:textColor="#2d3b45"
         android:textSize="@dimen/_12sdp" />
 
@@ -45,7 +45,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/_15sdp"
         android:paddingTop="@dimen/_10sdp"
-        android:text="Full Day Leave"
         android:textColor="#0581b2"
         android:textSize="@dimen/_12sdp" />
 
@@ -101,6 +100,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/_10sdp"
         android:layout_marginLeft="@dimen/_20sdp"
+        android:visibility="gone"
         android:layout_marginBottom="@dimen/_15sdp"
         android:layout_below="@+id/ll_buttom"
         android:background="@drawable/modification_bg">

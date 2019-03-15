@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         clickEvent();
         setFont();
         et_login.setText("santanu.pal@shyamfuture.com");
-        et_password.setText("hZUgBeRBpr");
+        et_password.setText("123456");
     }
 
     private void clickEvent() {

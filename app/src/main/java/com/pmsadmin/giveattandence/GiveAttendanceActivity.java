@@ -175,7 +175,8 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         buildLocationSettingsRequest();
         //callservice();
         setClickEvent();
-        getAttandenceListing();
+        //getAttandenceListing();
+        getAttendanceListingUpdated();
     }
 
     private void callservice() {
@@ -359,7 +360,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
     /**
      * Removes location updates from the FusedLocationApi.
      */
-    private void stopLocationUpdates() {
+    public void stopLocationUpdates() {
         if (!mRequestingLocationUpdates) {
             Log.d("TAG", "stopLocationUpdates: updates never requested, no-op.");
             return;
@@ -517,6 +518,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
 
                         if (jsonObject.optInt("request_status") == 1) {
                             LoginShared.setAttendanceFirstLoginTime(GiveAttendanceActivity.this, "0");
+                            stopLocationUpdates();
                             Intent i=new Intent(GiveAttendanceActivity.this,LoginActivity.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -624,6 +626,57 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
 
     }
 
+    private void getAttendanceListingUpdated() {
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_employeeListApi("Token "
+                + LoginShared.getLoginDataModel(GiveAttendanceActivity.this).getToken(),
+                LoginShared.getLoginDataModel(GiveAttendanceActivity.this).getUserId().toString());
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    if (response.code() == 201 || response.code()==200) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        AttendanceListModel loginModel;
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optInt("request_status") == 1) {
+                            loginModel = gson.fromJson(responseString, AttendanceListModel.class);
+                            LoginShared.setAttendanceListDataModel(GiveAttendanceActivity.this, loginModel);
+                            setRecyclerView();
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            MethodUtils.errorMsg(GiveAttendanceActivity.this, jsonObject.optString("msg"));
+                        } else {
+                            MethodUtils.errorMsg(GiveAttendanceActivity.this, GiveAttendanceActivity.this.getString(R.string.error_occurred));
+                        }
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        MethodUtils.errorMsg(GiveAttendanceActivity.this, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(GiveAttendanceActivity.this, GiveAttendanceActivity.this.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(GiveAttendanceActivity.this, GiveAttendanceActivity.this.getString(R.string.error_occurred));
+            }
+        });
+
+    }
+
+
     private void updateLocationUI() {
         if (mCurrentLocation != null) {
             Toast.makeText(getApplicationContext(), "location", Toast.LENGTH_LONG).show();
@@ -711,6 +764,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
                             loginModel = gson.fromJson(responseString, AttendanceAddModel.class);
                             LoginShared.setAttendanceAddDataModel(GiveAttendanceActivity.this, loginModel);
                             LoginShared.setAttendanceFirstLoginTime(GiveAttendanceActivity.this, "1");
+                            MethodUtils.errorMsg(GiveAttendanceActivity.this, jsonObject.optString("msg"));
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(GiveAttendanceActivity.this, jsonObject.optString("msg"));
                         } else {
@@ -733,5 +787,11 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
                 MethodUtils.errorMsg(GiveAttendanceActivity.this, GiveAttendanceActivity.this.getString(R.string.error_occurred));
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

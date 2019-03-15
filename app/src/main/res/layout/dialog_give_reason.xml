@@ -9,6 +9,9 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_15sdp"
         android:textColor="#000000"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
         android:text="You are logging out before 10 hours. Provide a justification to proceed."/>
 
     <RelativeLayout
@@ -23,7 +26,7 @@
         android:background="@drawable/editext_bg">
 
         <EditText
-            android:id="@+id/et_login"
+            android:id="@+id/et_reason"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -49,7 +52,7 @@
 
         <Button
             android:id="@+id/btn_submit"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/ok_button"
             android:text="Ok"
@@ -60,7 +63,7 @@
 
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/cancle_button"
             android:text="Cancel"

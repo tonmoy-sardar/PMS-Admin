@@ -31,7 +31,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 3;
     }
 
     public class ProjectViewHolder extends RecyclerView.ViewHolder {
