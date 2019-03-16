@@ -61,7 +61,7 @@
         <Button
             android:id="@+id/btn_approval"
             android:layout_width="@dimen/_80sdp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:background="@drawable/button_approve"
             android:text="Approve"
@@ -72,7 +72,7 @@
         <Button
             android:id="@+id/btn_reject"
             android:layout_width="@dimen/_80sdp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:background="@drawable/button_reject"
             android:text="Reject"
@@ -83,7 +83,7 @@
         <Button
             android:id="@+id/btn_modification"
             android:layout_width="@dimen/_90sdp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/button_modification"
             android:text="Modification"
             android:textAllCaps="false"

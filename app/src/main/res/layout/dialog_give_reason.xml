@@ -7,7 +7,7 @@
         android:id="@+id/tv_reason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/_15sdp"
+        android:textSize="@dimen/_12sdp"
         android:textColor="#000000"
         android:paddingTop="@dimen/_10sdp"
         android:paddingLeft="@dimen/_10sdp"

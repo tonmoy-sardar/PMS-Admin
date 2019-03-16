@@ -48,6 +48,7 @@ import com.pmsadmin.forgot.ForgotPasswordActivity;
 import com.pmsadmin.giveattandence.adapter.AttendanceHistoryAdapter;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
+import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
 import com.pmsadmin.location.GPSTracker;
 import com.pmsadmin.location.StartLocationAlert;
 import com.pmsadmin.location.TrackerGPS;
@@ -300,7 +301,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
 
     private void setRecyclerView() {
         AttendanceHistoryAdapter adapter = new AttendanceHistoryAdapter(GiveAttendanceActivity.this,
-                LoginShared.getAttendanceListDataModel(GiveAttendanceActivity.this).getResult());
+                LoginShared.getUpdatedAttendanceListDataModel(GiveAttendanceActivity.this).getResults());
         LinearLayoutManager horizontalLayoutManager =
                 new LinearLayoutManager(GiveAttendanceActivity.this, LinearLayoutManager.VERTICAL, false);
         rv_items.setLayoutManager(horizontalLayoutManager);
@@ -595,13 +596,13 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
                     if (response.code() == 201 || response.code()==200) {
                         String responseString = response.body().string();
                         Gson gson = new Gson();
-                        AttendanceListModel loginModel;
+                        UpdatedAttendanceListModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);
 
                         if (jsonObject.optInt("request_status") == 1) {
-                            loginModel = gson.fromJson(responseString, AttendanceListModel.class);
-                            LoginShared.setAttendanceListDataModel(GiveAttendanceActivity.this, loginModel);
-                            setRecyclerView();
+                            loginModel = gson.fromJson(responseString, UpdatedAttendanceListModel.class);
+                            LoginShared.setUpdatedAttendanceListDataModel(GiveAttendanceActivity.this, loginModel);
+                            //setRecyclerView();
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(GiveAttendanceActivity.this, jsonObject.optString("msg"));
                         } else {
@@ -644,15 +645,18 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
                     if (response.code() == 201 || response.code()==200) {
                         String responseString = response.body().string();
                         Gson gson = new Gson();
-                        AttendanceListModel loginModel;
+                        UpdatedAttendanceListModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);
 
                         if (jsonObject.optInt("request_status") == 1) {
-                            loginModel = gson.fromJson(responseString, AttendanceListModel.class);
-                            LoginShared.setAttendanceListDataModel(GiveAttendanceActivity.this, loginModel);
+                            loginModel = gson.fromJson(responseString, UpdatedAttendanceListModel.class);
+                            LoginShared.setUpdatedAttendanceListDataModel(GiveAttendanceActivity.this, loginModel);
                             setRecyclerView();
                         } else if (jsonObject.optInt("request_status") == 0) {
-                            MethodUtils.errorMsg(GiveAttendanceActivity.this, jsonObject.optString("msg"));
+                            //MethodUtils.errorMsg(GiveAttendanceActivity.this, jsonObject.optString("msg"));
+                            loginModel = gson.fromJson(responseString, UpdatedAttendanceListModel.class);
+                            LoginShared.setUpdatedAttendanceListDataModel(GiveAttendanceActivity.this, loginModel);
+                            setRecyclerView();
                         } else {
                             MethodUtils.errorMsg(GiveAttendanceActivity.this, GiveAttendanceActivity.this.getString(R.string.error_occurred));
                         }

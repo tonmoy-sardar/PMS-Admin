@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
+import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
 import com.pmsadmin.login.model.LoginModel;
 
 public class LoginShared {
@@ -102,6 +103,34 @@ public class LoginShared {
             loginModel = new AttendanceListModel();
         else
             loginModel = gson.fromJson(userDataModelJson, AttendanceListModel.class);
+
+        return loginModel;
+    }
+
+    public static void setUpdatedAttendanceListDataModel(Context context, UpdatedAttendanceListModel loginModel) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(loginModel);
+        editor.putString(SharedUtils.KEY_SHARED_UPDATED_ATTENDANCE_LIST_MODEL, json);
+        editor.commit();
+    }
+
+    //
+    public static UpdatedAttendanceListModel getUpdatedAttendanceListDataModel(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        UpdatedAttendanceListModel loginModel = null;
+        Gson gson = new Gson();
+        String userDataModelJson = LoginShared.prefs.getString(SharedUtils.KEY_SHARED_UPDATED_ATTENDANCE_LIST_MODEL, "");
+
+        if (userDataModelJson.equals(""))
+            loginModel = new UpdatedAttendanceListModel();
+        else
+            loginModel = gson.fromJson(userDataModelJson, UpdatedAttendanceListModel.class);
 
         return loginModel;
     }
