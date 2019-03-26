@@ -2,9 +2,6 @@ package com.pmsadmin.giveattandence;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Address;
@@ -14,15 +11,16 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -44,16 +42,12 @@ import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dialog.GiveReasonDialog;
-import com.pmsadmin.forgot.ForgotPasswordActivity;
 import com.pmsadmin.giveattandence.adapter.AttendanceHistoryAdapter;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
-import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
 import com.pmsadmin.location.GPSTracker;
-import com.pmsadmin.location.StartLocationAlert;
 import com.pmsadmin.location.TrackerGPS;
 import com.pmsadmin.login.LoginActivity;
-import com.pmsadmin.login.model.LoginModel;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
@@ -88,6 +82,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
     public GPSTracker gpsTracker;
     private LocationManager manager = null;
     private Location mCurrentLocation;
+    private GoogleApiClient googleApiClient;
     /**
      * Callback for Location events.
      */
@@ -303,7 +298,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         AttendanceHistoryAdapter adapter = new AttendanceHistoryAdapter(GiveAttendanceActivity.this,
                 LoginShared.getUpdatedAttendanceListDataModel(GiveAttendanceActivity.this).getResults());
         LinearLayoutManager horizontalLayoutManager =
-                new LinearLayoutManager(GiveAttendanceActivity.this, LinearLayoutManager.VERTICAL, false);
+                new LinearLayoutManager(GiveAttendanceActivity.this, RecyclerView.VERTICAL, false);
         rv_items.setLayoutManager(horizontalLayoutManager);
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         rv_items.addItemDecoration(decoration);
@@ -579,7 +574,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    private void getAttandenceListing() {
+    /*private void getAttandenceListing() {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -625,7 +620,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
             }
         });
 
-    }
+    }*/
 
     private void getAttendanceListingUpdated() {
         loader.show_with_label("Loading");

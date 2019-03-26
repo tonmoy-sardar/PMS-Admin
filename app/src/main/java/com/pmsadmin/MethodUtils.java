@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,7 +15,6 @@ import com.pmsadmin.dialog.ErrorMessageDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MethodUtils {
 
@@ -211,6 +210,38 @@ public class MethodUtils {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
             dashBoardModelImage.setItem("APP SURVEYORS");
             dashBoardModelImage.setImageId(R.drawable.appsurveyors_icon);
+            list.add(dashBoardModelImage);
+        }
+
+        return list;
+
+    }
+
+    public static List<DashBoardModelImage> getSecond2DashboardItems(){
+        List<DashBoardModelImage> list=new ArrayList<>();
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("REPORT");
+            dashBoardModelImage.setImageId(R.drawable.reports_icon);
+            list.add(dashBoardModelImage);
+        }
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("APPROVAL");
+            dashBoardModelImage.setImageId(R.drawable.approvals_icon);
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("CONVEYANCE");
+            dashBoardModelImage.setImageId(R.drawable.conveyance_icon);
+            list.add(dashBoardModelImage);
+        }
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("FOODING");
+            dashBoardModelImage.setImageId(R.drawable.fooding_icon);
             list.add(dashBoardModelImage);
         }
 

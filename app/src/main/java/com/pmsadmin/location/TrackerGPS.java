@@ -11,11 +11,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,13 +22,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+
 import android.util.Log;
 import android.widget.Toast;
 
-import com.pmsadmin.R;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
 
 import java.net.InetAddress;
@@ -40,7 +36,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-import static android.support.v4.app.NotificationCompat.PRIORITY_HIGH;
+import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
 
 
 /**

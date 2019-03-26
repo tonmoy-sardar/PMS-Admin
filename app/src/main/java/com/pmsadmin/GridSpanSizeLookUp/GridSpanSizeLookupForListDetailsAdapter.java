@@ -1,7 +1,7 @@
 package com.pmsadmin.GridSpanSizeLookUp;
 
 
-import android.support.v7.widget.GridLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.pmsadmin.dashboard.adapter.ItemsAdapterTiles;
 

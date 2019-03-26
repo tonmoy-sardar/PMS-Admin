@@ -45,7 +45,8 @@ public interface ApiInterface {
                                              @Body JsonObject object);
 
     @GET(ATTENDANCELISTING)
-    Call<ResponseBody> call_attendanceListingApi(@Header("Authorization") String Bearer);
+    Call<ResponseBody> call_attendanceListingApi(@Header("Authorization") String Bearer,
+                                                 @Path("employee_id") String employee_id);
 
     @GET(APPROVALLIST)
     Call<ResponseBody> call_approvalListingApi(@Header("Authorization") String Bearer,

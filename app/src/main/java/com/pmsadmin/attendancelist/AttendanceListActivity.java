@@ -3,10 +3,10 @@ package com.pmsadmin.attendancelist;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,22 +22,19 @@ import com.pmsadmin.attendancelist.adapter.AttendanceApprovalListAdapter;
 import com.pmsadmin.attendancelist.adapter.AttendanceReportListAdapter;
 import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
 import com.pmsadmin.dashboard.BaseActivity;
-import com.pmsadmin.dashboard.DashBoardActivity;
 import com.pmsadmin.filter.FilterActivity;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
-import com.pmsadmin.giveattandence.listattandencemodel.Result;
-import com.pmsadmin.login.LoginActivity;
+import com.pmsadmin.giveattandence.updatedattandenceListModel.Result;
+import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.networking.NetworkCheck;
 import com.pmsadmin.sharedhandler.LoginShared;
-import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,7 +162,8 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.call_attendanceListingApi("Token "
-                + LoginShared.getLoginDataModel(AttendanceListActivity.this).getToken());
+                + LoginShared.getLoginDataModel(AttendanceListActivity.this).getToken(),
+                LoginShared.getLoginDataModel(AttendanceListActivity.this).getUserId().toString());
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -176,13 +174,13 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
                     if (response.code() == 201 || response.code() == 200) {
                         String responseString = response.body().string();
                         Gson gson = new Gson();
-                        AttendanceListModel loginModel;
+                        UpdatedAttendanceListModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);
 
                         if (jsonObject.optInt("request_status") == 1) {
-                            loginModel = gson.fromJson(responseString, AttendanceListModel.class);
-                            LoginShared.setAttendanceListDataModel(AttendanceListActivity.this, loginModel);
-                            list.addAll(LoginShared.getAttendanceListDataModel(AttendanceListActivity.this).getResult());
+                            loginModel = gson.fromJson(responseString, UpdatedAttendanceListModel.class);
+                            LoginShared.setUpdatedAttendanceListDataModel(AttendanceListActivity.this, loginModel);
+                            list.addAll(LoginShared.getUpdatedAttendanceListDataModel(AttendanceListActivity.this).getResults());
                             adapter.notifyDataSetChanged();
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(AttendanceListActivity.this, jsonObject.optString("msg"));
@@ -239,7 +237,7 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
                 if (lastVisibleCount == totalItemCount - 1) {
                     if (approvalList.size() % 10 == 0) {
                         approvalList.add(null);
-                        adapter.notifyItemInserted(approvalList.size() - 1);
+                        attendanceApprovalListAdapter.notifyItemInserted(approvalList.size() - 1);
                         loading = true;
                         page++;
                         if (NetworkCheck.getInstant(AttendanceListActivity.this).isConnectingToInternet()) {
@@ -255,8 +253,8 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
     }
 
     private void setClickEvent() {
-        btn_report.setOnClickListener(this);
-        btn_approval.setOnClickListener(this);
+        //btn_report.setOnClickListener(this);
+        //btn_approval.setOnClickListener(this);
         rl_filter.setOnClickListener(this);
     }
 

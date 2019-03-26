@@ -1,8 +1,8 @@
 package com.pmsadmin.attendancelist.adapter;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
-import com.pmsadmin.giveattandence.listattandencemodel.Result;
+import com.pmsadmin.giveattandence.updatedattandenceListModel.Result;
 
 import java.util.List;
 
@@ -35,12 +35,12 @@ public class AttendanceReportListAdapter extends RecyclerView.Adapter<Attendance
     @Override
     public void onBindViewHolder(@NonNull AttendanceViewHolder attendanceViewHolder, int i) {
 
-        if (result.get(i).getEmployeeDetails().size() > 0) {
+        /*if (result.get(i).getEmployeeDetails().size() > 0) {
             attendanceViewHolder.tv_name.setText(result.get(i).getEmployeeDetails().get(0).getCuUser().getFirstName() + " " +
                     result.get(i).getEmployeeDetails().get(0).getCuUser().getLastName());
         } else {
             attendanceViewHolder.tv_name.setText("No Name");
-        }
+        }*/
 
         attendanceViewHolder.tv_date.setText(result.get(i).getDate());
         if (result.get(i).getLoginTime() == null || result.get(i).getLoginTime().equals("") ||

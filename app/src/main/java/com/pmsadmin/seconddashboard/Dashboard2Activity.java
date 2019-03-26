@@ -1,37 +1,52 @@
 package com.pmsadmin.seconddashboard;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
+import android.view.View;
 
-import com.pmsadmin.GridSpanSizeLookUp.GridSpanSizeLookupForListDetailsAdapter;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
-import com.pmsadmin.dashboard.DashBoardActivity;
-import com.pmsadmin.dashboard.adapter.ItemsAdapterTiles;
+import com.pmsadmin.dashboard.BaseActivity;
+import com.pmsadmin.filter.FilterActivity;
+import com.pmsadmin.filter.adapter.ProjectAdapter;
 import com.pmsadmin.seconddashboard.adapter.ItemsAdapterDashboardTiles;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
 
-public class Dashboard2Activity extends AppCompatActivity {
-
+public class Dashboard2Activity extends BaseActivity {
+    public View view;
     /*TextView tv_tender,tv_archived,tv_app;*/
-    RecyclerView rv_items;
+    RecyclerView rv_items,rv_items_checkbox;
     private GridLayoutManager mLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard2);
+        view = View.inflate(this, R.layout.activity_dashboard2, null);
+        addContentView(view);
         setViewBind();
         setFont();
         setRecyclerView();
+        setCheckBoxRecyclerView();
+    }
+
+    private void setCheckBoxRecyclerView() {
+        ProjectAdapter adapter = new ProjectAdapter(Dashboard2Activity.this);
+        LinearLayoutManager horizontalLayoutManager =
+                new LinearLayoutManager(Dashboard2Activity.this, RecyclerView.VERTICAL, false);
+        rv_items_checkbox.setLayoutManager(horizontalLayoutManager);
+        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        rv_items_checkbox.addItemDecoration(decoration);
+        rv_items_checkbox.setAdapter(adapter);
     }
 
     private void setRecyclerView() {
-        ItemsAdapterDashboardTiles adapter = new ItemsAdapterDashboardTiles(Dashboard2Activity.this, MethodUtils.getSecondDashboardItems());
+        ItemsAdapterDashboardTiles adapter = new ItemsAdapterDashboardTiles(Dashboard2Activity.this,
+                MethodUtils.getSecond2DashboardItems());
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         mLayoutManager = new GridLayoutManager(this, 2);
@@ -50,5 +65,6 @@ public class Dashboard2Activity extends AppCompatActivity {
 
     private void setViewBind() {
         rv_items=findViewById(R.id.rv_items);
+        rv_items_checkbox=findViewById(R.id.rv_items_checkbox);
     }
 }

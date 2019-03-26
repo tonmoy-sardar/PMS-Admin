@@ -3,13 +3,12 @@ package com.pmsadmin.login;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -17,7 +16,6 @@ import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.DashBoardActivity;
-import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.dialog.ErrorMessageDialog;
 import com.pmsadmin.dialog.ForgotPasswordDialog;
 import com.pmsadmin.login.model.LoginModel;
@@ -53,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         clickEvent();
         setFont();
         et_login.setText("santanu.pal@shyamfuture.com");
-        et_password.setText("123456");
+        et_password.setText("hvNzeqhkTR");
     }
 
     private void clickEvent() {

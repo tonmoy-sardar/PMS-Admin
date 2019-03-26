@@ -15,7 +15,7 @@
         android:textSize="@dimen/_12sdp"
         android:paddingLeft="@dimen/_15sdp"
         android:paddingTop="@dimen/_10sdp"
-        android:text="John Doe"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/tv_login"
