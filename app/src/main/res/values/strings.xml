@@ -2,6 +2,8 @@
     <string name="app_name">PMSAdmin</string>
     <string name="tender_survey">TENDER SURVEY SYSTEM</string>
 
+    <string name="google_maps_key">AIzaSyAkkz_K6d5CBMaY6qOBVSCuybYnP_AkagU</string>
+
     <string name="login_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Sign In</string>

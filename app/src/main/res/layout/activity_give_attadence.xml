@@ -22,11 +22,11 @@
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/ok_button"
         android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/ok_button"
         android:text="LEAVE"
-        android:textSize="@dimen/_10sdp"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_10sdp" />
 
     <Button
         android:id="@+id/btn_logout"
@@ -42,10 +42,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_items"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_leave"
-        android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/_10sdp">
     </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

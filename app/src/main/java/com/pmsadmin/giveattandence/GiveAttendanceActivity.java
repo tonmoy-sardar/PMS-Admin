@@ -45,6 +45,7 @@ import com.pmsadmin.dialog.GiveReasonDialog;
 import com.pmsadmin.giveattandence.adapter.AttendanceHistoryAdapter;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
+import com.pmsadmin.leavesection.LeaveActivity;
 import com.pmsadmin.location.GPSTracker;
 import com.pmsadmin.location.TrackerGPS;
 import com.pmsadmin.login.LoginActivity;
@@ -74,7 +75,7 @@ import retrofit2.Retrofit;
 public class GiveAttendanceActivity extends BaseActivity implements View.OnClickListener {
     public View view;
     RecyclerView rv_items;
-    Button btn_login, btn_logout;
+    Button btn_login, btn_logout,btn_leave;
     private LoadingData loader;
     public List<Address> addresses;
     List<Address> addresses1;
@@ -260,6 +261,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
     private void setClickEvent() {
         btn_login.setOnClickListener(this);
         btn_logout.setOnClickListener(this);
+        btn_leave.setOnClickListener(this);
     }
 
     private String getTodaysDate() {
@@ -292,6 +294,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         rv_items = findViewById(R.id.rv_items);
         btn_login = findViewById(R.id.btn_login);
         btn_logout = findViewById(R.id.btn_logout);
+        btn_leave = findViewById(R.id.btn_leave);
     }
 
     private void setRecyclerView() {
@@ -474,6 +477,12 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
                     new GiveReasonDialog(GiveAttendanceActivity.this).show();
                 }
                 //logoutApi();
+                break;
+
+            case R.id.btn_leave:
+                Intent i=new Intent(GiveAttendanceActivity.this, LeaveActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
     }

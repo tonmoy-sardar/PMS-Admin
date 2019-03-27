@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/adapter_report_item">
+
+    <TextView
+        android:id="@+id/tv_leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:text="Full Day Leave"
+        android:textColor="#2d3b45"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/tv_form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:text="From: 15.09.2018   |   To: 24.11.2018"
+        android:textColor="#2d3b45"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/tv_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_deviation"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:text="Justification: Annual Vacation"
+        android:textColor="#2d3b45"
+        android:textSize="@dimen/_12sdp" />
+
+    <Button
+        android:id="@+id/btn_status"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Pending"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/survey_pending"/>
+
+</LinearLayout>
