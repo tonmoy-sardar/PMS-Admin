@@ -82,6 +82,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         tv_attendance = findViewById(R.id.tv_attendance);
         tv_universal_header = findViewById(R.id.tv_universal_header);
         iv_close = findViewById(R.id.iv_close);
+
+        tv_user_name.setText(LoginShared.getLoginDataModel(BaseActivity.this).getEmail());
+
     }
 
     private void clickEvent() {

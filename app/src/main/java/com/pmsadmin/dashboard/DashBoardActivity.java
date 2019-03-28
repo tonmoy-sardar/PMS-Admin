@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import rx.android.BuildConfig;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -28,7 +30,6 @@ import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.pmsadmin.BuildConfig;
 import com.pmsadmin.GridSpanSizeLookUp.GridSpanSizeLookupForListDetailsAdapter;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
@@ -37,10 +38,14 @@ import com.pmsadmin.dashboard.adapter.ItemsAdapterTiles;
 import com.pmsadmin.dashboard.geofenceclasses.GeofenceBroadcastReceiver;
 import com.pmsadmin.dashboard.geofenceclasses.Constants;
 import com.pmsadmin.dashboard.geofenceclasses.GeofenceErrorMessages;
+import com.pmsadmin.dashboard.model.DashboardItemsModel;
+import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class DashBoardActivity extends BaseActivity implements OnCompleteListener<Void> {
@@ -53,6 +58,7 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
     private static final float GEOFENCE_RADIUS = 500.0f; // in meters
     static final HashMap<String, LatLng> BAY_AREA_LANDMARKS = new HashMap<>();
     private PendingGeofenceTask mPendingGeofenceTask = PendingGeofenceTask.NONE;
+    List<DashboardItemsModel> list=new ArrayList<>();
 
     /**
      * Tracks whether the user requested to add or remove geofences, or to do neither.
@@ -76,11 +82,13 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         addContentView(view);
         bindView();
         fontSet();
-        BAY_AREA_LANDMARKS.put("SFO", new LatLng(37.621313, -122.378955));
+        BAY_AREA_LANDMARKS.put("KOLKATA", new LatLng(22.5737036,88.4315579));
 
         MethodUtils.setStickyBar(DashBoardActivity.this);
         setRecyclerView();
         setRecyclerViewChild();
+
+        //addGeofencesButtonHandler(view);
     }
 
     /**
@@ -359,7 +367,11 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
     }
 
     private void setRecyclerViewChild() {
-        ItemsAdapter adapter = new ItemsAdapter(DashBoardActivity.this, MethodUtils.addDataDashboard());
+        list.addAll(MethodUtils.addDataDashboard());
+       /* if(!LoginShared.getLoginDataModel(DashBoardActivity.this).getEmail().equals("")){
+            list.remove(0);
+        }*/
+        ItemsAdapter adapter = new ItemsAdapter(DashBoardActivity.this, list);
         rv_child_items.addItemDecoration(new DividerItemDecoration(DashBoardActivity.this, LinearLayoutManager.VERTICAL) {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {

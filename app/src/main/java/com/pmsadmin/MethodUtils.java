@@ -87,7 +87,6 @@ public class MethodUtils {
 
     public static List<DashboardItemsModel>  addDataDashboard() {
         List<DashboardItemsModel> list=new ArrayList<>();
-
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
             dashboardItemsModel.setItem("Attendance");

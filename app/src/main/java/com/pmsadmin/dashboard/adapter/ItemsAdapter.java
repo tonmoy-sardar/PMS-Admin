@@ -2,8 +2,10 @@ package com.pmsadmin.dashboard.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.pmsadmin.R;
 import com.pmsadmin.attendancelist.AttendanceListActivity;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.seconddashboard.Dashboard2Activity;
+import com.pmsadmin.sharedhandler.LoginShared;
 
 import java.util.List;
 
@@ -45,7 +48,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         itemsViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(i==0){
+                if (list.get(i).getItem().equals("Attendance")) {
                     Intent profileIntent = new Intent(activity, Dashboard2Activity.class);
                     activity.startActivity(profileIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -64,11 +67,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         ImageView iv_item;
         TextView tv_item;
         RelativeLayout rl_main;
+
         public ItemsViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
-            iv_item=itemView.findViewById(R.id.iv_item);
-            tv_item=itemView.findViewById(R.id.tv_item);
-            rl_main=itemView.findViewById(R.id.rl_main);
+            iv_item = itemView.findViewById(R.id.iv_item);
+            tv_item = itemView.findViewById(R.id.tv_item);
+            rl_main = itemView.findViewById(R.id.rl_main);
             tv_item.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }

@@ -49,6 +49,7 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_15sdp"
+            android:clickable="true"
             android:background="@drawable/leave_drawable">
 
             <TextView
@@ -76,6 +77,7 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_15sdp"
+            android:clickable="true"
             android:background="@drawable/leave_drawable">
 
             <TextView
@@ -103,6 +105,7 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_15sdp"
+            android:clickable="true"
             android:background="@drawable/leave_drawable">
 
             <EditText

@@ -29,7 +29,7 @@
             android:paddingLeft="@dimen/_20sdp"
             android:text="Santanu"
             android:textColor="#ffffff"
-            android:textSize="@dimen/_25sdp" />
+            android:textSize="@dimen/_15sdp" />
 
         <ImageView
             android:id="@+id/iv_cross"
