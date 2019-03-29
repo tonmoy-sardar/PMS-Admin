@@ -21,11 +21,12 @@ import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.attendancelist.adapter.AttendanceApprovalListAdapter;
 import com.pmsadmin.attendancelist.adapter.AttendanceReportListAdapter;
 import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
+import com.pmsadmin.attendancelist.reportlistmodel.ReportListModel;
+import com.pmsadmin.attendancelist.reportlistmodel.Result;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.filter.FilterActivity;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
-import com.pmsadmin.giveattandence.updatedattandenceListModel.Result;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
@@ -161,9 +162,9 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register = apiInterface.call_attendanceListingApi("Token "
+        final Call<ResponseBody> register = apiInterface.call_reportListingApi("Token "
                 + LoginShared.getLoginDataModel(AttendanceListActivity.this).getToken(),
-                LoginShared.getLoginDataModel(AttendanceListActivity.this).getUserId().toString());
+                "application/json");
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -174,13 +175,13 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
                     if (response.code() == 201 || response.code() == 200) {
                         String responseString = response.body().string();
                         Gson gson = new Gson();
-                        UpdatedAttendanceListModel loginModel;
+                        ReportListModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);
 
                         if (jsonObject.optInt("request_status") == 1) {
-                            loginModel = gson.fromJson(responseString, UpdatedAttendanceListModel.class);
-                            LoginShared.setUpdatedAttendanceListDataModel(AttendanceListActivity.this, loginModel);
-                            list.addAll(LoginShared.getUpdatedAttendanceListDataModel(AttendanceListActivity.this).getResults());
+                            loginModel = gson.fromJson(responseString, ReportListModel.class);
+                            LoginShared.setReportListDataModel(AttendanceListActivity.this, loginModel);
+                            list.addAll(LoginShared.getReportListDataModel(AttendanceListActivity.this).getResults());
                             adapter.notifyDataSetChanged();
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(AttendanceListActivity.this, jsonObject.optString("msg"));

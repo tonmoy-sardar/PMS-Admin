@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
+import com.pmsadmin.attendancelist.reportlistmodel.ReportListModel;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
@@ -103,6 +104,34 @@ public class LoginShared {
             loginModel = new AttendanceListModel();
         else
             loginModel = gson.fromJson(userDataModelJson, AttendanceListModel.class);
+
+        return loginModel;
+    }
+
+    public static void setReportListDataModel(Context context, ReportListModel loginModel) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(loginModel);
+        editor.putString(SharedUtils.KEY_SHARED_UPDATED_REPORT_LIST_MODEL, json);
+        editor.commit();
+    }
+
+    //
+    public static ReportListModel getReportListDataModel(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        ReportListModel loginModel = null;
+        Gson gson = new Gson();
+        String userDataModelJson = LoginShared.prefs.getString(SharedUtils.KEY_SHARED_UPDATED_REPORT_LIST_MODEL, "");
+
+        if (userDataModelJson.equals(""))
+            loginModel = new ReportListModel();
+        else
+            loginModel = gson.fromJson(userDataModelJson, ReportListModel.class);
 
         return loginModel;
     }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
-import com.pmsadmin.giveattandence.updatedattandenceListModel.Result;
+import com.pmsadmin.attendancelist.reportlistmodel.Result;
 import com.pmsadmin.showgeofence.GeoFenceActivity;
 
 import java.util.List;

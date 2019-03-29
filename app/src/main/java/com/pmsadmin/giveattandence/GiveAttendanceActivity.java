@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -738,7 +739,7 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         loader.show_with_label("Loading");
         JsonObject object = new JsonObject();
         object.addProperty("type", 1);
-        object.addProperty("employee", LoginShared.getLoginDataModel(GiveAttendanceActivity.this).getUserId());
+        //object.addProperty("employee", LoginShared.getLoginDataModel(GiveAttendanceActivity.this).getUserId());
         object.addProperty("date", getTodaysDate());
         object.addProperty("login_time", getCurrentTimeUsingDate());
         object.addProperty("login_latitude", gpsTracker.getLatitude());

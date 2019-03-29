@@ -19,17 +19,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="#2a4e68"
-            android:text="REPORT"
+            android:text="APPROVAL"
             android:textSize="@dimen/_12sdp"
             android:textColor="#ffffff"
-            android:layout_weight="2"/>
+            android:layout_weight="1"/>
         <Button
             android:id="@+id/btn_approval"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="#2daada"
-            android:text="APPROVAL"
-            android:visibility="gone"
+            android:text="LEAVE"
             android:textSize="@dimen/_12sdp"
             android:textColor="#ffffff"
             android:layout_weight="1"/>

@@ -3,14 +3,35 @@ package com.pmsadmin.attendancelist.adapter;
 import android.app.Activity;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.apilist.ApiList;
+import com.pmsadmin.attendancelist.AttendanceListActivity;
 import com.pmsadmin.attendancelist.approvallistmodel.Result;
+import com.pmsadmin.giveattandence.GiveAttendanceActivity;
+import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
+import com.pmsadmin.login.LoginActivity;
+import com.pmsadmin.netconnection.ConnectionDetector;
+import com.pmsadmin.networkUtils.ApiInterface;
+import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.sharedhandler.LoginShared;
+import com.pmsadmin.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -19,10 +40,12 @@ public class AttendanceApprovalListAdapter extends RecyclerView.Adapter<Approval
     List<Result> approvalList;
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROG = 2;
+    private LoadingData loader;
 
     public AttendanceApprovalListAdapter(Activity activity, List<Result> approvalList) {
         this.activity = activity;
         this.approvalList = approvalList;
+        loader = new LoadingData(activity);
     }
 
     @NonNull
@@ -76,24 +99,36 @@ public class AttendanceApprovalListAdapter extends RecyclerView.Adapter<Approval
             }
         }
 
-        approvalViewHolder.btn_modification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MethodUtils.errorMsg(activity,"Under Development");
-            }
-        });
-
         approvalViewHolder.btn_approval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MethodUtils.errorMsg(activity,"Under Development");
+                if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
+                }else {
+                    attendanceEditApi(1);
+                }
             }
         });
 
         approvalViewHolder.btn_reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MethodUtils.errorMsg(activity,"Under Development");
+                if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
+                }else {
+                    attendanceEditApi(2);
+                }
+            }
+        });
+
+        approvalViewHolder.btn_modification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
+                }else {
+                    attendanceEditApi(3);
+                }
             }
         });
 
@@ -116,5 +151,57 @@ public class AttendanceApprovalListAdapter extends RecyclerView.Adapter<Approval
             super(view, activity, tempStatus);
             progressBar = view.findViewById(R.id.progressBar1);
         }
+    }
+
+    private void attendanceEditApi(int status) {
+        loader.show_with_label("Loading");
+        JsonObject object = new JsonObject();
+        object.addProperty("approved_status", status);
+        object.addProperty("justification", "");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_attendanceLogoutApi("Token "
+                        + LoginShared.getLoginDataModel(activity).getToken(),
+                LoginShared.getAttendanceAddDataModel(activity).getResult().getId().toString(),
+                object);
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    if (response.code() == 201 || response.code()==200) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        AttendanceAddModel loginModel;
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optInt("request_status") == 1) {
+                            MethodUtils.errorMsg(activity, jsonObject.optString("msg"));
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            MethodUtils.errorMsg(activity, jsonObject.optString("msg"));
+                        } else {
+                            MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+                        }
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        MethodUtils.errorMsg(activity, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+            }
+        });
+
     }
 }

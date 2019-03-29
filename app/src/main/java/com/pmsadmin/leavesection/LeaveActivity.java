@@ -16,18 +16,39 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.apilist.ApiList;
+import com.pmsadmin.attendancelist.AttendanceListActivity;
 import com.pmsadmin.dashboard.BaseActivity;
+import com.pmsadmin.dashboard.DashBoardActivity;
 import com.pmsadmin.dialog.universalpopup.UniversalPopup;
+import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.leavesection.adapter.LeaveHistoryAdapter;
+import com.pmsadmin.networkUtils.ApiInterface;
+import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.utils.SpacesItemDecoration;
+import com.pmsadmin.utils.progressloader.LoadingData;
 
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class LeaveActivity extends BaseActivity implements View.OnClickListener {
 
@@ -35,18 +56,21 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
     private int month, year, day;
     TextView tv_from,tv_to;
     EditText et_type;
-    Button btn_report,btn_approval;
+    Button btn_report,btn_approval,btn_apply;
     RelativeLayout rl_form,rl_to,rl_type,rl_bottom;
     LinearLayout ll_header;
     RecyclerView rv_items;
+    EditText tv_reason;
     private List<String> leaveList = new ArrayList<>();
     private UniversalPopup leavePopup;
     LeaveHistoryAdapter adapter;
+    private LoadingData loader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_leave, null);
         addContentView(view);
+        loader = new LoadingData(LeaveActivity.this);
         bindView();
         setClickEvent();
         addLeaveListAndCall();
@@ -59,12 +83,13 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         rl_type.setOnClickListener(this);
         btn_report.setOnClickListener(this);
         btn_approval.setOnClickListener(this);
+        btn_apply.setOnClickListener(this);
     }
 
     private void addLeaveListAndCall() {
-        leaveList.add("Full Day");
-        leaveList.add("Half Day");
-        leaveList.add("Out Duty");
+        leaveList.add("EL");
+        leaveList.add("CL");
+        leaveList.add("Absent");
         leavePopup = new UniversalPopup(LeaveActivity.this, leaveList, et_type);
     }
 
@@ -80,6 +105,8 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         btn_approval=view.findViewById(R.id.btn_approval);
         ll_header=view.findViewById(R.id.ll_header);
         rl_bottom=view.findViewById(R.id.rl_bottom);
+        btn_apply=view.findViewById(R.id.btn_apply);
+        tv_reason=view.findViewById(R.id.tv_reason);
         tv_universal_header.setText("Leave");
     }
 
@@ -101,6 +128,9 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.rl_to:
                 ExpiryDialog(tv_to);
+                break;
+            case R.id.btn_apply:
+                leaveApplyApi();
                 break;
             case R.id.rl_type:
                 hideSoftKeyBoard();
@@ -128,6 +158,68 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                 rl_bottom.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    public String getCurrentTimeUsingDate() {
+        Date date = new Date();
+        String strDateFormat = "hh:mm:ss";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String formattedDate = dateFormat.format(date);
+        System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
+        return formattedDate;
+    }
+
+    private void leaveApplyApi() {
+        loader.show_with_label("Loading");
+        JsonObject object = new JsonObject();
+        object.addProperty("leave_type", et_type.getText().toString().trim());
+        object.addProperty("start_date", tv_from.getText().toString().trim()+ "T" + getCurrentTimeUsingDate());
+        object.addProperty("end_date", tv_to.getText().toString().trim()+ "T" + getCurrentTimeUsingDate());
+        object.addProperty("reason", tv_reason.getText().toString().trim());
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_leaveApplyApi("Token "
+                + LoginShared.getLoginDataModel(LeaveActivity.this).getToken(),"application/json",object);
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    if (response.code() == 201 || response.code() == 200) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        //if (jsonObject.optInt("request_status") == 1) {
+                            /*loginModel = gson.fromJson(responseString, AttendanceAddModel.class);
+                            LoginShared.setAttendanceAddDataModel(DashBoardActivity.this, loginModel);*/
+                            MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
+                        //} else if (jsonObject.optInt("request_status") == 0) {
+                           // MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
+                       // } else {
+                            //MethodUtils.errorMsg(LeaveActivity.this, LeaveActivity.this.getString(R.string.error_occurred));
+                        //}
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(LeaveActivity.this, LeaveActivity.this.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(LeaveActivity.this, LeaveActivity.this.getString(R.string.error_occurred));
+            }
+        });
+
+
     }
 
     private void showAndDismissLeavePopup() {
@@ -185,7 +277,8 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                 if (dayInString.length() == 1) {
                     dayInString = "0" + dayInString;
                 }
-                tv.setText(dayInString + "-" + monthInString + "-" + year);
+                //tv.setText(dayInString + "-" + monthInString + "-" + year);
+                tv.setText(year + "-" + monthInString + "-" + dayInString);
             }
         });
     }

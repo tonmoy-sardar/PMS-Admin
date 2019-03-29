@@ -40,8 +40,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.pmsadmin.R;
+import com.pmsadmin.application.MyApplication;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dialog.deviationdialog.DeviationDialog;
+import com.pmsadmin.location.GPSTracker;
+import com.pmsadmin.showgeofence.googlemap.AvailableUserMarker;
+import com.pmsadmin.showgeofence.googlemap.CustomInfoWindowAdapter;
 
 public class GeoFenceActivity extends BaseActivity
         implements
@@ -60,6 +64,7 @@ public class GeoFenceActivity extends BaseActivity
     private Location lastLocation;
     public View view;
     RelativeLayout rl_bottom;
+    GPSTracker gpsTracker;
 
     private MapFragment mapFragment;
 
@@ -77,6 +82,7 @@ public class GeoFenceActivity extends BaseActivity
         view = View.inflate(this, R.layout.activity_geo_fence, null);
         addContentView(view);
         // initialize GoogleMaps
+        gpsTracker=new GPSTracker(GeoFenceActivity.this);
         initGMaps();
         bindView();
 
@@ -211,9 +217,13 @@ public class GeoFenceActivity extends BaseActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady()");
-        map = googleMap;
-        map.setOnMapClickListener(this);
-        map.setOnMarkerClickListener(this);
+        MyApplication.getInstance().googleMap = googleMap;
+        MyApplication.getInstance().googleMap.setInfoWindowAdapter(
+                new CustomInfoWindowAdapter(GeoFenceActivity.this));
+        MyApplication.getInstance().googleMap.setOnMapClickListener(this);
+        MyApplication.getInstance().googleMap.setOnMarkerClickListener(this);
+        new AvailableUserMarker(GeoFenceActivity.this, String.valueOf(gpsTracker.getLatitude()),
+                String.valueOf(gpsTracker.getLongitude()));
         LatLng latLng=new LatLng(22.5737036,88.4315579);
         markerForGeofence(latLng);
     }
@@ -319,13 +329,13 @@ public class GeoFenceActivity extends BaseActivity
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)
                 .title(title);
-        if ( map!=null ) {
+        if ( MyApplication.getInstance().googleMap!=null ) {
             if ( locationMarker != null )
                 locationMarker.remove();
-            locationMarker = map.addMarker(markerOptions);
+            locationMarker = MyApplication.getInstance().googleMap.addMarker(markerOptions);
             float zoom = 14f;
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoom);
-            map.animateCamera(cameraUpdate);
+            MyApplication.getInstance().googleMap.animateCamera(cameraUpdate);
         }
     }
 
@@ -339,12 +349,12 @@ public class GeoFenceActivity extends BaseActivity
                 .position(latLng)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                 .title(title);
-        if ( map!=null ) {
+        if ( MyApplication.getInstance().googleMap!=null ) {
             // Remove last geoFenceMarker
             if (geoFenceMarker != null)
                 geoFenceMarker.remove();
 
-            geoFenceMarker = map.addMarker(markerOptions);
+            geoFenceMarker = MyApplication.getInstance().googleMap.addMarker(markerOptions);
         }
     }
 
@@ -431,8 +441,8 @@ public class GeoFenceActivity extends BaseActivity
                 .center( geoFenceMarker.getPosition())
                 .strokeColor(Color.argb(200, 255,0,0))
                 //.fillColor( Color.argb(100, 150,150,150) )
-                .radius( GEOFENCE_RADIUS );
-        geoFenceLimits = map.addCircle( circleOptions );
+                .radius(GEOFENCE_RADIUS);
+        geoFenceLimits = MyApplication.getInstance().googleMap.addCircle( circleOptions );
     }
 
     private final String KEY_GEOFENCE_LAT = "GEOFENCE LATITUDE";

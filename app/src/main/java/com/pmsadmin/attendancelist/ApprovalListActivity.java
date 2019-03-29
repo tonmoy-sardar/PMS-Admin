@@ -10,6 +10,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApprovalListActivity extends BaseActivity {
+public class ApprovalListActivity extends BaseActivity implements View.OnClickListener {
     public View view;
     RecyclerView rv_items_report, rv_items_approval;
     Button btn_report, btn_approval;
@@ -61,10 +62,37 @@ public class ApprovalListActivity extends BaseActivity {
         loader = new LoadingData(ApprovalListActivity.this);
         bindView();
         fontSet();
+        setClickEvent();
         setApprovalRecyclerView();
         getApprovalListing();
 
     }
+
+    private void setClickEvent() {
+        btn_report.setOnClickListener(this);
+        btn_approval.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_report:
+                btn_report.setBackgroundColor(Color.parseColor("#2a4e68"));
+                btn_approval.setBackgroundColor(Color.parseColor("#2daada"));
+                getApprovalListing();
+                break;
+            case R.id.btn_approval:
+                btn_report.setBackgroundColor(Color.parseColor("#2daada"));
+                btn_approval.setBackgroundColor(Color.parseColor("#2a4e68"));
+                getLeaveListing();
+                break;
+        }
+    }
+
+    private void getLeaveListing() {
+
+    }
+
     private void bindView() {
         tv_universal_header.setText("Attendance");
         rv_items_report = findViewById(R.id.rv_items_report);
@@ -172,7 +200,7 @@ public class ApprovalListActivity extends BaseActivity {
                             approvalList.addAll(LoginShared.getApprovalListModel(ApprovalListActivity.this).getResults());
                             attendanceApprovalListAdapter.notifyDataSetChanged();
                         } else if (jsonObject.optInt("request_status") == 0) {
-                            MethodUtils.errorMsg(ApprovalListActivity.this, jsonObject.optString("msg"));
+                            //MethodUtils.errorMsg(ApprovalListActivity.this, jsonObject.optString("msg"));
                         } else {
                             MethodUtils.errorMsg(ApprovalListActivity.this, ApprovalListActivity.this.getString(R.string.error_occurred));
                         }

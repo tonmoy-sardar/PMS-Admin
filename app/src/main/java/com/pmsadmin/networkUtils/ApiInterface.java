@@ -19,11 +19,14 @@ import static com.pmsadmin.apilist.ApiList.ATTANDENCEADD;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCELOGOUT;
 import static com.pmsadmin.apilist.ApiList.ATTENDANCELISTING;
 import static com.pmsadmin.apilist.ApiList.ATTENDANCELOCATIONUPDATE;
+import static com.pmsadmin.apilist.ApiList.ATTENDENCEEDIT;
 import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
+import static com.pmsadmin.apilist.ApiList.LEAVEAPPLY;
 import static com.pmsadmin.apilist.ApiList.LOGIN;
 import static com.pmsadmin.apilist.ApiList.LOGOUT;
+import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
 
 public interface ApiInterface {
 
@@ -48,6 +51,10 @@ public interface ApiInterface {
     Call<ResponseBody> call_attendanceListingApi(@Header("Authorization") String Bearer,
                                                  @Path("employee_id") String employee_id);
 
+    @GET(REPORTLISTING)
+    Call<ResponseBody> call_reportListingApi(@Header("Authorization") String Bearer,
+                                                 @Header("Content-Type") String Content_type);
+
     @GET(APPROVALLIST)
     Call<ResponseBody> call_approvalListingApi(@Header("Authorization") String Bearer,
                                                @Query("page") String page);
@@ -57,6 +64,11 @@ public interface ApiInterface {
                                                 @Path("attendance_id") String attendance_id,
                                                 @Body JsonObject object);
 
+    @PUT(ATTENDENCEEDIT)
+    Call<ResponseBody> call_attendanceEditApi(@Header("Authorization") String Bearer,
+                                              @Path("attendance_id") String attendance_id,
+                                              @Body JsonObject object);
+
     @POST(ATTENDANCELOCATIONUPDATE)
     Call<ResponseBody> call_attendanceLocationUpdateApi(@Header("Authorization") String Bearer,
                                              @Body JsonObject object);
@@ -64,4 +76,8 @@ public interface ApiInterface {
     @GET(EMPLOYEELIST)
     Call<ResponseBody> call_employeeListApi(@Header("Authorization") String Bearer,
                                             @Path("employee_id") String employee_id);
+    @POST(LEAVEAPPLY)
+    Call<ResponseBody> call_leaveApplyApi(@Header("Authorization") String Bearer,
+                                          @Header("Content-Type") String Content_type,
+                                          @Body JsonObject object);
 }
