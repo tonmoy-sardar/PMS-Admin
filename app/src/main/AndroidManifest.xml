@@ -30,8 +30,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".leavesection.LeaveActivity"></activity>
-        <activity android:name=".showgeofence.GeoFenceActivity" />
+        <activity android:name=".leavesection.LeaveActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".showgeofence.GeoFenceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".attendancelist.ApprovalListActivity"
             android:screenOrientation="portrait"

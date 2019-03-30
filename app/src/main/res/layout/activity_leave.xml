@@ -52,7 +52,7 @@
             android:clickable="true"
             android:background="@drawable/leave_drawable">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +65,21 @@
                 android:paddingLeft="@dimen/_10sdp"
                 android:textColor="#000000"
                 android:textColorHint="#7A8790"
-                android:textSize="@dimen/_11sdp" />
+                android:textSize="@dimen/_11sdp" />-->
+            <EditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="From Date"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -80,7 +94,7 @@
             android:clickable="true"
             android:background="@drawable/leave_drawable">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,7 +107,21 @@
                 android:paddingLeft="@dimen/_10sdp"
                 android:textColor="#000000"
                 android:textColorHint="#7A8790"
-                android:textSize="@dimen/_11sdp" />
+                android:textSize="@dimen/_11sdp" />-->
+            <EditText
+                android:id="@+id/et_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="To Date"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
 
         <RelativeLayout

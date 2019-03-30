@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
+import com.pmsadmin.attendancelist.leavelistmodel.LeaveListModel;
 import com.pmsadmin.attendancelist.reportlistmodel.ReportListModel;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
+import com.pmsadmin.leavesection.leavehistorymodel.LeaveHistoryModel;
 import com.pmsadmin.login.model.LoginModel;
 
 public class LoginShared {
@@ -188,6 +190,62 @@ public class LoginShared {
             loginModel = new AttendanceAddModel();
         else
             loginModel = gson.fromJson(userDataModelJson, AttendanceAddModel.class);
+
+        return loginModel;
+    }
+
+    public static void setLeaveListDataModel(Context context, LeaveListModel loginModel) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(loginModel);
+        editor.putString(SharedUtils.KEY_SHARED_LEAVE_LIST, json);
+        editor.commit();
+    }
+
+    //
+    public static LeaveListModel getLeaveListDataModel(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        LeaveListModel loginModel = null;
+        Gson gson = new Gson();
+        String userDataModelJson = LoginShared.prefs.getString(SharedUtils.KEY_SHARED_LEAVE_LIST, "");
+
+        if (userDataModelJson.equals(""))
+            loginModel = new LeaveListModel();
+        else
+            loginModel = gson.fromJson(userDataModelJson, LeaveListModel.class);
+
+        return loginModel;
+    }
+
+    public static void setLeaveHistoryDataModel(Context context, LeaveHistoryModel loginModel) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(loginModel);
+        editor.putString(SharedUtils.KEY_SHARED_LEAVE_HISTORY_LIST, json);
+        editor.commit();
+    }
+
+    //
+    public static LeaveHistoryModel getLeaveHistoryDataModel(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        LeaveHistoryModel loginModel = null;
+        Gson gson = new Gson();
+        String userDataModelJson = LoginShared.prefs.getString(SharedUtils.KEY_SHARED_LEAVE_HISTORY_LIST, "");
+
+        if (userDataModelJson.equals(""))
+            loginModel = new LeaveHistoryModel();
+        else
+            loginModel = gson.fromJson(userDataModelJson, LeaveHistoryModel.class);
 
         return loginModel;
     }

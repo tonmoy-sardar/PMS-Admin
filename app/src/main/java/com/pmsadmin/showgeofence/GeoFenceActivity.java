@@ -2,7 +2,6 @@ package com.pmsadmin.showgeofence;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -44,6 +43,7 @@ import com.pmsadmin.application.MyApplication;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dialog.deviationdialog.DeviationDialog;
 import com.pmsadmin.location.GPSTracker;
+import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.showgeofence.googlemap.AvailableUserMarker;
 import com.pmsadmin.showgeofence.googlemap.CustomInfoWindowAdapter;
 
@@ -65,6 +65,7 @@ public class GeoFenceActivity extends BaseActivity
     public View view;
     RelativeLayout rl_bottom;
     GPSTracker gpsTracker;
+    int position=0;
 
     private MapFragment mapFragment;
 
@@ -85,6 +86,9 @@ public class GeoFenceActivity extends BaseActivity
         gpsTracker=new GPSTracker(GeoFenceActivity.this);
         initGMaps();
         bindView();
+        if(getIntent().getExtras()!=null){
+            position= Integer.parseInt(getIntent().getStringExtra("position"));
+        }
 
         // create GoogleApiClient
         createGoogleApi();
@@ -223,7 +227,8 @@ public class GeoFenceActivity extends BaseActivity
         MyApplication.getInstance().googleMap.setOnMapClickListener(this);
         MyApplication.getInstance().googleMap.setOnMarkerClickListener(this);
         new AvailableUserMarker(GeoFenceActivity.this, String.valueOf(gpsTracker.getLatitude()),
-                String.valueOf(gpsTracker.getLongitude()));
+                String.valueOf(gpsTracker.getLongitude()),
+                LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getLogDetails());
         LatLng latLng=new LatLng(22.5737036,88.4315579);
         markerForGeofence(latLng);
     }

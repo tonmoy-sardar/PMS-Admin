@@ -22,11 +22,15 @@ import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.attendancelist.AttendanceListActivity;
+import com.pmsadmin.attendancelist.reportlistmodel.ReportListModel;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dashboard.DashBoardActivity;
 import com.pmsadmin.dialog.universalpopup.UniversalPopup;
+import com.pmsadmin.giveattandence.GiveAttendanceActivity;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.leavesection.adapter.LeaveHistoryAdapter;
+import com.pmsadmin.leavesection.leavehistorymodel.LeaveHistoryModel;
+import com.pmsadmin.leavesection.leavehistorymodel.Result;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
@@ -54,7 +58,7 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
 
     public View view;
     private int month, year, day;
-    TextView tv_from,tv_to;
+    EditText et_from,et_to;
     EditText et_type;
     Button btn_report,btn_approval,btn_apply;
     RelativeLayout rl_form,rl_to,rl_type,rl_bottom;
@@ -62,6 +66,7 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
     RecyclerView rv_items;
     EditText tv_reason;
     private List<String> leaveList = new ArrayList<>();
+    private List<Result> list = new ArrayList<>();
     private UniversalPopup leavePopup;
     LeaveHistoryAdapter adapter;
     private LoadingData loader;
@@ -74,13 +79,62 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         bindView();
         setClickEvent();
         addLeaveListAndCall();
-        setLeaveHistoryRecyclerView();
+        //setLeaveHistoryRecyclerView();
+    }
+
+    private void setLeaveHistoryApi() {
+        list.clear();
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final  Call<ResponseBody> register=apiInterface.call_leaveHistoryApi("Token "
+                        + LoginShared.getLoginDataModel(LeaveActivity.this).getToken(),
+                "application/json",LoginShared.getLoginDataModel(LeaveActivity.this).getUserId().toString());
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    if (response.code() == 201 || response.code() == 200) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        LeaveHistoryModel loginModel;
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optInt("request_status") == 1) {
+                            loginModel = gson.fromJson(responseString, LeaveHistoryModel.class);
+                            LoginShared.setLeaveHistoryDataModel(LeaveActivity.this, loginModel);
+                            list.addAll(LoginShared.getLeaveHistoryDataModel(LeaveActivity.this).getResults());
+                            setLeaveHistoryRecyclerView();
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
+                        } else {
+                            MethodUtils.errorMsg(LeaveActivity.this, LeaveActivity.this.getString(R.string.error_occurred));
+                        }
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(LeaveActivity.this, LeaveActivity.this.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setClickEvent() {
-        rl_form.setOnClickListener(this);
-        rl_to.setOnClickListener(this);
-        rl_type.setOnClickListener(this);
+        et_from.setOnClickListener(this);
+        et_to.setOnClickListener(this);
+        et_type.setOnClickListener(this);
         btn_report.setOnClickListener(this);
         btn_approval.setOnClickListener(this);
         btn_apply.setOnClickListener(this);
@@ -94,8 +148,8 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void bindView() {
-        tv_from=view.findViewById(R.id.tv_from);
-        tv_to=view.findViewById(R.id.tv_to);
+        et_from=view.findViewById(R.id.et_from);
+        et_to=view.findViewById(R.id.et_to);
         rl_form=view.findViewById(R.id.rl_form);
         rl_to=view.findViewById(R.id.rl_to);
         rl_type=view.findViewById(R.id.rl_type);
@@ -111,7 +165,7 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void setLeaveHistoryRecyclerView() {
-        adapter = new LeaveHistoryAdapter(LeaveActivity.this);
+        adapter = new LeaveHistoryAdapter(LeaveActivity.this,list);
         rv_items.setItemAnimator(null);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(LeaveActivity.this);
         rv_items.setLayoutManager(mLayoutManager);
@@ -123,16 +177,16 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.rl_form:
-                ExpiryDialog(tv_from);
+            case R.id.et_from:
+                ExpiryDialog(et_from);
                 break;
-            case R.id.rl_to:
-                ExpiryDialog(tv_to);
+            case R.id.et_to:
+                ExpiryDialog(et_to);
                 break;
             case R.id.btn_apply:
                 leaveApplyApi();
                 break;
-            case R.id.rl_type:
+            case R.id.et_type:
                 hideSoftKeyBoard();
                 if (leavePopup != null && leavePopup.isShowing()) {
                     leavePopup.dismiss();
@@ -156,6 +210,7 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                 btn_approval.setBackgroundColor(Color.parseColor("#2a4e68"));
                 rv_items.setVisibility(View.VISIBLE);
                 rl_bottom.setVisibility(View.GONE);
+                setLeaveHistoryApi();
                 break;
         }
     }
@@ -173,8 +228,8 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         loader.show_with_label("Loading");
         JsonObject object = new JsonObject();
         object.addProperty("leave_type", et_type.getText().toString().trim());
-        object.addProperty("start_date", tv_from.getText().toString().trim()+ "T" + getCurrentTimeUsingDate());
-        object.addProperty("end_date", tv_to.getText().toString().trim()+ "T" + getCurrentTimeUsingDate());
+        object.addProperty("start_date", et_from.getText().toString().trim()+ "T" + getCurrentTimeUsingDate());
+        object.addProperty("end_date", et_to.getText().toString().trim()+ "T" + getCurrentTimeUsingDate());
         object.addProperty("reason", tv_reason.getText().toString().trim());
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -239,7 +294,7 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void ExpiryDialog(final TextView tv) {
+    private void ExpiryDialog(final EditText tv) {
         Calendar mCalendar;
         mCalendar = Calendar.getInstance();
         System.out.println("Inside Dialog Box");

@@ -24,6 +24,8 @@ import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
 import static com.pmsadmin.apilist.ApiList.LEAVEAPPLY;
+import static com.pmsadmin.apilist.ApiList.LEAVEAPPLYLIST;
+import static com.pmsadmin.apilist.ApiList.LEAVEHISTORY;
 import static com.pmsadmin.apilist.ApiList.LOGIN;
 import static com.pmsadmin.apilist.ApiList.LOGOUT;
 import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
@@ -80,4 +82,13 @@ public interface ApiInterface {
     Call<ResponseBody> call_leaveApplyApi(@Header("Authorization") String Bearer,
                                           @Header("Content-Type") String Content_type,
                                           @Body JsonObject object);
+
+    @GET(LEAVEAPPLYLIST)
+    Call<ResponseBody> call_leaveListApi(@Header("Authorization") String Bearer,
+                                          @Header("Content-Type") String Content_type,
+                                         @Query("page") String page);
+    @GET(LEAVEHISTORY)
+    Call<ResponseBody> call_leaveHistoryApi(@Header("Authorization") String Bearer,
+                                            @Header("Content-Type") String Content_type,
+                                            @Path("employee_id") String employee_id);
 }

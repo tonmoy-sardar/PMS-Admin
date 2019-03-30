@@ -24,14 +24,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.pmsadmin.R;
 import com.pmsadmin.application.MyApplication;
+import com.pmsadmin.attendancelist.reportlistmodel.LogDetail;
 import com.pmsadmin.location.GPSTracker;
-import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.showgeofence.GeoFenceActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 
 public class AvailableUserMarker {
@@ -46,11 +47,13 @@ public class AvailableUserMarker {
     private int counterShowData = -1;
     private View mCustomMarkerView;
     private de.hdodenhof.circleimageview.CircleImageView profile_image;
+    public List<LogDetail> list;
 
-    public AvailableUserMarker(GeoFenceActivity activity, String lat, String lng) {
+    public AvailableUserMarker(GeoFenceActivity activity, String lat, String lng,List<LogDetail> list) {
         this.activity = activity;
         this.lat = lat;
         this.lng = lng;
+        this.list=list;
         gpsTracker = new GPSTracker(activity);
         DisplayImageOptions opts = new DisplayImageOptions.Builder().cacheInMemory(true).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(activity)
@@ -150,11 +153,8 @@ public class AvailableUserMarker {
 
     private void markerUpdate() {
         counterMarker++;
-        counterParentMarker++;
-        if (counterParentMarker < LoginShared.getReportListDataModel(activity).getResults().size()) {
-            //if (counterMarker < LoginShared.getReportListDataModel(activity).getResults().get(counterParentMarker).getLogDetails().size()) {
+        if (counterMarker < list.size()) {
             new LoadMarker().execute("");
-            //}
         }
 
     }
@@ -221,23 +221,14 @@ public class AvailableUserMarker {
 
         protected void onPostExecute(Bitmap bitmap) {
 
-            /*if (LoginShared.getReportListDataModel(activity).
-                    getResults().get(counterParentMarker).getLogDetails().size() > 0) {*/
-            counterShowData++;
-                if(counterShowData<LoginShared.getReportListDataModel(activity).
-                        getResults().get(counterParentMarker).getLogDetails().size()){
-                LatLng latLng = new LatLng(Double.parseDouble(LoginShared.getReportListDataModel(activity).
-                        getResults().get(counterParentMarker).getLogDetails().get(counterMarker).getLatitude()),
-                        Double.parseDouble(LoginShared.getReportListDataModel(activity).
-                                getResults().get(counterParentMarker).getLogDetails().get(counterMarker).getLongitude()));
+                LatLng latLng = new LatLng(Double.parseDouble(list.get(counterMarker).getLatitude()),
+                        Double.parseDouble(list.get(counterMarker).getLongitude()));
 
                 Marker marker = MyApplication.getInstance().googleMap.addMarker(new MarkerOptions()
                         .position(latLng)
                         .draggable(true)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-                marker.setTag(LoginShared.getReportListDataModel(activity).
-                        getResults().get(counterParentMarker).getLogDetails());
-            }
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                marker.setTag(list.get(counterMarker));
 
             try {
 
@@ -245,8 +236,7 @@ public class AvailableUserMarker {
                 e.printStackTrace();
 
             } finally {
-                if (counterParentMarker < LoginShared.getReportListDataModel(activity).getResults().size()) {
-                    //if (counterMarker < LoginShared.getReportListDataModel(activity).getResults().get(counterParentMarker).getLogDetails().size()) {
+                if (counterMarker < list.size()) {
                     markerUpdate();
                 } else {
                     System.out.print("nothing");

@@ -6,6 +6,10 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.pmsadmin.attendancelist.reportlistmodel.LogDetail;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MyApplication extends Application {

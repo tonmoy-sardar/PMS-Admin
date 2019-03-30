@@ -22,4 +22,6 @@ public class ApiList {
     public static final String APPROVALLIST="attandance_approval_list/?";
     public static final String ATTENDENCEEDIT="attandance_edit/{attendance_id}/";
     public static final String LEAVEAPPLY="advance_leave_apply/";
+    public static final String LEAVEAPPLYLIST="advance_leave_apply/?";
+    public static final String LEAVEHISTORY="attandance_list_by_employee/{employee_id}/";
 }

@@ -27,6 +27,7 @@
         android:textSize="@dimen/_12sdp"
         android:paddingLeft="@dimen/_15sdp"
         android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_10sdp"
         android:text="Log in:10:00 AM"/>
 
     <ImageView
@@ -36,6 +37,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="@dimen/_30sdp"
+        android:visibility="gone"
         android:background="@drawable/divider"/>
 
     <ImageView
@@ -44,7 +46,7 @@
         android:layout_height="@dimen/_17sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/i_icon"/>
+        android:src="@drawable/location_icon"/>
 
     <TextView
         android:id="@+id/tv_date"

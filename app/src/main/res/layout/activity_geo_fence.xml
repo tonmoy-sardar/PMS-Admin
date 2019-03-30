@@ -11,7 +11,7 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_270sdp" />
+        android:layout_height="@dimen/_260sdp" />
 
     <RelativeLayout
         android:id="@+id/rl_bottom"
@@ -119,7 +119,7 @@
         <RelativeLayout
             android:id="@+id/rl_search"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/_10sdp"
