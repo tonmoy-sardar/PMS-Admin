@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_topbar_menu_profile"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:text="Santanu"
             android:textColor="#ffffff"
@@ -45,17 +45,38 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_below="@+id/tv_user_name"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:background="#536880" />
+        <TextView
+            android:id="@+id/tv_dashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="Dashboard"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_17sdp" />
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/tv_dashboard"
+            android:layout_margin="@dimen/_8sdp"
+            android:background="#536880" />
+
 
         <TextView
             android:id="@+id/tv_tender_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/view1"
+            android:layout_below="@+id/view5"
             android:paddingRight="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:text="Tender List"
             android:textColor="#ffffff"
@@ -66,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_below="@+id/tv_tender_list"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:background="#536880" />
 
         <TextView
@@ -75,8 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/view2"
             android:paddingRight="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:text="My attendance"
             android:textColor="#ffffff"
@@ -87,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_below="@+id/tv_attendance"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:background="#536880" />
 
         <TextView
@@ -96,8 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/view4"
             android:paddingRight="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:text="Help"
             android:textColor="#ffffff"
@@ -108,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_below="@+id/tv_help"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:background="#536880" />
 
 
@@ -118,8 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/view3"
             android:paddingRight="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:text="Logout"
             android:textColor="#ffffff"

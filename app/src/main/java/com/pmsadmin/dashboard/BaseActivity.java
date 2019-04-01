@@ -46,7 +46,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     TextView tv_tender_list;
     TextView tv_help;
     TextView tv_logout;
-    TextView tv_attendance;
+    TextView tv_attendance,tv_dashboard;
     public TextView tv_universal_header;
     private LoadingData loader;
 
@@ -82,6 +82,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         tv_attendance = findViewById(R.id.tv_attendance);
         tv_universal_header = findViewById(R.id.tv_universal_header);
         iv_close = findViewById(R.id.iv_close);
+        tv_dashboard = findViewById(R.id.tv_dashboard);
 
         tv_user_name.setText(LoginShared.getLoginDataModel(BaseActivity.this).getEmail());
 
@@ -93,6 +94,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         tv_user_name.setOnClickListener(this);
         tv_logout.setOnClickListener(this);
         tv_attendance.setOnClickListener(this);
+        tv_dashboard.setOnClickListener(this);
     }
 
     public void addContentView(View view) {
@@ -173,6 +175,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 Intent logIntent = new Intent(BaseActivity.this, GiveAttendanceActivity.class);
                 startActivity(logIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            case R.id.tv_dashboard:
+                if (isDrawerOpen()) {
+                    mDrawerLayout.closeDrawers();
+                }
+                Intent intent = new Intent(BaseActivity.this, DashBoardActivity.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }

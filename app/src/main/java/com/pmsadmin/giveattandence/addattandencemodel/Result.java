@@ -1,7 +1,6 @@
 
 package com.pmsadmin.giveattandence.addattandencemodel;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,7 +14,10 @@ public class Result {
     private Integer type;
     @SerializedName("employee")
     @Expose
-    private Integer employee;
+    private String employee;
+    @SerializedName("user_project")
+    @Expose
+    private Object userProject;
     @SerializedName("date")
     @Expose
     private String date;
@@ -55,9 +57,6 @@ public class Result {
     @SerializedName("owned_by")
     @Expose
     private String ownedBy;
-    @SerializedName("employee_details")
-    @Expose
-    private List<EmployeeDetail> employeeDetails = null;
 
     public Integer getId() {
         return id;
@@ -75,12 +74,20 @@ public class Result {
         this.type = type;
     }
 
-    public Integer getEmployee() {
+    public String getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Integer employee) {
+    public void setEmployee(String employee) {
         this.employee = employee;
+    }
+
+    public Object getUserProject() {
+        return userProject;
+    }
+
+    public void setUserProject(Object userProject) {
+        this.userProject = userProject;
     }
 
     public String getDate() {
@@ -185,14 +192,6 @@ public class Result {
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
-    }
-
-    public List<EmployeeDetail> getEmployeeDetails() {
-        return employeeDetails;
-    }
-
-    public void setEmployeeDetails(List<EmployeeDetail> employeeDetails) {
-        this.employeeDetails = employeeDetails;
     }
 
 }

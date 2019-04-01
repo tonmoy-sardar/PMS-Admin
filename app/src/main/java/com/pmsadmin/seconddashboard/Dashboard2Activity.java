@@ -44,6 +44,12 @@ public class Dashboard2Activity extends BaseActivity {
         rv_items_checkbox.setAdapter(adapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
     private void setRecyclerView() {
         ItemsAdapterDashboardTiles adapter = new ItemsAdapterDashboardTiles(Dashboard2Activity.this,
                 MethodUtils.getSecond2DashboardItems());

@@ -15,7 +15,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.pmsadmin.R;
+import com.pmsadmin.attendancelist.reportlistmodel.LogDetail;
 import com.pmsadmin.utils.SpacesItemDecoration;
+
+import java.util.List;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,10 +28,14 @@ public class DeviationDialog extends Dialog implements View.OnClickListener {
     Activity activity;
     RecyclerView rv_items;
     ImageView ivDismissDialog;
+    List<LogDetail> logDetails;
     View view;
-    public DeviationDialog(Activity activity) {
+    String name;
+    public DeviationDialog(Activity activity, List<LogDetail> logDetails, String name) {
         super(activity);
         this.activity=activity;
+        this.logDetails=logDetails;
+        this.name=name;
     }
 
     @Override
@@ -90,7 +97,7 @@ public class DeviationDialog extends Dialog implements View.OnClickListener {
     }
 
     private void setRecyclerViewChild() {
-        DeviationDialogAdapter adapter = new DeviationDialogAdapter(activity);
+        DeviationDialogAdapter adapter = new DeviationDialogAdapter(activity,logDetails,name);
         rv_items.addItemDecoration(new DividerItemDecoration(activity, LinearLayoutManager.VERTICAL) {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {

@@ -13,7 +13,11 @@ import com.pmsadmin.dashboard.model.DashBoardModelImage;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.dialog.ErrorMessageDialog;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MethodUtils {
@@ -50,6 +54,20 @@ public class MethodUtils {
 
     public static void errorMsg(Context context, String msg) {
         ErrorMessageDialog.getInstant(context).show(msg);
+    }
+
+    public static String profileDate(String date) {
+        String converted_date = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            Date date0 = sdf.parse(date);
+            DateFormat dateFormat = new SimpleDateFormat("MMM dd,yyyy");
+            converted_date = dateFormat.format(date0);
+            System.out.println("Converted String: " + converted_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return converted_date;
     }
 
     public static boolean isValidUrl(String url) {

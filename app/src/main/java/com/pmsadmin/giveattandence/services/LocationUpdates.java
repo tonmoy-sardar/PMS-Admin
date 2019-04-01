@@ -4,12 +4,37 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
+
+import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.LocationResult;
+import com.google.gson.JsonObject;
+import com.pmsadmin.apilist.ApiList;
+import com.pmsadmin.networkUtils.ApiInterface;
+import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.sharedhandler.LoginShared;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class LocationUpdates extends IntentService {
 
+    List<Address> addresses1;
+    Geocoder geocoder;
     private String TAG = this.getClass().getSimpleName();
     public LocationUpdates() {
         super("Fused Location");
@@ -21,55 +46,12 @@ public class LocationUpdates extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        /*AppPreference appPreference=new AppPreference(getApplicationContext());
         Log.i(TAG, "onHandleIntent");
         Location location = intent.getParcelableExtra(FusedLocationProviderApi.KEY_LOCATION_CHANGED);
         LocationResult result = LocationResult.extractResult(intent);
         if (location != null) {
-            LocDatabaseHelper database = LocDatabaseHelper.getInstance(this);
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            System.out.println(timestamp);
-           // System.out.println("Fake location lat long back"+location.getLatitude()+" "+location.getLongitude());
-            //Updating the location fetched detail to shared. It will be used when trip tracking will be started.
-            new AppPreference(this).setTimestamp(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
-            new AppPreference(this).setLattitude(location.getLatitude());
-            new AppPreference(this).setLongitude(location.getLongitude());
-
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(COLUMN_TIME, String.valueOf(timestamp));
-            contentValues.put(COLUMN_LATITUDE, location.getLatitude());
-            contentValues.put(COLUMN_LONGITUDE, location.getLongitude());
-            contentValues.put(COLUMN_TRIP, "BCOS");
-
-            //Adding LatLng details in sqlite after every 2 minutes
-            database.insert(String.valueOf(timestamp.getTime()), location.getLatitude(), location.getLongitude());
-
-
-            //Get Distance between two points
-            final ArrayList<TripDistanceModels> trip_list_values = database.getDistanceInTwoPoints();
-            System.out.println("background in oreo after trip"+"lat"+location.getLongitude()+"long"+location.getLongitude());
-
-            Log.d("List Size is", "" + trip_list_values.size() +
-                    "\t Latitude : " + location.getLatitude() + "\t Longitude : " + location.getLongitude() +
-                    "\n Speed : " + location.getSpeed());
-            new DistanceCalculation(this, trip_list_values);
-            if (ConnectionDetector.isConnectingToInternet(getApplicationContext())){
-                System.out.println("internet on");
-                ArrayList<String> arrayList=new ArrayList<>();
-                arrayList=appPreference.getcsvArrayList(ConstantGeneral.TRIPCSV_PREFERENCE);
-                if (arrayList!=null) {
-
-                   if( arrayList.size() > 0 && new AppPreference(getApplicationContext()).getTripstatus().equals("")){
-                      // callapifortripcsvpload();
-                       Intent serviceIntent = new Intent(getApplicationContext(), TripUploadService.class);
-                       getApplicationContext().startService(serviceIntent);
-                      // PendingIntent pendingIntent = PendingIntent.getService(this,0, serviceIntent, 0);
-                       //getApplicationContext().startService(new Intent(getApplicationContext(), TripUploadService.class));
-
-                   }
-               }
-            }
-        }*/
+            updateLocationUI(location);
+        }
 
     }
 
@@ -78,4 +60,60 @@ public class LocationUpdates extends IntentService {
         //new AppPreference(getApplicationContext()).setTripstatus("1");
     }*/
 
+    public String getCurrentTimeUsingDate() {
+        Date date = new Date();
+        String strDateFormat = "hh:mm:ss";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String formattedDate = dateFormat.format(date);
+        System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
+        return formattedDate;
+    }
+
+    private void updateLocationUI(Location location) {
+        geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        //if (mCurrentLocation != null) {
+        //Toast.makeText(getApplicationContext(), "location", Toast.LENGTH_LONG).show();
+        JsonObject object = new JsonObject();
+        object.addProperty("attandance",1);
+        object.addProperty("time",getCurrentTimeUsingDate());
+        object.addProperty("latitude",location.getLatitude());
+        object.addProperty("longitude",location.getLongitude());
+        try {
+            addresses1 = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses1.size() > 0) {
+            object.addProperty("login_address", addresses1.get(0).getLocality() + "," + addresses1.get(0).getAdminArea());
+        } else {
+            object.addProperty("login_address", "");
+        }
+
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_attendanceLocationUpdateApi("Token "
+                        + LoginShared.getLoginDataModel(getApplicationContext()).getToken(),
+                object);
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+            /*mLatitudeTextView.setText(String.format(Locale.ENGLISH, "%s: %f", mLatitudeLabel,
+                    mCurrentLocation.getLatitude()));
+            mLongitudeTextView.setText(String.format(Locale.ENGLISH, "%s: %f", mLongitudeLabel,
+                    mCurrentLocation.getLongitude()));
+            mLastUpdateTimeTextView.setText(String.format(Locale.ENGLISH, "%s: %s",
+                    mLastUpdateTimeLabel, mLastUpdateTime));*/
+    }
 }

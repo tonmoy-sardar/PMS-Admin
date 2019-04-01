@@ -1,5 +1,5 @@
 
-package com.pmsadmin.attendancelist.reportlistmodel;
+package com.pmsadmin.giveattandence.addattandencemodel;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

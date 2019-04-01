@@ -6,23 +6,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class AttendanceAddModel {
 
-    @SerializedName("request_status")
-    @Expose
-    private Integer requestStatus;
     @SerializedName("result")
     @Expose
     private Result result;
+    @SerializedName("request_status")
+    @Expose
+    private Integer requestStatus;
     @SerializedName("msg")
     @Expose
     private String msg;
-
-    public Integer getRequestStatus() {
-        return requestStatus;
-    }
-
-    public void setRequestStatus(Integer requestStatus) {
-        this.requestStatus = requestStatus;
-    }
 
     public Result getResult() {
         return result;
@@ -30,6 +22,14 @@ public class AttendanceAddModel {
 
     public void setResult(Result result) {
         this.result = result;
+    }
+
+    public Integer getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(Integer requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
     public String getMsg() {

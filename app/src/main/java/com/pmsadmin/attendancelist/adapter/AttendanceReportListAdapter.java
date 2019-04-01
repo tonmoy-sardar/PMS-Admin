@@ -46,8 +46,20 @@ public class AttendanceReportListAdapter extends RecyclerView.Adapter<Attendance
         } else {
             attendanceViewHolder.tv_name.setText("No Name");
         }*/
+        if (result.get(position).getJustification() == null || result.get(position).getJustification().equals("") ||
+                result.get(position).getJustification().equalsIgnoreCase("null")) {
+            attendanceViewHolder.tv_justification.setText("Justification: "+result.get(position).getJustification());
+        }else{
+            attendanceViewHolder.tv_justification.setText("Justification: ");
+        }
 
-        attendanceViewHolder.tv_date.setText(result.get(position).getDate());
+
+        if (result.get(position).getDate() == null || result.get(position).getDate().equals("") ||
+                result.get(position).getDate().equalsIgnoreCase("null")) {
+            attendanceViewHolder.tv_date.setText(MethodUtils.profileDate(result.get(position).getDate()));
+        }else{
+            attendanceViewHolder.tv_date.setText("");
+        }
         if (result.get(position).getLoginTime() == null || result.get(position).getLoginTime().equals("") ||
                 result.get(position).getLoginTime().equalsIgnoreCase("null")) {
             attendanceViewHolder.tv_login.setText("");
@@ -67,7 +79,6 @@ public class AttendanceReportListAdapter extends RecyclerView.Adapter<Attendance
             attendanceViewHolder.tv_justification.setVisibility(View.VISIBLE);
             attendanceViewHolder.tv_justification.setText(result.get(position).getJustification());
         }
-
         attendanceViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

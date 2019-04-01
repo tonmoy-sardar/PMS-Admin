@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.attendancelist.leavelistmodel.Result;
 import com.pmsadmin.utils.progressloader.LoadingData;
@@ -62,8 +63,8 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListViewHolder> 
                 !leaveList.get(i).getStartDate().equalsIgnoreCase("null") ||
                 leaveList.get(i).getEndDate() != null || !leaveList.get(i).getEndDate().equals("") ||
                 !leaveList.get(i).getEndDate().equalsIgnoreCase("null")) {
-            holder.tv_form.setText("Form: " + leaveList.get(i).getStartDate() + " To: " +
-                    leaveList.get(i).getEndDate());
+            holder.tv_form.setText("Form: " + MethodUtils.profileDate(leaveList.get(i).getStartDate()) + " To: " +
+                    MethodUtils.profileDate(leaveList.get(i).getEndDate()));
         } else {
             holder.tv_form.setText("");
         }

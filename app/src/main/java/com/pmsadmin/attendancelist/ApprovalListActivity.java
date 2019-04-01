@@ -55,10 +55,11 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
     private int page = 1;
     private int page1 = 1;
     private int lastVisibleItem = 0;
-    private int totalItemCount, lastVisibleCount,totalItemCount1, lastVisibleCount1;
+    private int totalItemCount, lastVisibleCount, totalItemCount1, lastVisibleCount1;
     List<Result> approvalList = new ArrayList<>();
     List<com.pmsadmin.attendancelist.leavelistmodel.Result> leaveList = new ArrayList<>();
     private LoadingData loader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,12 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
         setApprovalRecyclerView();
         setLeaveListRecyclerView();
         getApprovalListing();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void setLeaveListRecyclerView() {
@@ -87,7 +93,7 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
         rv_items_approval.addItemDecoration(decoration);
         rv_items_approval.setAdapter(adapter);*/
         leaveListAdapter = new LeaveListAdapter(
-                ApprovalListActivity.this,leaveList);
+                ApprovalListActivity.this, leaveList);
         rv_items_report.setAdapter(leaveListAdapter);
         rv_items_report.setItemAnimator(new DefaultItemAnimator());
         final GridLayoutManager mLayoutManager = new GridLayoutManager(ApprovalListActivity.this, 1);
@@ -128,7 +134,7 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_report:
                 btn_report.setBackgroundColor(Color.parseColor("#2a4e68"));
                 btn_approval.setBackgroundColor(Color.parseColor("#2daada"));
@@ -142,7 +148,7 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
                 btn_approval.setBackgroundColor(Color.parseColor("#2a4e68"));
                 rv_items_report.setVisibility(View.VISIBLE);
                 rv_items_approval.setVisibility(View.GONE);
-                page1=1;
+                page1 = 1;
                 getLeaveListing();
                 break;
         }
@@ -157,7 +163,7 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.call_leaveListApi("Token "
-                + LoginShared.getLoginDataModel(ApprovalListActivity.this).getToken(),"application/json",
+                        + LoginShared.getLoginDataModel(ApprovalListActivity.this).getToken(), "application/json",
                 String.valueOf(page1));
 
         register.enqueue(new Callback<ResponseBody>() {
@@ -165,13 +171,23 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
+                /*if(response.code()==404){
+                    leaveList.addAll(LoginShared.getLeaveListDataModel(ApprovalListActivity.this).getResults());
+                    leaveListAdapter.notifyDataSetChanged();
 
+                }*/
                 if (page1 > 1) {
-                    try {
-                        leaveList.remove(leaveList.size() - 1);
-                        leaveListAdapter.notifyItemRemoved(leaveList.size());
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (response.code() == 404) {
+                        leaveList.addAll(LoginShared.getLeaveListDataModel(ApprovalListActivity.this).getResults());
+                        leaveListAdapter.notifyDataSetChanged();
+                        return;
+                    } else {
+                        try {
+                            leaveList.remove(leaveList.size() - 1);
+                            leaveListAdapter.notifyItemRemoved(leaveList.size());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 try {
@@ -182,10 +198,10 @@ public class ApprovalListActivity extends BaseActivity implements View.OnClickLi
                         JSONObject jsonObject = new JSONObject(responseString);
 
                         //if (jsonObject.optInt("request_status") == 1) {
-                            loginModel = gson.fromJson(responseString, LeaveListModel.class);
-                            LoginShared.setLeaveListDataModel(ApprovalListActivity.this, loginModel);
-                            leaveList.addAll(LoginShared.getLeaveListDataModel(ApprovalListActivity.this).getResults());
-                            leaveListAdapter.notifyDataSetChanged();
+                        loginModel = gson.fromJson(responseString, LeaveListModel.class);
+                        LoginShared.setLeaveListDataModel(ApprovalListActivity.this, loginModel);
+                        leaveList.addAll(LoginShared.getLeaveListDataModel(ApprovalListActivity.this).getResults());
+                        leaveListAdapter.notifyDataSetChanged();
                         /*} else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(ApprovalListActivity.this, jsonObject.optString("msg"));
                         } else {

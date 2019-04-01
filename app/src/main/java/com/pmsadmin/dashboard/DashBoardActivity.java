@@ -3,8 +3,12 @@ package com.pmsadmin.dashboard;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,6 +17,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -74,6 +79,7 @@ import com.pmsadmin.dashboard.geofenceclasses.GeofenceErrorMessages;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
+import com.pmsadmin.giveattandence.services.BackgroundLocationService;
 import com.pmsadmin.location.GPSTracker;
 import com.pmsadmin.login.LoginActivity;
 import com.pmsadmin.netconnection.ConnectionDetector;
@@ -493,6 +499,13 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         if (mRequestingLocationUpdates) {
             startLocationUpdates();
         }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            // perform Opertaion
+            startForegroundService(new Intent(this, BackgroundLocationService.class));
+        }else{
+            startService(new Intent(this, BackgroundLocationService.class));
+        }
     }
 
     @Override
@@ -865,10 +878,15 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
                         JSONObject jsonObject = new JSONObject(responseString);
 
                         if (jsonObject.optInt("request_status") == 1) {
-                            /*loginModel = gson.fromJson(responseString, AttendanceAddModel.class);
-                            LoginShared.setAttendanceAddDataModel(DashBoardActivity.this, loginModel);*/
+                            loginModel = gson.fromJson(responseString, AttendanceAddModel.class);
+                            LoginShared.setAttendanceAddDataModel(DashBoardActivity.this, loginModel);
                             LoginShared.setAttendanceFirstLoginTime(DashBoardActivity.this, "1");
                             MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                startForegroundService(new Intent(DashBoardActivity.this, BackgroundLocationService.class));
+                            }else{
+                                startService(new Intent(DashBoardActivity.this, BackgroundLocationService.class));
+                            }
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
                         } else {
@@ -923,4 +941,49 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         GridSpanSizeLookupForListDetailsAdapter headerSpanSizeLookup = new GridSpanSizeLookupForListDetailsAdapter(adapter, mLayoutManager);
         mLayoutManager.setSpanSizeLookup(headerSpanSizeLookup);
     }
+
+    // the scheduler
+    //protected FunctionEveryHour scheduler;
+
+
+    /*// method to schedule your actions
+    private void scheduleEveryOneHour(){
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+                new Intent(WAKE_UP_AFTER_ONE_HOUR),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // wake up time every 1 hour
+        Calendar wakeUpTime = Calendar.getInstance();
+        wakeUpTime.add(Calendar.SECOND, 60 * 60);
+
+        AlarmManager aMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
+        aMgr.set(AlarmManager.RTC_WAKEUP,
+                wakeUpTime.getTimeInMillis(),
+                pendingIntent);
+    }
+
+//put this in the creation of service or if service is running long operations put this in onStartCommand
+
+    scheduler = new FunctionEveryHour();
+    registerReceiver(scheduler , new IntentFilter(WAKE_UP_AFTER_ONE_HOUR));
+
+    // broadcastreceiver to handle your work
+    class FunctionEveryHour extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // if phone is lock use PowerManager to acquire lock
+
+            // your code to handle operations every one hour...
+
+            // after that call again your method to schedule again
+            // if you have boolean if the user doesnt want to continue
+            // create a Preference or store it and retrieve it here like
+            boolean mContinue = getUserPreference(USER_CONTINUE_OR_NOT);//
+
+            if(mContinue){
+                scheduleEveryOneHour();
+            }
+        }
+    }*/
 }

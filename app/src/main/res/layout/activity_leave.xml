@@ -78,7 +78,6 @@
                 android:inputType="text|textNoSuggestions"
                 android:paddingLeft="@dimen/_10sdp"
                 android:maxLines="1"
-                android:paddingBottom="@dimen/_6sdp"
                 android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
 
@@ -120,7 +119,6 @@
                 android:inputType="text|textNoSuggestions"
                 android:paddingLeft="@dimen/_10sdp"
                 android:maxLines="1"
-                android:paddingBottom="@dimen/_6sdp"
                 android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
 

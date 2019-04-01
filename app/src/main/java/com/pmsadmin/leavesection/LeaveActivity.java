@@ -77,6 +77,7 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         addContentView(view);
         loader = new LoadingData(LeaveActivity.this);
         bindView();
+        fontSet();
         setClickEvent();
         addLeaveListAndCall();
         //setLeaveHistoryRecyclerView();
@@ -162,6 +163,17 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         btn_apply=view.findViewById(R.id.btn_apply);
         tv_reason=view.findViewById(R.id.tv_reason);
         tv_universal_header.setText("Leave");
+
+    }
+
+    private void fontSet() {
+        et_from.setTypeface(MethodUtils.getNormalFont(LeaveActivity.this));
+        et_to.setTypeface(MethodUtils.getNormalFont(LeaveActivity.this));
+        et_type.setTypeface(MethodUtils.getNormalFont(LeaveActivity.this));
+        tv_reason.setTypeface(MethodUtils.getNormalFont(LeaveActivity.this));
+        btn_report.setTypeface(MethodUtils.getBoldFont(LeaveActivity.this));
+        btn_approval.setTypeface(MethodUtils.getBoldFont(LeaveActivity.this));
+        btn_apply.setTypeface(MethodUtils.getBoldFont(LeaveActivity.this));
     }
 
     private void setLeaveHistoryRecyclerView() {
@@ -172,6 +184,12 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         rv_items.addItemDecoration(decoration);
         rv_items.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     @Override
@@ -247,10 +265,15 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                         Gson gson = new Gson();
                         JSONObject jsonObject = new JSONObject(responseString);
 
+                        et_from.setText("");
+                        et_to.setText("");
+                        et_type.setText("");
+                        tv_reason.setText("");
+
                         //if (jsonObject.optInt("request_status") == 1) {
                             /*loginModel = gson.fromJson(responseString, AttendanceAddModel.class);
                             LoginShared.setAttendanceAddDataModel(DashBoardActivity.this, loginModel);*/
-                            MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
+                            //MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
                         //} else if (jsonObject.optInt("request_status") == 0) {
                            // MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
                        // } else {

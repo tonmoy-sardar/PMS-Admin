@@ -101,6 +101,8 @@
             android:name=".dashboard.geofenceclasses.GeofenceTransitionsJobIntentService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service android:name=".giveattandence.services.BackgroundLocationService"></service>
     </application>
 
 </manifest>

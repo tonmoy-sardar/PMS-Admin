@@ -9,6 +9,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Build;
@@ -17,25 +19,47 @@ import android.os.IBinder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.JsonObject;
 import com.pmsadmin.R;
+import com.pmsadmin.apilist.ApiList;
+import com.pmsadmin.dashboard.DashBoardActivity;
+import com.pmsadmin.networkUtils.ApiInterface;
+import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.sharedhandler.LoginShared;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 
 public class BackgroundLocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     protected static final String TAG = "BackService";
 
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 900000;
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 6000;
     public static GoogleApiClient mGoogleApiClient;
     public static LocationRequest mLocationRequest;
     private static PendingIntent mPendingIntent;
     IBinder mBinder = new LocalBinder();
+    List<Address> addresses1;
+    Geocoder geocoder;
 
     private class LocalBinder extends Binder{
         public BackgroundLocationService getServerInstance() {
@@ -53,8 +77,8 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_LOW);
             ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
             Notification notification = new Notification.Builder(mContext, CHANNEL_ID)
-                            .setContentTitle("Bcos")
-                            .setContentText("Trip finding....")
+                            .setContentTitle("PMSAdmin")
+                            .setContentText("Location finding....")
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .build();
             startForeground(1, notification);
@@ -148,7 +172,65 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         String message = "Latitude : " + location.getLatitude() + "\n Longitude : " + location.getLongitude() +
                 "\n location Accuracy: " + location.getAccuracy() + "\n speed: " + location.getSpeed();
         Log.d(TAG, "onLocationChanged: " + message);
+        updateLocationUI(location);
         //new BackgroundLocationUpdateService().locationWork(this,location);
+    }
+
+    public String getCurrentTimeUsingDate() {
+        Date date = new Date();
+        String strDateFormat = "hh:mm:ss";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String formattedDate = dateFormat.format(date);
+        System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
+        return formattedDate;
+    }
+
+    private void updateLocationUI(Location location) {
+        geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        //if (mCurrentLocation != null) {
+            Toast.makeText(getApplicationContext(), "location", Toast.LENGTH_LONG).show();
+            JsonObject object = new JsonObject();
+            object.addProperty("attandance",LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult().getId());
+            object.addProperty("time",getCurrentTimeUsingDate());
+            object.addProperty("latitude",location.getLatitude());
+            object.addProperty("longitude",location.getLongitude());
+            try {
+                addresses1 = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (addresses1.size() > 0) {
+                object.addProperty("address", addresses1.get(0).getLocality() + "," + addresses1.get(0).getAdminArea());
+            } else {
+                object.addProperty("address", "");
+            }
+
+            Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+            ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+            final Call<ResponseBody> register = apiInterface.call_attendanceLocationUpdateApi("Token "
+                            + LoginShared.getLoginDataModel(getApplicationContext()).getToken(),
+                    object);
+
+            register.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    //Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+            /*mLatitudeTextView.setText(String.format(Locale.ENGLISH, "%s: %f", mLatitudeLabel,
+                    mCurrentLocation.getLatitude()));
+            mLongitudeTextView.setText(String.format(Locale.ENGLISH, "%s: %f", mLongitudeLabel,
+                    mCurrentLocation.getLongitude()));
+            mLastUpdateTimeTextView.setText(String.format(Locale.ENGLISH, "%s: %s",
+                    mLastUpdateTimeLabel, mLastUpdateTime));*/
     }
 
     @Override

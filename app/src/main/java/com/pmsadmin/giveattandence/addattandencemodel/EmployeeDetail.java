@@ -12,7 +12,7 @@ public class EmployeeDetail {
     private Integer id;
     @SerializedName("cu_emp_code")
     @Expose
-    private Object cuEmpCode;
+    private String cuEmpCode;
     @SerializedName("cu_phone_no")
     @Expose
     private String cuPhoneNo;
@@ -30,7 +30,7 @@ public class EmployeeDetail {
     private CuUser cuUser;
     @SerializedName("applications")
     @Expose
-    private List<Object> applications = null;
+    private List<Application> applications = null;
 
     public Integer getId() {
         return id;
@@ -40,11 +40,11 @@ public class EmployeeDetail {
         this.id = id;
     }
 
-    public Object getCuEmpCode() {
+    public String getCuEmpCode() {
         return cuEmpCode;
     }
 
-    public void setCuEmpCode(Object cuEmpCode) {
+    public void setCuEmpCode(String cuEmpCode) {
         this.cuEmpCode = cuEmpCode;
     }
 
@@ -88,11 +88,11 @@ public class EmployeeDetail {
         this.cuUser = cuUser;
     }
 
-    public List<Object> getApplications() {
+    public List<Application> getApplications() {
         return applications;
     }
 
-    public void setApplications(List<Object> applications) {
+    public void setApplications(List<Application> applications) {
         this.applications = applications;
     }
 

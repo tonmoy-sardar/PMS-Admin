@@ -105,7 +105,7 @@ public class AttendanceApprovalListAdapter extends RecyclerView.Adapter<Approval
                 if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 }else {
-                    attendanceEditApi(1);
+                    attendanceEditApi(2);
                 }
             }
         });
@@ -116,7 +116,7 @@ public class AttendanceApprovalListAdapter extends RecyclerView.Adapter<Approval
                 if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 }else {
-                    attendanceEditApi(2);
+                    attendanceEditApi(3);
                 }
             }
         });
