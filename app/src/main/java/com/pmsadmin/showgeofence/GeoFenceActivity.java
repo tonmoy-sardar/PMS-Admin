@@ -36,6 +36,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -44,12 +45,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.application.MyApplication;
+import com.pmsadmin.attendancelist.reportlistmodel.Result;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dialog.deviationdialog.DeviationDialog;
 import com.pmsadmin.location.GPSTracker;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.showgeofence.googlemap.AvailableUserMarker;
 import com.pmsadmin.showgeofence.googlemap.CustomInfoWindowAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeoFenceActivity extends BaseActivity
         implements
@@ -115,11 +120,15 @@ public class GeoFenceActivity extends BaseActivity
     }
 
     private void setData() {
-        tv_name.setText(LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getEmployeeDetails().get(0).getCuUser().getFirstName()+" "+
-                LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getEmployeeDetails().get(0).getCuUser().getLastName());
-        if(LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getLogDetails().size()>0) {
-            tv_reason.setText("Justification:" + LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getLogDetails().get(0).getJustification());
+        tv_name.setText(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName()+" "+
+                LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName());
+        if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getLogDetails().size()>0) {
+            tv_reason.setText("Justification:" + LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getLogDetails().get(0).getJustification());
         }
+
+        /*tv_name.setText("Santanu Pal");
+        tv_reason.setText("for late update");*/
+
     }
 
     private void bindView() {
@@ -265,16 +274,50 @@ public class GeoFenceActivity extends BaseActivity
     // Callback called when Map is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        LatLng latLng;
         Log.d(TAG, "onMapReady()");
         MyApplication.getInstance().googleMap = googleMap;
         MyApplication.getInstance().googleMap.setInfoWindowAdapter(
                 new CustomInfoWindowAdapter(GeoFenceActivity.this));
         MyApplication.getInstance().googleMap.setOnMapClickListener(this);
         MyApplication.getInstance().googleMap.setOnMarkerClickListener(this);
-        new AvailableUserMarker(GeoFenceActivity.this, String.valueOf(gpsTracker.getLatitude()),
-                String.valueOf(gpsTracker.getLongitude()),
-                LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getLogDetails());
-        LatLng latLng = new LatLng(22.5737036, 88.4315579);
+
+        /*if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation()!=null){
+            CameraPosition camPos = new CameraPosition.Builder()
+                    .target(new LatLng(Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLatitude()),
+                            Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLongitude())))
+                    .zoom(12.8f)
+                    .build();
+
+            CameraUpdate camUpdate = CameraUpdateFactory.newCameraPosition(camPos);
+
+            MyApplication.getInstance().googleMap.moveCamera(camUpdate);
+
+        }else{
+            CameraPosition camPos = new CameraPosition.Builder()
+                    .target(new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
+                    .zoom(12.8f)
+                    .build();
+
+            CameraUpdate camUpdate = CameraUpdateFactory.newCameraPosition(camPos);
+
+            MyApplication.getInstance().googleMap.moveCamera(camUpdate);
+        }*/
+        if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation()!=null) {
+            new AvailableUserMarker(GeoFenceActivity.this, LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLatitude(),
+                    LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLongitude(),
+                    LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getLogDetails());
+        }else {
+            new AvailableUserMarker(GeoFenceActivity.this, String.valueOf(gpsTracker.getLatitude()),
+                    String.valueOf(gpsTracker.getLongitude()),
+                    LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getLogDetails());
+        }
+       if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation()!=null) {
+           latLng = new LatLng(Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLatitude()),
+                   Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLongitude()));
+       }else{
+           latLng=new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude());
+       }
         markerForGeofence(latLng);
     }
 

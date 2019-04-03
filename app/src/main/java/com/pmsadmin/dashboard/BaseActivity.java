@@ -2,6 +2,8 @@ package com.pmsadmin.dashboard;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,11 +16,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.forgot.ForgotPasswordActivity;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
+import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
+import com.pmsadmin.giveattandence.services.BackgroundLocationService;
+import com.pmsadmin.location.GPSTracker;
 import com.pmsadmin.login.LoginActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
@@ -27,6 +34,14 @@ import com.pmsadmin.utils.GeneralToApp;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -49,6 +64,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     TextView tv_attendance,tv_dashboard;
     public TextView tv_universal_header;
     private LoadingData loader;
+    public GPSTracker gpsTracker;
+    public List<Address> addresses;
+    Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +74,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_base);
         loader = new LoadingData(BaseActivity.this);
         viewBind();
+        gpsTracker = new GPSTracker(BaseActivity.this);
+        geocoder = new Geocoder(BaseActivity.this, Locale.getDefault());
         clickEvent();
         setFont();
         initializeDrawer();
@@ -167,7 +187,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.tv_logout:
-                logout();
+                logoutApi();
                 break;
             case R.id.tv_attendance:
                 if (isDrawerOpen()) {
@@ -247,9 +267,107 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         });
 
     }
+    private String getTodaysDate() {
+        Date c = Calendar.getInstance().getTime();
 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c);
+        return formattedDate;
+    }
+
+    public String getCurrentTimeUsingDate() {
+        Date date = new Date();
+        String strDateFormat = "HH:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String formattedDate = dateFormat.format(date);
+        System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
+        return formattedDate;
+    }
+    private void logoutApi() {
+        try {
+            addresses = geocoder.getFromLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        loader.show_with_label("Loading");
+        JsonObject object = new JsonObject();
+        object.addProperty("logout_time", getCurrentTimeUsingDate());
+        object.addProperty("logout_latitude", gpsTracker.getLatitude());
+        object.addProperty("logout_longitude", gpsTracker.getLongitude());
+        if(addresses!=null) {
+            if (addresses.size() > 0) {
+                object.addProperty("logout_address", addresses.get(0).getLocality() + "," + addresses.get(0).getAdminArea());
+            } else {
+                object.addProperty("logout_address", "");
+            }
+        }else{
+            object.addProperty("logout_address", "");
+        }
+
+        object.addProperty("approved_status",4);
+        object.addProperty("justification","");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_attendanceLogoutApi("Token "
+                        + LoginShared.getLoginDataModel(BaseActivity.this).getToken(),
+                LoginShared.getAttendanceAddDataModel(BaseActivity.this).getResult().getId().toString(),
+                object);
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    if (response.code() == 201 || response.code()==200) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        AttendanceAddModel loginModel;
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optInt("request_status") == 1) {
+                            MethodUtils.errorMsg(BaseActivity.this, jsonObject.optString("msg"));
+                            new android.os.Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    navigateToLogin();
+                                }
+                            }, GeneralToApp.SPLASH_WAIT_TIME);
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            MethodUtils.errorMsg(BaseActivity.this, jsonObject.optString("msg"));
+                            new android.os.Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    navigateToLogin();
+                                }
+                            }, GeneralToApp.SPLASH_WAIT_TIME);
+                        } else {
+                            MethodUtils.errorMsg(BaseActivity.this, getString(R.string.error_occurred));
+                        }
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        MethodUtils.errorMsg(BaseActivity.this, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(BaseActivity.this, BaseActivity.this.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(BaseActivity.this, BaseActivity.this.getString(R.string.error_occurred));
+            }
+        });
+
+    }
     private void navigateToLogin() {
         LoginShared.destroySessionTypePreference();
+        stopService(new Intent(BaseActivity.this,BackgroundLocationService.class));
+        BackgroundLocationService.stoplocationservice();
         Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
         startActivity(logIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

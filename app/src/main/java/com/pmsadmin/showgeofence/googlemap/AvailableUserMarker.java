@@ -205,7 +205,7 @@ public class AvailableUserMarker {
         protected Bitmap doInBackground(String... params) {
             // Get bitmap from server
             Bitmap overlay;
-            try {
+            /*try {
                 URL url = new URL(params[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
@@ -215,8 +215,8 @@ public class AvailableUserMarker {
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
-            }
-            return overlay;
+            }*/
+            return null;
         }
 
         protected void onPostExecute(Bitmap bitmap) {

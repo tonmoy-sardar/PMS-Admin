@@ -16,6 +16,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -53,7 +54,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     protected static final String TAG = "BackService";
 
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 6000;
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
     public static GoogleApiClient mGoogleApiClient;
     public static LocationRequest mLocationRequest;
     private static PendingIntent mPendingIntent;
@@ -61,7 +62,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     List<Address> addresses1;
     Geocoder geocoder;
 
-    private class LocalBinder extends Binder{
+    private class LocalBinder extends Binder {
         public BackgroundLocationService getServerInstance() {
             return BackgroundLocationService.this;
         }
@@ -77,16 +78,16 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_LOW);
             ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
             Notification notification = new Notification.Builder(mContext, CHANNEL_ID)
-                            .setContentTitle("PMSAdmin")
-                            .setContentText("Location finding....")
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .build();
+                    .setContentTitle("PMSAdmin")
+                    .setContentText("Location finding....")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .build();
             startForeground(1, notification);
-        }else {
+        } else {
             Intent mIntentService = new Intent(this, LocationUpdates.class);
             mPendingIntent = PendingIntent.getService(this, 1, mIntentService, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        } buildGoogleApiClient();
+        }
+        buildGoogleApiClient();
     }
 
     @Nullable
@@ -146,7 +147,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             requestLocationUpdates();
-        }else {
+        } else {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, mPendingIntent);
         }
     }
@@ -168,7 +169,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     @Override
     public void onLocationChanged(Location location) {
-       System.out.println("background in oreo before trip "+"lat"+location.getLongitude()+"long"+location.getLongitude());
+        System.out.println("background in oreo before trip " + "lat" + location.getLongitude() + "long" + location.getLongitude());
         String message = "Latitude : " + location.getLatitude() + "\n Longitude : " + location.getLongitude() +
                 "\n location Accuracy: " + location.getAccuracy() + "\n speed: " + location.getSpeed();
         Log.d(TAG, "onLocationChanged: " + message);
@@ -188,49 +189,48 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     private void updateLocationUI(Location location) {
         geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         //if (mCurrentLocation != null) {
-            Toast.makeText(getApplicationContext(), "location", Toast.LENGTH_LONG).show();
-            JsonObject object = new JsonObject();
-            object.addProperty("attandance",LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult().getId());
-            object.addProperty("time",getCurrentTimeUsingDate());
-            object.addProperty("latitude",location.getLatitude());
-            object.addProperty("longitude",location.getLongitude());
-            try {
-                addresses1 = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        //Toast.makeText(getApplicationContext(), "location", Toast.LENGTH_LONG).show();
+        JsonObject object = new JsonObject();
+        if (LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult() != null) {
+            object.addProperty("attandance", LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult().getId());
+        }
+        object.addProperty("time", getCurrentTimeUsingDate());
+        object.addProperty("latitude", location.getLatitude());
+        object.addProperty("longitude", location.getLongitude());
+        try {
+            addresses1 = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (addresses1 != null) {
             if (addresses1.size() > 0) {
                 object.addProperty("address", addresses1.get(0).getLocality() + "," + addresses1.get(0).getAdminArea());
             } else {
                 object.addProperty("address", "");
             }
+        } else {
+            object.addProperty("address", "");
+        }
 
-            Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
-            ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-            final Call<ResponseBody> register = apiInterface.call_attendanceLocationUpdateApi("Token "
-                            + LoginShared.getLoginDataModel(getApplicationContext()).getToken(),
-                    object);
+        final Call<ResponseBody> register = apiInterface.call_attendanceLocationUpdateApi("Token "
+                        + LoginShared.getLoginDataModel(getApplicationContext()).getToken(),
+                object);
 
-            register.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
-                }
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+            }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    //Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
-                }
-            });
-
-
-            /*mLatitudeTextView.setText(String.format(Locale.ENGLISH, "%s: %f", mLatitudeLabel,
-                    mCurrentLocation.getLatitude()));
-            mLongitudeTextView.setText(String.format(Locale.ENGLISH, "%s: %f", mLongitudeLabel,
-                    mCurrentLocation.getLongitude()));
-            mLastUpdateTimeTextView.setText(String.format(Locale.ENGLISH, "%s: %s",
-                    mLastUpdateTimeLabel, mLastUpdateTime));*/
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -255,7 +255,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         try {
             Log.i(TAG, "Starting location updates");
             LocationRequestHelper.setRequesting(this, true);
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 //            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, getPendingIntent());
         } catch (SecurityException e) {
             LocationRequestHelper.setRequesting(this, false);
@@ -269,11 +269,11 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }*/
 
-    public static void stoplocationservice(){
-       // LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    public static void stoplocationservice() {
+        // LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, mPendingIntent);
         mGoogleApiClient.disconnect();
-        mGoogleApiClient=null;
-        mPendingIntent=null;
+        mGoogleApiClient = null;
+        mPendingIntent = null;
     }
 }

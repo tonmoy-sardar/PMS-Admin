@@ -38,7 +38,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:background="@drawable/button_modification"
-            android:text="Deviations"
+            android:text="View More"
             android:textAllCaps="false"
             android:textColor="#ffffff"
             android:textSize="@dimen/_12sdp" />

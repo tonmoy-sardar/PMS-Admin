@@ -30,6 +30,9 @@ public class LogDetail {
     @SerializedName("justification")
     @Expose
     private Object justification;
+    @SerializedName("remarks")
+    @Expose
+    private Object remarks;
     @SerializedName("is_checkout")
     @Expose
     private Boolean isCheckout;
@@ -96,6 +99,14 @@ public class LogDetail {
 
     public void setJustification(Object justification) {
         this.justification = justification;
+    }
+
+    public Object getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(Object remarks) {
+        this.remarks = remarks;
     }
 
     public Boolean getIsCheckout() {

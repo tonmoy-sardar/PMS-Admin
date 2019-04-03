@@ -52,20 +52,6 @@
             android:clickable="true"
             android:background="@drawable/leave_drawable">
 
-            <!--<TextView
-                android:id="@+id/tv_from"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/iv_email"
-                android:background="@android:color/transparent"
-                android:cursorVisible="true"
-                android:hint="From Date"
-                android:inputType="text"
-                android:paddingLeft="@dimen/_10sdp"
-                android:textColor="#000000"
-                android:textColorHint="#7A8790"
-                android:textSize="@dimen/_11sdp" />-->
             <EditText
                 android:id="@+id/et_from"
                 android:layout_width="match_parent"

@@ -12,7 +12,7 @@ public class ReportListModel {
     private Integer count;
     @SerializedName("next")
     @Expose
-    private String next;
+    private Object next;
     @SerializedName("previous")
     @Expose
     private Object previous;
@@ -34,11 +34,11 @@ public class ReportListModel {
         this.count = count;
     }
 
-    public String getNext() {
+    public Object getNext() {
         return next;
     }
 
-    public void setNext(String next) {
+    public void setNext(Object next) {
         this.next = next;
     }
 

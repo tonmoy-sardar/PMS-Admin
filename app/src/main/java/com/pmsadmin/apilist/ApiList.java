@@ -13,9 +13,10 @@ public class ApiList {
     public static final String FORGOT = "forgot_password/";
     public static final String CHANGEPASSWORD = "change_password/";
     public static final String LOGOUT = "logout/";
+    public static final String LOGOUTRELEASE = "logout/";
     public static final String ATTANDENCEADD = "attandance_add/";
     public static final String ATTENDANCELISTING = "attandance_list_by_employee/{employee_id}";
-    public static final String REPORTLISTING = "attandance_approval_log_list";
+    public static final String REPORTLISTING = "attandance_approval_log_list/?";
     public static final String ATTENDANCELOCATIONUPDATE = "attandance_log_add/";
     public static final String ATTANDENCELOGOUT = "attandance_edit/{attendance_id}/";
     public static final String EMPLOYEELIST = "attandance_list_by_employee/{employee_id}/";

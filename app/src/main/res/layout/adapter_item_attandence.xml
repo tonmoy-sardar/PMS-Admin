@@ -80,9 +80,10 @@
         android:text="Somethingcfbgbfdgfgfgfdgfdgdfgdfgdfgdggfg"
         android:textSize="@dimen/_12sdp"
         android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp"
         android:paddingBottom="@dimen/_15sdp"
         android:layout_alignParentBottom="true"
         android:textColor="#2d3b45"
-        android:layout_below="@+id/iv_div"/>
+        android:layout_below="@+id/tv_logout"/>
 
 </RelativeLayout>

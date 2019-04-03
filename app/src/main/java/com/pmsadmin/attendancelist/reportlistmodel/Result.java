@@ -12,7 +12,7 @@ public class Result {
     private Integer id;
     @SerializedName("user_project")
     @Expose
-    private Integer userProject;
+    private UserProject userProject;
     @SerializedName("date")
     @Expose
     private String date;
@@ -43,11 +43,11 @@ public class Result {
         this.id = id;
     }
 
-    public Integer getUserProject() {
+    public UserProject getUserProject() {
         return userProject;
     }
 
-    public void setUserProject(Integer userProject) {
+    public void setUserProject(UserProject userProject) {
         this.userProject = userProject;
     }
 

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#edf5fe"
+    tools:context="com.pmsadmin.addsite.AddSiteActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_site"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/tv_tender"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="true"
+            android:background="@drawable/leave_drawable">
+
+            <!--<EditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="Site Name"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:textSize="@dimen/_10sdp" />-->
+            <EditText
+                android:id="@+id/et_site"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="Site Name"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="#000000"
+                android:textColorHint="#7A8790"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/rl_site"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="true"
+            android:background="@drawable/leave_drawable">
+
+            <!--<EditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="Site Name"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:textSize="@dimen/_10sdp" />-->
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="Site Address"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="#000000"
+                android:textColorHint="#7A8790"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_type"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/rl_address"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="true"
+            android:background="@drawable/leave_drawable">
+
+            <EditText
+                android:id="@+id/et_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="Site Type"
+                android:inputType="number"
+                android:maxLines="1"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_10sdp" />
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:src="@drawable/downarrow_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_description"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/rl_type"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="true"
+            android:background="@drawable/leave_drawable">
+
+            <!--<EditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="Site Name"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:textSize="@dimen/_10sdp" />-->
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="Site Description"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="#000000"
+                android:textColorHint="#7A8790"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_company"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/rl_description"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="true"
+            android:background="@drawable/leave_drawable">
+
+            <!--<EditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="Site Name"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:textSize="@dimen/_10sdp" />-->
+            <EditText
+                android:id="@+id/et_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="Company Name"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="#000000"
+                android:textColorHint="#7A8790"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_gst"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/rl_description"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="true"
+            android:background="@drawable/leave_drawable">
+
+            <!--<EditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="Site Name"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:textSize="@dimen/_10sdp" />-->
+            <EditText
+                android:id="@+id/et_gst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="GST Number"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="#000000"
+                android:textColorHint="#7A8790"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_area"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/rl_gst"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="true"
+            android:background="@drawable/leave_drawable">
+
+            <!--<EditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:hint="Site Name"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="@dimen/_10sdp"
+                android:maxLines="1"
+                android:textSize="@dimen/_10sdp" />-->
+            <EditText
+                android:id="@+id/et_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="Geo-Fencing Area"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="#000000"
+                android:textColorHint="#7A8790"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_apply"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/login_bg"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/rl_area"
+            android:textSize="@dimen/_15sdp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

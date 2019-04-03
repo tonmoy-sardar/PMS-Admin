@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import com.pmsadmin.dashboard.model.DashBoardModelImage;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.dialog.ErrorMessageDialog;
+import com.pmsadmin.seconddashboard.adapter.ProjectsItem;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -259,6 +260,101 @@ public class MethodUtils {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
             dashBoardModelImage.setItem("FOODING");
             dashBoardModelImage.setImageId(R.drawable.fooding_icon);
+            list.add(dashBoardModelImage);
+        }
+
+        return list;
+
+    }
+
+    public static List<ProjectsItem> getProjectItems(){
+        List<ProjectsItem> list=new ArrayList<>();
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Matla-canning");
+            list.add(dashBoardModelImage);
+        }
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Rajkharsawan-Mahalimarup");
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Kendpasi-Maluka");
+            list.add(dashBoardModelImage);
+        }
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Octagon Bpo");
+            list.add(dashBoardModelImage);
+        }
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Tatahitachi/Kharagpur");
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Salt lake,Kolkata");
+            list.add(dashBoardModelImage);
+        }
+
+        return list;
+
+    }
+
+    public static List<ProjectsItem> getFilterProjectItems(){
+        List<ProjectsItem> list=new ArrayList<>();
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Matla-P0001");
+            list.add(dashBoardModelImage);
+        }
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Durgapur-P0002");
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Kharagpur-P0003");
+            list.add(dashBoardModelImage);
+        }
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("New Town-P0004");
+            list.add(dashBoardModelImage);
+        }
+
+        return list;
+
+    }
+
+    public static List<ProjectsItem> getFilterDesignationItems(){
+        List<ProjectsItem> list=new ArrayList<>();
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Project Manager");
+            list.add(dashBoardModelImage);
+        }
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Supervisor");
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Skilled Labour");
+            list.add(dashBoardModelImage);
+        }
+        {
+            ProjectsItem dashBoardModelImage = new ProjectsItem();
+            dashBoardModelImage.setProjectName("Unskilled Labour");
             list.add(dashBoardModelImage);
         }
 

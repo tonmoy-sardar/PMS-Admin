@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
 import com.pmsadmin.attendancelist.leavelistmodel.LeaveListModel;
 import com.pmsadmin.attendancelist.reportlistmodel.ReportListModel;
@@ -12,6 +13,10 @@ import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
 import com.pmsadmin.leavesection.leavehistorymodel.LeaveHistoryModel;
 import com.pmsadmin.login.model.LoginModel;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginShared {
     private static Context context;
@@ -292,6 +297,27 @@ public class LoginShared {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(SharedUtils.KEY_SHARED_ATTENDANCE_LOGIN_TIME, value);
         editor.commit();
+    }
+
+    //////////////////SAVE IMPORTANT//////
+    public static void saveResultList(Context context, List<com.pmsadmin.attendancelist.reportlistmodel.Result> list, String key) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        editor.putString(key, json);
+        editor.apply(); // This line is IMPORTANT !!!
+    }
+
+    public static List<com.pmsadmin.attendancelist.reportlistmodel.Result> getResultList(Context context, String key) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        Gson gson = new Gson();
+        String json = prefs.getString(key, null);
+        Type type = new TypeToken<ArrayList<com.pmsadmin.attendancelist.reportlistmodel.Result>>() {
+        }.getType();
+        return gson.fromJson(json, type);
     }
 
 

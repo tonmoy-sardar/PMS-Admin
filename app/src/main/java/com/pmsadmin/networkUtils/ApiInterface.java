@@ -55,7 +55,8 @@ public interface ApiInterface {
 
     @GET(REPORTLISTING)
     Call<ResponseBody> call_reportListingApi(@Header("Authorization") String Bearer,
-                                                 @Header("Content-Type") String Content_type);
+                                             @Header("Content-Type") String Content_type,
+                                             @Query("page") String page);
 
     @GET(APPROVALLIST)
     Call<ResponseBody> call_approvalListingApi(@Header("Authorization") String Bearer,
@@ -73,11 +74,12 @@ public interface ApiInterface {
 
     @POST(ATTENDANCELOCATIONUPDATE)
     Call<ResponseBody> call_attendanceLocationUpdateApi(@Header("Authorization") String Bearer,
-                                             @Body JsonObject object);
+                                                        @Body JsonObject object);
 
     @GET(EMPLOYEELIST)
     Call<ResponseBody> call_employeeListApi(@Header("Authorization") String Bearer,
                                             @Path("employee_id") String employee_id);
+
     @POST(LEAVEAPPLY)
     Call<ResponseBody> call_leaveApplyApi(@Header("Authorization") String Bearer,
                                           @Header("Content-Type") String Content_type,
@@ -85,8 +87,9 @@ public interface ApiInterface {
 
     @GET(LEAVEAPPLYLIST)
     Call<ResponseBody> call_leaveListApi(@Header("Authorization") String Bearer,
-                                          @Header("Content-Type") String Content_type,
+                                         @Header("Content-Type") String Content_type,
                                          @Query("page") String page);
+
     @GET(LEAVEHISTORY)
     Call<ResponseBody> call_leaveHistoryApi(@Header("Authorization") String Bearer,
                                             @Header("Content-Type") String Content_type,

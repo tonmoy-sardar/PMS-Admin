@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -80,7 +79,7 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
         try {
             setReportsRecyclerView();
             getAttandenceListing();
-            setApprovalRecyclerView();
+            //setApprovalRecyclerView();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
@@ -157,27 +156,36 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
 
 
     private void getAttandenceListing() {
-        list.clear();
-        loader.show_with_label("Loading");
+        if (!loading) {
+            loader.show_with_label("Loading");
+        }
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.call_reportListingApi("Token "
                 + LoginShared.getLoginDataModel(AttendanceListActivity.this).getToken(),
-                "application/json");
+                "application/json", String.valueOf(page));
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
+
+                if (page > 1) {
+                    try {
+                        list.remove(list.size() - 1);
+                        adapter.notifyItemRemoved(list.size());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 try {
                     if (response.code() == 201 || response.code() == 200) {
                         String responseString = response.body().string();
                         Gson gson = new Gson();
                         ReportListModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);
-
                         if (jsonObject.optInt("request_status") == 1) {
                             loginModel = gson.fromJson(responseString, ReportListModel.class);
                             LoginShared.setReportListDataModel(AttendanceListActivity.this, loginModel);
@@ -202,7 +210,7 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-                MethodUtils.errorMsg(AttendanceListActivity.this, AttendanceListActivity.this.getString(R.string.error_occurred));
+               // MethodUtils.errorMsg(AttendanceListActivity.this, AttendanceListActivity.this.getString(R.string.error_occurred));
             }
         });
 
@@ -260,14 +268,49 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
     }
 
     private void setReportsRecyclerView() {
-        adapter = new AttendanceReportListAdapter(AttendanceListActivity.this,
+       /* adapter = new AttendanceReportListAdapter(AttendanceListActivity.this,
                 list);
         rv_items_report.setItemAnimator(null);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(AttendanceListActivity.this);
         rv_items_report.setLayoutManager(mLayoutManager);
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         rv_items_report.addItemDecoration(decoration);
+        rv_items_report.setAdapter(adapter);*/
+
+        adapter = new AttendanceReportListAdapter(
+                AttendanceListActivity.this, list);
         rv_items_report.setAdapter(adapter);
+        rv_items_report.setItemAnimator(new DefaultItemAnimator());
+        final GridLayoutManager mLayoutManager = new GridLayoutManager(AttendanceListActivity.this, 1);
+        rv_items_report.setLayoutManager(mLayoutManager);
+
+        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        rv_items_report.addItemDecoration(decoration);
+
+        rv_items_report.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                totalItemCount = mLayoutManager.getItemCount();
+                lastVisibleCount = mLayoutManager.findLastCompletelyVisibleItemPosition();
+
+                if (lastVisibleCount == totalItemCount - 1) {
+                    if (list.size() % 10 == 0) {
+                        list.add(null);
+                        adapter.notifyItemInserted(list.size() - 1);
+                        loading = true;
+                        page++;
+                        if (NetworkCheck.getInstant(AttendanceListActivity.this).isConnectingToInternet()) {
+                            //getApprovalListing();
+                            getAttandenceListing();
+                        } else {
+                            MethodUtils.errorMsg(AttendanceListActivity.this, "Please check your phone's network connection");
+                        }
+
+                    }
+                }
+            }
+        });
     }
 
     private void bindView() {

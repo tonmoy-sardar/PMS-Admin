@@ -6,13 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.seconddashboard.adapter.ProjectsItem;
+
+import java.util.List;
 
 public class DesignationAdapter extends RecyclerView.Adapter<DesignationAdapter.DesignationViewHolder> {
     Activity activity;
-    public DesignationAdapter(Activity activity){
+    List<ProjectsItem> filterDesignationItems;
+    public DesignationAdapter(Activity activity, List<ProjectsItem> filterDesignationItems){
         this.activity=activity;
+        this.filterDesignationItems=filterDesignationItems;
     }
     @NonNull
     @Override
@@ -25,18 +32,21 @@ public class DesignationAdapter extends RecyclerView.Adapter<DesignationAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull DesignationViewHolder designationViewHolder, int i) {
-
+        designationViewHolder.tv_text.setText(filterDesignationItems.get(i).getProjectName());
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return filterDesignationItems.size();
     }
 
     public class DesignationViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_text;
 
         public DesignationViewHolder(@NonNull View itemView) {
             super(itemView);
+            tv_text=itemView.findViewById(R.id.tv_text);
+            tv_text.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }
 }

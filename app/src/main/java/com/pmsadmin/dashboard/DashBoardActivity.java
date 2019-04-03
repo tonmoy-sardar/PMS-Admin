@@ -852,9 +852,13 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         object.addProperty("login_time", getCurrentTimeUsingDate());
         object.addProperty("login_latitude", gpsTracker.getLatitude());
         object.addProperty("login_longitude", gpsTracker.getLongitude());
-        if (addresses.size() > 0) {
-            object.addProperty("login_address", addresses.get(0).getLocality() + "," + addresses.get(0).getAdminArea());
-        } else {
+        if(addresses!=null) {
+            if (addresses.size() > 0) {
+                object.addProperty("login_address", addresses.get(0).getLocality() + "," + addresses.get(0).getAdminArea());
+            } else {
+                object.addProperty("login_address", "");
+            }
+        }else{
             object.addProperty("login_address", "");
         }
         object.addProperty("justification", "");
@@ -886,6 +890,12 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
                                 startForegroundService(new Intent(DashBoardActivity.this, BackgroundLocationService.class));
                             }else{
                                 startService(new Intent(DashBoardActivity.this, BackgroundLocationService.class));
+                            }
+
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                startForegroundService(new Intent(DashBoardActivity.this, LogoutService.class));
+                            }else{
+                                startService(new Intent(DashBoardActivity.this, LogoutService.class));
                             }
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
@@ -921,7 +931,7 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
 
     public String getCurrentTimeUsingDate() {
         Date date = new Date();
-        String strDateFormat = "hh:mm:ss";
+        String strDateFormat = "HH:mm:ss";
         DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
         String formattedDate = dateFormat.format(date);
         System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);

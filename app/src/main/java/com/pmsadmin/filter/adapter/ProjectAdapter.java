@@ -6,13 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.seconddashboard.adapter.ProjectsItem;
+
+import java.util.List;
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder> {
     Activity activity;
-    public ProjectAdapter(Activity activity){
+    List<ProjectsItem> projectItems;
+    public ProjectAdapter(Activity activity, List<ProjectsItem> projectItems){
         this.activity=activity;
+        this.projectItems=projectItems;
     }
 
     @NonNull
@@ -27,17 +34,21 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
     @Override
     public void onBindViewHolder(@NonNull ProjectViewHolder projectViewHolder, int i) {
 
+        projectViewHolder.tv_text.setText(projectItems.get(i).getProjectName());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return projectItems.size();
     }
 
     public class ProjectViewHolder extends RecyclerView.ViewHolder {
 
+        TextView tv_text;
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
+            tv_text=itemView.findViewById(R.id.tv_text);
+            tv_text.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }
 }

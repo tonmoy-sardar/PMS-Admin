@@ -17,6 +17,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -29,13 +32,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".leavesection.LeaveActivity"
+        <activity android:name=".addsite.AddSiteActivity"></activity>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".leavesection.LeaveActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".showgeofence.GeoFenceActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".showgeofence.GeoFenceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".attendancelist.ApprovalListActivity"
             android:screenOrientation="portrait"
@@ -73,12 +85,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!--                    Google Map. -->
+        </activity> <!-- Google Map. -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <!--              The API key for Google Maps-based APIs. -->
+            android:value="@integer/google_play_services_version" /> <!-- The API key for Google Maps-based APIs. -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" /> <!-- Google Map. -->
@@ -96,13 +106,13 @@
             android:name=".dashboard.geofenceclasses.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
+        <receiver android:process=":remote" android:name=".dashboard.Alarm"></receiver>
 
         <service
             android:name=".dashboard.geofenceclasses.GeofenceTransitionsJobIntentService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service android:name=".giveattandence.services.BackgroundLocationService"></service>
+        <service android:name=".giveattandence.services.BackgroundLocationService" />
     </application>
 
 </manifest>

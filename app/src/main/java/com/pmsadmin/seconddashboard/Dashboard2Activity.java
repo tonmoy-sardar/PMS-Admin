@@ -35,7 +35,7 @@ public class Dashboard2Activity extends BaseActivity {
     }
 
     private void setCheckBoxRecyclerView() {
-        ProjectAdapter adapter = new ProjectAdapter(Dashboard2Activity.this);
+        ProjectAdapter adapter = new ProjectAdapter(Dashboard2Activity.this,MethodUtils.getProjectItems());
         LinearLayoutManager horizontalLayoutManager =
                 new LinearLayoutManager(Dashboard2Activity.this, RecyclerView.VERTICAL, false);
         rv_items_checkbox.setLayoutManager(horizontalLayoutManager);
