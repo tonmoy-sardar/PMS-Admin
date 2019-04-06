@@ -18,8 +18,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -34,7 +33,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".addsite.AddSiteActivity"></activity>
+        <activity android:name=".tenderdashboard.TenderDashboardActivity"></activity>
+        <activity android:name=".addsite.AddSiteActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -106,7 +106,9 @@
             android:name=".dashboard.geofenceclasses.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
-        <receiver android:process=":remote" android:name=".dashboard.Alarm"></receiver>
+        <receiver
+            android:name=".dashboard.Alarm"
+            android:process=":remote" />
 
         <service
             android:name=".dashboard.geofenceclasses.GeofenceTransitionsJobIntentService"

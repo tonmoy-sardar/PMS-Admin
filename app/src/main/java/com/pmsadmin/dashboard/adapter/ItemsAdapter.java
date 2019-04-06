@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.addsite.AddSiteActivity;
 import com.pmsadmin.attendancelist.AttendanceListActivity;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.seconddashboard.Dashboard2Activity;
@@ -50,6 +51,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
             public void onClick(View v) {
                 if (list.get(i).getItem().equals("Attendance")) {
                     Intent profileIntent = new Intent(activity, Dashboard2Activity.class);
+                    activity.startActivity(profileIntent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else if(list.get(i).getItem().equals("Projects")){
+                    Intent profileIntent = new Intent(activity, AddSiteActivity.class);
                     activity.startActivity(profileIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

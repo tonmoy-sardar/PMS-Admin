@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.attendancelist.reportlistmodel.DeviationDetail;
 import com.pmsadmin.attendancelist.reportlistmodel.LogDetail;
 
 import java.util.List;
@@ -18,11 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class DeviationDialogAdapter extends RecyclerView.Adapter<DeviationDialogAdapter.DeviationDialogViewHolder> {
     Activity activity;
-    List<LogDetail> logDetails;
+    List<DeviationDetail> getDeviationDetails;
     String name;
-    public DeviationDialogAdapter(Activity activity, List<LogDetail> logDetails, String name){
+    public DeviationDialogAdapter(Activity activity, List<DeviationDetail> getDeviationDetails, String name){
         this.activity=activity;
-        this.logDetails=logDetails;
+        this.getDeviationDetails=getDeviationDetails;
         this.name=name;
     }
     @NonNull
@@ -41,7 +42,7 @@ public class DeviationDialogAdapter extends RecyclerView.Adapter<DeviationDialog
 
     @Override
     public int getItemCount() {
-        return logDetails.size();
+        return getDeviationDetails.size();
     }
 
     public class DeviationDialogViewHolder extends RecyclerView.ViewHolder{

@@ -848,7 +848,7 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         JsonObject object = new JsonObject();
         object.addProperty("type", 1);
         //object.addProperty("employee", LoginShared.getLoginDataModel(DashBoardActivity.this).getUserId());
-        object.addProperty("date", getTodaysDate() + " " + getCurrentTimeUsingDate());
+        object.addProperty("date", getTodaysDate() + "T" + getCurrentTimeUsingDate());
         object.addProperty("login_time", getCurrentTimeUsingDate());
         object.addProperty("login_latitude", gpsTracker.getLatitude());
         object.addProperty("login_longitude", gpsTracker.getLongitude());

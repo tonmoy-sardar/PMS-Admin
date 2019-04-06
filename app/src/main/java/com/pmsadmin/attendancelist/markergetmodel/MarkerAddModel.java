@@ -1,11 +1,11 @@
 
-package com.pmsadmin.attendancelist.reportlistmodel;
+package com.pmsadmin.attendancelist.markergetmodel;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ReportListModel {
+public class MarkerAddModel {
 
     @SerializedName("count")
     @Expose

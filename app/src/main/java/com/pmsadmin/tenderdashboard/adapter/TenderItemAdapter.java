@@ -1,56 +1,41 @@
-package com.pmsadmin.dashboard.adapter;
+package com.pmsadmin.tenderdashboard.adapter;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.dashboard.model.DashBoardModelImage;
-import com.pmsadmin.tenderdashboard.TenderDashboardActivity;
 
 import java.util.List;
 
-public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.ItemsAdapterTilesViewHolder> {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class TenderItemAdapter extends RecyclerView.Adapter<TenderItemAdapter.ItemsAdapterTilesViewHolder> {
     Activity activity;
     public List<DashBoardModelImage> items;
-    public ItemsAdapterTiles(Activity activity, List<DashBoardModelImage> items){
+    public TenderItemAdapter(Activity activity, List<DashBoardModelImage> items){
         this.activity=activity;
         this.items=items;
     }
     @NonNull
     @Override
-    public ItemsAdapterTilesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public TenderItemAdapter.ItemsAdapterTilesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.adapter_item_second_tiles, viewGroup, false);
 
-        return new ItemsAdapterTilesViewHolder(itemView,activity);
+        return new TenderItemAdapter.ItemsAdapterTilesViewHolder(itemView,activity);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemsAdapterTilesViewHolder itemsAdapterTiles, final int i) {
+    public void onBindViewHolder(@NonNull TenderItemAdapter.ItemsAdapterTilesViewHolder itemsAdapterTiles, int i) {
         itemsAdapterTiles.tv_item.setText(items.get(i).getItem());
         itemsAdapterTiles.iv_item.setImageResource(items.get(i).getImageId());
-        itemsAdapterTiles.rl_main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(items.get(i).getItem().equals("TENDER")){
-                    Intent intent=new Intent(activity, TenderDashboardActivity.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            }
-        });
-
-
     }
 
     @Override
@@ -62,12 +47,10 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
 
         ImageView iv_item;
         TextView tv_item;
-        RelativeLayout rl_main;
         public ItemsAdapterTilesViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
             iv_item=itemView.findViewById(R.id.iv_item);
             tv_item=itemView.findViewById(R.id.tv_item);
-            rl_main=itemView.findViewById(R.id.rl_main);
             tv_item.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }

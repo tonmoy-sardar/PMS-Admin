@@ -31,9 +31,9 @@ public class Result {
     @SerializedName("employee_details")
     @Expose
     private List<EmployeeDetail> employeeDetails = null;
-    @SerializedName("log_details")
+    @SerializedName("deviation_details")
     @Expose
-    private List<LogDetail> logDetails = null;
+    private List<DeviationDetail> deviationDetails = null;
 
     public Integer getId() {
         return id;
@@ -99,12 +99,12 @@ public class Result {
         this.employeeDetails = employeeDetails;
     }
 
-    public List<LogDetail> getLogDetails() {
-        return logDetails;
+    public List<DeviationDetail> getDeviationDetails() {
+        return deviationDetails;
     }
 
-    public void setLogDetails(List<LogDetail> logDetails) {
-        this.logDetails = logDetails;
+    public void setDeviationDetails(List<DeviationDetail> deviationDetails) {
+        this.deviationDetails = deviationDetails;
     }
 
 }

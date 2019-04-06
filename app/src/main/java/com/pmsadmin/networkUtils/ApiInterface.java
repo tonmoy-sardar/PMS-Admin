@@ -14,6 +14,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import static com.pmsadmin.apilist.ApiList.ADDSITE;
 import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCEADD;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCELOGOUT;
@@ -23,11 +24,13 @@ import static com.pmsadmin.apilist.ApiList.ATTENDENCEEDIT;
 import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
+import static com.pmsadmin.apilist.ApiList.GETSITETYPE;
 import static com.pmsadmin.apilist.ApiList.LEAVEAPPLY;
 import static com.pmsadmin.apilist.ApiList.LEAVEAPPLYLIST;
 import static com.pmsadmin.apilist.ApiList.LEAVEHISTORY;
 import static com.pmsadmin.apilist.ApiList.LOGIN;
 import static com.pmsadmin.apilist.ApiList.LOGOUT;
+import static com.pmsadmin.apilist.ApiList.MARKERGET;
 import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
 
 public interface ApiInterface {
@@ -94,4 +97,16 @@ public interface ApiInterface {
     Call<ResponseBody> call_leaveHistoryApi(@Header("Authorization") String Bearer,
                                             @Header("Content-Type") String Content_type,
                                             @Path("employee_id") String employee_id);
+
+    @GET(GETSITETYPE)
+    Call<ResponseBody> call_siteTypeApi(@Header("Authorization") String Bearer);
+
+    @POST(ADDSITE)
+    Call<ResponseBody> call_siteAddApi(@Header("Authorization") String Bearer,
+                                          @Header("Content-Type") String Content_type,
+                                          @Body JsonObject object);
+
+    @GET(MARKERGET)
+    Call<ResponseBody> call_markerGetApi(@Header("Authorization") String Bearer,
+                                         @Query("attendance_id") String attendance_id);
 }

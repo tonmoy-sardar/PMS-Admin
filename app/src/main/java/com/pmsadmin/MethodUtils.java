@@ -71,6 +71,34 @@ public class MethodUtils {
         return converted_date;
     }
 
+    public static String deviationTime(String date) {
+        String converted_date = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            Date date0 = sdf.parse(date);
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm a");
+            converted_date = dateFormat.format(date0);
+            System.out.println("Converted String: " + converted_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return converted_date;
+    }
+
+    public static String deviationDate(String date) {
+        String converted_date = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            Date date0 = sdf.parse(date);
+            DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            converted_date = dateFormat.format(date0);
+            System.out.println("Converted String: " + converted_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return converted_date;
+    }
+
     public static boolean isValidUrl(String url) {
         // if(url.contains("http")){
         if (android.util.Patterns.WEB_URL.matcher(url).matches()) {
@@ -358,6 +386,38 @@ public class MethodUtils {
             list.add(dashBoardModelImage);
         }
 
+        return list;
+
+    }
+
+    public static List<DashBoardModelImage> getTenderItems(){
+        List<DashBoardModelImage> list=new ArrayList<>();
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("ADD NEW TENDER");
+            dashBoardModelImage.setImageId(R.drawable.addnew_tender_icon);
+            list.add(dashBoardModelImage);
+        }
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("TENDER LIST");
+            dashBoardModelImage.setImageId(R.drawable.tenderlist_icon);
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("ARCHIVED TENDERS");
+            dashBoardModelImage.setImageId(R.drawable.archivedtenders_icon);
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("APP SURVEYORS");
+            dashBoardModelImage.setImageId(R.drawable.appsurveyors_icon);
+            list.add(dashBoardModelImage);
+        }
         return list;
 
     }

@@ -94,7 +94,7 @@ public class AttendanceReportListAdapter extends RecyclerView.Adapter<Attendance
                     result.get(position).getLoginTime().equalsIgnoreCase("null")) {
                 attendanceViewHolder.tv_login.setText("");
             } else {
-                attendanceViewHolder.tv_login.setText("Log In: " + result.get(position).getLoginTime());
+                attendanceViewHolder.tv_login.setText("Log In: " + MethodUtils.profileDate(result.get(position).getLoginTime()));
             }
         }else{
             attendanceViewHolder.tv_login.setText("");
@@ -104,7 +104,11 @@ public class AttendanceReportListAdapter extends RecyclerView.Adapter<Attendance
                     result.get(position).getLogoutTime().equalsIgnoreCase("null")) {
                 attendanceViewHolder.tv_logout.setText("");
             } else {
-                attendanceViewHolder.tv_logout.setText("Log Out: " + result.get(position).getLogoutTime());
+                if(result.get(position).getLogoutTime()!="0") {
+                    attendanceViewHolder.tv_logout.setText("Log Out: " + MethodUtils.profileDate(result.get(position).getLogoutTime()));
+                }else{
+                    attendanceViewHolder.tv_logout.setText("Log Out: " + result.get(position).getLogoutTime());
+                }
             }
         }else{
             attendanceViewHolder.tv_logout.setText("");

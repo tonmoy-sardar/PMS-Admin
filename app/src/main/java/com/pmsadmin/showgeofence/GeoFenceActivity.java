@@ -73,7 +73,7 @@ public class GeoFenceActivity extends BaseActivity
     private Location lastLocation;
     public View view;
     RelativeLayout rl_bottom;
-    TextView tv_name,tv_form,tv_deviation,tv_reason;
+    TextView tv_name, tv_form, tv_deviation, tv_reason;
     EditText et_search;
     GPSTracker gpsTracker;
     int position = 0;
@@ -120,16 +120,22 @@ public class GeoFenceActivity extends BaseActivity
     }
 
     private void setData() {
-        tv_name.setText(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName()+" "+
-                LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName());
-        if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getLogDetails().size()>0) {
-            tv_reason.setText("Justification:" + LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getLogDetails().get(0).getJustification());
+        tv_name.setText(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName() + " " +
+                LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName());
+        tv_reason.setText("Justification:" + LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getJustification());
+        if(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails().size()>0){
+            tv_deviation.setText("Location Deviation: " + MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                    get(position).getDeviationDetails().get(0).getFromTime()+ MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                    get(position).getDeviationDetails().get(0).getToTime())));
+
+            tv_form.setText("Log In: "+ MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                    get(position).getDeviationDetails().get(0).getFromTime())+"  |  "+"Log Out: "+MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                    get(position).getDeviationDetails().get(0).getToTime()));
         }
+    }
 
         /*tv_name.setText("Santanu Pal");
         tv_reason.setText("for late update");*/
-
-    }
 
     private void bindView() {
         rl_bottom = view.findViewById(R.id.rl_bottom);
@@ -156,9 +162,9 @@ public class GeoFenceActivity extends BaseActivity
                 break;
             case R.id.btn_all:
                 new DeviationDialog(GeoFenceActivity.this,
-                        LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getLogDetails(),
-                        LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getEmployeeDetails().get(0).getCuUser().getFirstName()+" "+
-                                LoginShared.getReportListDataModel(GeoFenceActivity.this).getResults().get(position).getEmployeeDetails().get(0).getCuUser().getLastName()).show();
+                        LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails(),
+                        LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName() + " " +
+                                LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName()).show();
                 break;
         }
     }
@@ -282,6 +288,12 @@ public class GeoFenceActivity extends BaseActivity
         MyApplication.getInstance().googleMap.setOnMapClickListener(this);
         MyApplication.getInstance().googleMap.setOnMarkerClickListener(this);
 
+        if (LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation() != null) {
+            MyApplication.getInstance().googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation().getLatitude()),
+                    Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation().getLongitude())), 12.8f));
+        } else {
+            MyApplication.getInstance().googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()), 12.8f));
+        }
         /*if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation()!=null){
             CameraPosition camPos = new CameraPosition.Builder()
                     .target(new LatLng(Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLatitude()),
@@ -303,21 +315,19 @@ public class GeoFenceActivity extends BaseActivity
 
             MyApplication.getInstance().googleMap.moveCamera(camUpdate);
         }*/
-        if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation()!=null) {
-            new AvailableUserMarker(GeoFenceActivity.this, LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLatitude(),
-                    LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLongitude(),
-                    LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getLogDetails());
-        }else {
+        if (LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation() != null) {
+            new AvailableUserMarker(GeoFenceActivity.this, LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation().getLatitude(),
+                    LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation().getLongitude());
+        } else {
             new AvailableUserMarker(GeoFenceActivity.this, String.valueOf(gpsTracker.getLatitude()),
-                    String.valueOf(gpsTracker.getLongitude()),
-                    LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getLogDetails());
+                    String.valueOf(gpsTracker.getLongitude()));
         }
-       if(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation()!=null) {
-           latLng = new LatLng(Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLatitude()),
-                   Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this,"result").get(position).getUserProject().getSiteLocation().getLongitude()));
-       }else{
-           latLng=new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude());
-       }
+        if (LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation() != null) {
+            latLng = new LatLng(Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation().getLatitude()),
+                    Double.parseDouble(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getUserProject().getSiteLocation().getLongitude()));
+        } else {
+            latLng = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
+        }
         markerForGeofence(latLng);
     }
 

@@ -24,14 +24,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.pmsadmin.R;
 import com.pmsadmin.application.MyApplication;
+import com.pmsadmin.attendancelist.markergetmodel.Result;
 import com.pmsadmin.attendancelist.reportlistmodel.LogDetail;
 import com.pmsadmin.location.GPSTracker;
+import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.showgeofence.GeoFenceActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 
@@ -47,13 +45,13 @@ public class AvailableUserMarker {
     private int counterShowData = -1;
     private View mCustomMarkerView;
     private de.hdodenhof.circleimageview.CircleImageView profile_image;
-    public List<LogDetail> list;
+    public List<Result> list;
 
-    public AvailableUserMarker(GeoFenceActivity activity, String lat, String lng,List<LogDetail> list) {
+    public AvailableUserMarker(GeoFenceActivity activity, String lat, String lng) {
         this.activity = activity;
         this.lat = lat;
         this.lng = lng;
-        this.list=list;
+        this.list= LoginShared.getMarkerListDataModel(activity).getResults();
         gpsTracker = new GPSTracker(activity);
         DisplayImageOptions opts = new DisplayImageOptions.Builder().cacheInMemory(true).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(activity)
@@ -78,55 +76,6 @@ public class AvailableUserMarker {
 
     private void callAvailableUserData() {
         plotAvailableUser();
-        /*Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
-        Call<ResponseBody> call_matches = apiInterface.call_matchesMapApi("Bearer " +
-                        LoginShared.getLoginToken(activity),
-                "application/json", lat,
-                lng);
-
-        call_matches.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                try {
-                    if (response.code() == 200) {
-                        String responseString = response.body().string();
-                        Gson gson = new Gson();
-
-                        MatchesModel matchesModel;
-                        JSONObject jsonObject = new JSONObject(responseString);
-                        if (jsonObject.optInt("status") == 1) {
-
-                            matchesModel = gson.fromJson(responseString, MatchesModel.class);
-                            LoginShared.setMatchesDataModel(activity, matchesModel);
-                            MyApplication.refreshMatchesDataModelFromShared(activity);
-
-                            plotAvailableUser();
-
-                        } else if (jsonObject.optInt("status") == 0) {
-                            MethodUtils.errorMsg(activity, jsonObject.optString("message"));
-                        } else {
-                            MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
-                        }
-
-                    } else {
-                        MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
-            }
-        });*/
-
     }
 
     private Bitmap getMarkerBitmapFromView(View view, Bitmap bitmap) {
@@ -153,8 +102,10 @@ public class AvailableUserMarker {
 
     private void markerUpdate() {
         counterMarker++;
-        if (counterMarker < list.size()) {
-            new LoadMarker().execute("");
+        if(list!=null) {
+            if (counterMarker < list.size()) {
+                new LoadMarker().execute("");
+            }
         }
 
     }

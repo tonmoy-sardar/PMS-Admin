@@ -25,4 +25,7 @@ public class ApiList {
     public static final String LEAVEAPPLY="advance_leave_apply/";
     public static final String LEAVEAPPLYLIST="advance_leave_apply/?";
     public static final String LEAVEHISTORY="leave_list_by_employee/{employee_id}/";
+    public static final String GETSITETYPE="project_site_management_site_type_add/";
+    public static final String ADDSITE="project_site_management_site_add/";
+    public static final String MARKERGET="attandance_log_add/?";
 }

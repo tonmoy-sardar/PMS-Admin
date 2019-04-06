@@ -45,6 +45,7 @@ import com.pmsadmin.sharedhandler.LoginShared;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -186,6 +187,14 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         return formattedDate;
     }
 
+    private String getTodaysDate() {
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c);
+        return formattedDate;
+    }
+
     private void updateLocationUI(Location location) {
         geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         //if (mCurrentLocation != null) {
@@ -194,7 +203,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         if (LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult() != null) {
             object.addProperty("attandance", LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult().getId());
         }
-        object.addProperty("time", getCurrentTimeUsingDate());
+        object.addProperty("time", getTodaysDate() + " " + getCurrentTimeUsingDate());
         object.addProperty("latitude", location.getLatitude());
         object.addProperty("longitude", location.getLongitude());
         try {

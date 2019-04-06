@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.pmsadmin.R;
+import com.pmsadmin.attendancelist.reportlistmodel.DeviationDetail;
 import com.pmsadmin.attendancelist.reportlistmodel.LogDetail;
 import com.pmsadmin.utils.SpacesItemDecoration;
 
@@ -28,13 +29,13 @@ public class DeviationDialog extends Dialog implements View.OnClickListener {
     Activity activity;
     RecyclerView rv_items;
     ImageView ivDismissDialog;
-    List<LogDetail> logDetails;
+    List<DeviationDetail> getDeviationDetails;
     View view;
     String name;
-    public DeviationDialog(Activity activity, List<LogDetail> logDetails, String name) {
+    public DeviationDialog(Activity activity, List<DeviationDetail> getDeviationDetails, String name) {
         super(activity);
         this.activity=activity;
-        this.logDetails=logDetails;
+        this.getDeviationDetails=getDeviationDetails;
         this.name=name;
     }
 
@@ -97,7 +98,7 @@ public class DeviationDialog extends Dialog implements View.OnClickListener {
     }
 
     private void setRecyclerViewChild() {
-        DeviationDialogAdapter adapter = new DeviationDialogAdapter(activity,logDetails,name);
+        DeviationDialogAdapter adapter = new DeviationDialogAdapter(activity,getDeviationDetails,name);
         rv_items.addItemDecoration(new DividerItemDecoration(activity, LinearLayoutManager.VERTICAL) {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {

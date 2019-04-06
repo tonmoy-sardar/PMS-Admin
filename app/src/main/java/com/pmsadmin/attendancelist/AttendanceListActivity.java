@@ -20,6 +20,7 @@ import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.attendancelist.adapter.AttendanceApprovalListAdapter;
 import com.pmsadmin.attendancelist.adapter.AttendanceReportListAdapter;
 import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
+import com.pmsadmin.attendancelist.markergetmodel.MarkerAddModel;
 import com.pmsadmin.attendancelist.reportlistmodel.ReportListModel;
 import com.pmsadmin.attendancelist.reportlistmodel.Result;
 import com.pmsadmin.dashboard.BaseActivity;
@@ -27,6 +28,8 @@ import com.pmsadmin.filter.FilterActivity;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
+import com.pmsadmin.login.LoginActivity;
+import com.pmsadmin.login.model.LoginModel;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.networking.NetworkCheck;
@@ -79,10 +82,57 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
         try {
             setReportsRecyclerView();
             getAttandenceListing();
+            callMakerGetApi();
             //setApprovalRecyclerView();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
+    }
+
+    private void callMakerGetApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_markerGetApi("Token "
+                + LoginShared.getLoginDataModel(getApplicationContext()).getToken(),
+                "124");
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    if (response.code() == 200 || response.code()==201) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        MarkerAddModel loginModel;
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optInt("request_status") == 1) {
+                            loginModel = gson.fromJson(responseString, MarkerAddModel.class);
+                            LoginShared.setMarkerListDataModel(AttendanceListActivity.this, loginModel);
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            MethodUtils.errorMsg(AttendanceListActivity.this, jsonObject.optString("msg"));
+                        } else {
+                            MethodUtils.errorMsg(AttendanceListActivity.this, AttendanceListActivity.this.getString(R.string.error_occurred));
+                        }
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        MethodUtils.errorMsg(AttendanceListActivity.this, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(AttendanceListActivity.this, AttendanceListActivity.this.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(AttendanceListActivity.this, AttendanceListActivity.this.getString(R.string.error_occurred));
+            }
+        });
     }
 
     private void fontSet() {
