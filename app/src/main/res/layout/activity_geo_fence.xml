@@ -13,6 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_260sdp" />
 
+    <ImageView
+        android:id="@+id/iv_circle"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:visibility="gone"
+        android:src="@drawable/circle"/>
+
+
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="wrap_content"

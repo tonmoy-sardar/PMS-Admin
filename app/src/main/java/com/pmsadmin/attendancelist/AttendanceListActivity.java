@@ -95,7 +95,7 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
 
         final Call<ResponseBody> register = apiInterface.call_markerGetApi("Token "
                 + LoginShared.getLoginDataModel(getApplicationContext()).getToken(),
-                "124");
+                LoginShared.getAttendanceAddDataModel(AttendanceListActivity.this).getResult().getId().toString());
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -125,12 +125,15 @@ public class GeoFenceActivity extends BaseActivity
         tv_reason.setText("Justification:" + LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getJustification());
         if(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails().size()>0){
             tv_deviation.setText("Location Deviation: " + MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
-                    get(position).getDeviationDetails().get(0).getFromTime()+ MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
-                    get(position).getDeviationDetails().get(0).getToTime())));
+                    get(position).getDeviationDetails().get(0).getFromTime())+" - "+ MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                    get(position).getDeviationDetails().get(0).getToTime()));
 
             tv_form.setText("Log In: "+ MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
                     get(position).getDeviationDetails().get(0).getFromTime())+"  |  "+"Log Out: "+MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
                     get(position).getDeviationDetails().get(0).getToTime()));
+        }else{
+            tv_deviation.setVisibility(View.GONE);
+            tv_form.setVisibility(View.GONE);
         }
     }
 
@@ -328,6 +331,8 @@ public class GeoFenceActivity extends BaseActivity
         } else {
             latLng = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
         }
+        LatLng coordinate = new LatLng(latLng.latitude, latLng.longitude); //Store these lat lng values somewhere. These should be constant.
+        MyApplication.getInstance().googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 15));
         markerForGeofence(latLng);
     }
 
@@ -419,7 +424,7 @@ public class GeoFenceActivity extends BaseActivity
         //textLat.setText( "Lat: " + location.getLatitude() );
         //textLong.setText( "Long: " + location.getLongitude() );
 
-        markerLocation(new LatLng(location.getLatitude(), location.getLongitude()));
+        //markerLocation(new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
     private void writeLastLocation() {
@@ -429,6 +434,7 @@ public class GeoFenceActivity extends BaseActivity
     private Marker locationMarker;
 
     private void markerLocation(LatLng latLng) {
+
         Log.i(TAG, "markerLocation(" + latLng + ")");
         String title = latLng.latitude + ", " + latLng.longitude;
         MarkerOptions markerOptions = new MarkerOptions()
@@ -453,6 +459,7 @@ public class GeoFenceActivity extends BaseActivity
                 .position(latLng)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                 .title(title);
+
         if (MyApplication.getInstance().googleMap != null) {
             // Remove last geoFenceMarker
             if (geoFenceMarker != null)
@@ -476,7 +483,7 @@ public class GeoFenceActivity extends BaseActivity
 
     private static final long GEO_DURATION = 60 * 60 * 1000;
     private static final String GEOFENCE_REQ_ID = "My Geofence";
-    private static final float GEOFENCE_RADIUS = 1000.0f; // in meters
+    private static final float GEOFENCE_RADIUS = 500.0f; // in meters
 
     // Create a Geofence
     private Geofence createGeofence(LatLng latLng, float radius) {

@@ -291,7 +291,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
         loader.show_with_label("Loading");
         JsonObject object = new JsonObject();
-        object.addProperty("logout_time", getCurrentTimeUsingDate());
+        object.addProperty("logout_time", getTodaysDate() + "T" + getCurrentTimeUsingDate());
         object.addProperty("logout_latitude", gpsTracker.getLatitude());
         object.addProperty("logout_longitude", gpsTracker.getLongitude());
         if(addresses!=null) {
@@ -303,7 +303,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }else{
             object.addProperty("logout_address", "");
         }
-
         object.addProperty("approved_status",4);
         object.addProperty("justification","");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);

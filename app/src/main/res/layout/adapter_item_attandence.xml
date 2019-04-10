@@ -66,7 +66,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv_date"
         android:textSize="@dimen/_12sdp"
-        android:paddingRight="@dimen/_15sdp"
+        android:paddingRight="@dimen/_12sdp"
         android:paddingTop="@dimen/_5sdp"
         android:textColor="#2d3b45"
         android:text="Log Out: 06:00 PM"/>

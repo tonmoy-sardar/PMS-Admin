@@ -54,9 +54,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
                     activity.startActivity(profileIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(list.get(i).getItem().equals("Projects")){
-                    Intent profileIntent = new Intent(activity, AddSiteActivity.class);
+                    /*Intent profileIntent = new Intent(activity, AddSiteActivity.class);
                     activity.startActivity(profileIntent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                 }
             }
         });

@@ -223,6 +223,12 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         } else {
             if (LoginShared.getAttendanceFirstLoginTime(DashBoardActivity.this).equals("1")) {
                 //MethodUtils.errorMsg(DashBoardActivity.this,"You are already Logged in");
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    // perform Opertaion
+                    startForegroundService(new Intent(this, BackgroundLocationService.class));
+                }else{
+                    startService(new Intent(this, BackgroundLocationService.class));
+                }
             } else {
                 addAttendance();
             }
@@ -498,13 +504,6 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         super.onResume();
         if (mRequestingLocationUpdates) {
             startLocationUpdates();
-        }
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            // perform Opertaion
-            startForegroundService(new Intent(this, BackgroundLocationService.class));
-        }else{
-            startService(new Intent(this, BackgroundLocationService.class));
         }
     }
 
@@ -849,9 +848,10 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         object.addProperty("type", 1);
         //object.addProperty("employee", LoginShared.getLoginDataModel(DashBoardActivity.this).getUserId());
         object.addProperty("date", getTodaysDate() + "T" + getCurrentTimeUsingDate());
-        object.addProperty("login_time", getCurrentTimeUsingDate());
+        object.addProperty("login_time", getTodaysDate() + "T" + getCurrentTimeUsingDate());
         object.addProperty("login_latitude", gpsTracker.getLatitude());
         object.addProperty("login_longitude", gpsTracker.getLongitude());
+        //object.addProperty("user_project_id", 1);
         if(addresses!=null) {
             if (addresses.size() > 0) {
                 object.addProperty("login_address", addresses.get(0).getLocality() + "," + addresses.get(0).getAdminArea());
@@ -861,7 +861,7 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         }else{
             object.addProperty("login_address", "");
         }
-        object.addProperty("justification", "");
+        //object.addProperty("justification", "");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -885,7 +885,7 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
                             loginModel = gson.fromJson(responseString, AttendanceAddModel.class);
                             LoginShared.setAttendanceAddDataModel(DashBoardActivity.this, loginModel);
                             LoginShared.setAttendanceFirstLoginTime(DashBoardActivity.this, "1");
-                            MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
+                            //MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
                             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
                                 startForegroundService(new Intent(DashBoardActivity.this, BackgroundLocationService.class));
                             }else{

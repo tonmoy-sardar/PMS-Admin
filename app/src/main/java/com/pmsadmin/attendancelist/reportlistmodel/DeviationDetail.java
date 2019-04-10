@@ -23,7 +23,7 @@ public class DeviationDetail {
     private String deviationType;
     @SerializedName("justification")
     @Expose
-    private Object justification;
+    private String justification;
     @SerializedName("approved_status")
     @Expose
     private Integer approvedStatus;
@@ -89,11 +89,11 @@ public class DeviationDetail {
         this.deviationType = deviationType;
     }
 
-    public Object getJustification() {
+    public String getJustification() {
         return justification;
     }
 
-    public void setJustification(Object justification) {
+    public void setJustification(String justification) {
         this.justification = justification;
     }
 

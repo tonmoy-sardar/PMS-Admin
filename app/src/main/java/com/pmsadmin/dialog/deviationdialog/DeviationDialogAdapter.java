@@ -11,6 +11,8 @@ import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.attendancelist.reportlistmodel.DeviationDetail;
 import com.pmsadmin.attendancelist.reportlistmodel.LogDetail;
+import com.pmsadmin.sharedhandler.LoginShared;
+import com.pmsadmin.showgeofence.GeoFenceActivity;
 
 import java.util.List;
 
@@ -38,6 +40,14 @@ public class DeviationDialogAdapter extends RecyclerView.Adapter<DeviationDialog
     @Override
     public void onBindViewHolder(@NonNull DeviationDialogViewHolder holder, int position) {
         holder.tv_name.setText(name);
+
+        holder.tv_deviation.setText("Location Deviation: " + MethodUtils.deviationTime(getDeviationDetails.get(position).getFromTime())
+                +" - "+ MethodUtils.deviationTime(getDeviationDetails.get(position).getToTime()));
+
+        holder.tv_form.setText("Log In: "+ MethodUtils.deviationDate(getDeviationDetails.get(position).getFromTime())
+                +"  |  "+"Log Out: "+MethodUtils.deviationDate(getDeviationDetails.get(position).getToTime()));
+
+        holder.tv_reason.setText("Justification: "+getDeviationDetails.get(position).getJustification());
     }
 
     @Override
@@ -47,7 +57,7 @@ public class DeviationDialogAdapter extends RecyclerView.Adapter<DeviationDialog
 
     public class DeviationDialogViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tv_name,tv_form,tv_deviation;
+        TextView tv_name,tv_form,tv_deviation,tv_reason;
         EditText et_search;
         public DeviationDialogViewHolder(@NonNull View itemView,Activity activity) {
             super(itemView);
@@ -55,9 +65,11 @@ public class DeviationDialogAdapter extends RecyclerView.Adapter<DeviationDialog
             tv_form=itemView.findViewById(R.id.tv_form);
             tv_deviation=itemView.findViewById(R.id.tv_deviation);
             et_search=itemView.findViewById(R.id.et_search);
+            tv_reason=itemView.findViewById(R.id.tv_reason);
             tv_name.setTypeface(MethodUtils.getNormalFont(activity));
             tv_form.setTypeface(MethodUtils.getNormalFont(activity));
             tv_deviation.setTypeface(MethodUtils.getNormalFont(activity));
+            tv_reason.setTypeface(MethodUtils.getNormalFont(activity));
             et_search.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }

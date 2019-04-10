@@ -74,14 +74,14 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
                         || results.get(i).getLoginTime().equals("")) {
                     attendanceViewHolder.tv_date_value.setText("");
                 } else {
-                    attendanceViewHolder.tv_date_value.setText("Log In Time: " + results.get(i).getLoginTime());
+                    attendanceViewHolder.tv_date_value.setText("Log In Time: " + MethodUtils.profileDate(results.get(i).getLoginTime()));
                 }
 
                 if (results.get(i).getLogoutTime() == null || results.get(i).getLogoutTime().equalsIgnoreCase("null")
                         || results.get(i).getLogoutTime().equals("")) {
                     attendanceViewHolder.tv_login.setText("");
                 } else {
-                    attendanceViewHolder.tv_login.setText("Log Out Time: " + results.get(i).getLogoutTime());
+                    attendanceViewHolder.tv_login.setText("Log Out Time: " + MethodUtils.profileDate(results.get(i).getLogoutTime()));
                 }
 
                 if (results.get(i).getJustification() == null || results.get(i).getJustification().equalsIgnoreCase("null")

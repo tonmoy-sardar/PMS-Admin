@@ -37,7 +37,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonObject;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
-import com.pmsadmin.dashboard.DashBoardActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
@@ -55,7 +54,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     protected static final String TAG = "BackService";
 
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 600000;
     public static GoogleApiClient mGoogleApiClient;
     public static LocationRequest mLocationRequest;
     private static PendingIntent mPendingIntent;
@@ -118,7 +117,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         notification.setSmallIcon(R.drawable.big_marker);
         notificationManager.notify(151458461, notification.build());*/
 
-
         return START_STICKY;
     }
 
@@ -170,17 +168,18 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     @Override
     public void onLocationChanged(Location location) {
-        System.out.println("background in oreo before trip " + "lat" + location.getLongitude() + "long" + location.getLongitude());
+        System.out.println("background in oreo before trip " + "lat" + location.getLatitude() + "long" + location.getLongitude());
         String message = "Latitude : " + location.getLatitude() + "\n Longitude : " + location.getLongitude() +
                 "\n location Accuracy: " + location.getAccuracy() + "\n speed: " + location.getSpeed();
         Log.d(TAG, "onLocationChanged: " + message);
+        //64985209
         updateLocationUI(location);
         //new BackgroundLocationUpdateService().locationWork(this,location);
     }
 
     public String getCurrentTimeUsingDate() {
         Date date = new Date();
-        String strDateFormat = "hh:mm:ss";
+        String strDateFormat = "HH:mm:ss";
         DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
         String formattedDate = dateFormat.format(date);
         System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
@@ -203,7 +202,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         if (LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult() != null) {
             object.addProperty("attandance", LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult().getId());
         }
-        object.addProperty("time", getTodaysDate() + " " + getCurrentTimeUsingDate());
+        object.addProperty("time", getTodaysDate() + "T" + getCurrentTimeUsingDate());
         object.addProperty("latitude", location.getLatitude());
         object.addProperty("longitude", location.getLongitude());
         try {
@@ -232,7 +231,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                //Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
             }
 
             @Override
