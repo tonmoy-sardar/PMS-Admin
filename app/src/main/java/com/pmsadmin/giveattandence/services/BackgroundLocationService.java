@@ -48,13 +48,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
 
 
 public class BackgroundLocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     protected static final String TAG = "BackService";
 
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 600000;
+    //public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 600000;
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 60000;
     public static GoogleApiClient mGoogleApiClient;
     public static LocationRequest mLocationRequest;
     private static PendingIntent mPendingIntent;
@@ -134,7 +136,8 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     protected void createLocationRequest() {
         Log.i(TAG, "createLocationRequest()");
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(900000);
+        //mLocationRequest.setInterval(900000);
+        mLocationRequest.setInterval(6000);
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
@@ -172,6 +175,11 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         String message = "Latitude : " + location.getLatitude() + "\n Longitude : " + location.getLongitude() +
                 "\n location Accuracy: " + location.getAccuracy() + "\n speed: " + location.getSpeed();
         Log.d(TAG, "onLocationChanged: " + message);
+
+
+        //MyTimerTask myTask = new MyTimerTask();
+        Timer myTimer = new Timer();
+
         //64985209
         updateLocationUI(location);
         //new BackgroundLocationUpdateService().locationWork(this,location);
@@ -204,6 +212,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         }
         object.addProperty("time", getTodaysDate() + "T" + getCurrentTimeUsingDate());
         object.addProperty("latitude", location.getLatitude());
+
         object.addProperty("longitude", location.getLongitude());
         try {
             addresses1 = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
@@ -231,7 +240,12 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
+                try {
+                    System.out.println("Success: "+response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -240,6 +254,12 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             }
         });
     }
+
+
+
+
+
+
 
     @Override
     public void onConnectionSuspended(int cause) {

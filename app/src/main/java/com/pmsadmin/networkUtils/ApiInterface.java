@@ -21,7 +21,9 @@ import static com.pmsadmin.apilist.ApiList.ATTANDENCELOGOUT;
 import static com.pmsadmin.apilist.ApiList.ATTENDANCELISTING;
 import static com.pmsadmin.apilist.ApiList.ATTENDANCELOCATIONUPDATE;
 import static com.pmsadmin.apilist.ApiList.ATTENDENCEEDIT;
+import static com.pmsadmin.apilist.ApiList.ATTENDENCE_DEVIATION_LIST;
 import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
+import static com.pmsadmin.apilist.ApiList.DEVIATION_JUSTIFICATION;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
 import static com.pmsadmin.apilist.ApiList.GETSITETYPE;
@@ -70,6 +72,11 @@ public interface ApiInterface {
                                                 @Path("attendance_id") String attendance_id,
                                                 @Body JsonObject object);
 
+    @PUT(DEVIATION_JUSTIFICATION)
+    Call<ResponseBody> call_deviation_justification(@Header("Authorization") String Bearer,
+                                                @Path("deviation_id") String deviation_id,
+                                                @Body JsonObject object);
+
     @PUT(ATTENDENCEEDIT)
     Call<ResponseBody> call_attendanceEditApi(@Header("Authorization") String Bearer,
                                               @Path("attendance_id") String attendance_id,
@@ -109,4 +116,9 @@ public interface ApiInterface {
     @GET(MARKERGET)
     Call<ResponseBody> call_markerGetApi(@Header("Authorization") String Bearer,
                                          @Query("attendance_id") String attendance_id);
+
+    @GET(ATTENDENCE_DEVIATION_LIST)
+    Call<ResponseBody> call_deviation_listApi(@Header("Authorization") String Bearer,
+                                            @Header("Content-Type") String Content_type,
+                                              @Query("attandance") Integer attendence_id);
 }

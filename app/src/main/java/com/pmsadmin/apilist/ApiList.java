@@ -4,6 +4,9 @@ public class ApiList {
 
     //Staging server
     //public static final String BASE_URL = "http://192.168.24.129:8002/";
+    //public static final String BASE_URL = "http://166.62.54.122:8001/";
+    //public static final String BASE_URL = "http://192.168.28.126:8000/";
+
     public static final String BASE_URL = "http://166.62.54.122:8001/";
 
     //Live Server
@@ -27,4 +30,7 @@ public class ApiList {
     public static final String GETSITETYPE="project_site_management_site_type_add/";
     public static final String ADDSITE="project_site_management_site_add/";
     public static final String MARKERGET="attandance_log_add/?";
+    public static final String ATTENDENCE_DEVIATION_LIST="attandance_deviation_by_attandance_list/?";
+    public static final String DEVIATION_JUSTIFICATION="attandance_deviation_justification/{deviation_id}/";
+    public static final String ATTANDANCE_JUSTIFICATION="attandance_justification_edit/{attandance_id}/";
 }

@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
+
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -15,6 +17,12 @@ public class Result {
     @SerializedName("employee")
     @Expose
     private String employee;
+    @SerializedName("is_deviation")
+    @Expose
+    private Integer is_deviation;
+    @SerializedName("is_ten_hrs")
+    @Expose
+    private Integer is_ten_hrs;
     @SerializedName("user_project")
     @Expose
     private String userProject;
@@ -139,4 +147,19 @@ public class Result {
         this.holiday = holiday;
     }
 
+    public Integer getIs_deviation() {
+        return is_deviation;
+    }
+
+    public void setIs_deviation(Integer is_deviation) {
+        this.is_deviation = is_deviation;
+    }
+
+    public Integer getIs_ten_hrs() {
+        return is_ten_hrs;
+    }
+
+    public void setIs_ten_hrs(Integer is_ten_hrs) {
+        this.is_ten_hrs = is_ten_hrs;
+    }
 }

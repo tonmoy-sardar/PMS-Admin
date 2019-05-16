@@ -4,6 +4,9 @@
 
     <string name="google_maps_key">AIzaSyAkkz_K6d5CBMaY6qOBVSCuybYnP_AkagU</string>
 
+    <!--Login screen name-->
+
+    <string name="login_page_name">PMS System</string>
     <string name="login_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Sign In</string>
@@ -13,6 +16,8 @@
     <string name="enter_password">Please enter your password</string>
     <string name="no_internet">No internet connection</string>
     <string name="copyright">Copyright © 2019 <a href="https://shyamsteel.com/">Shyamsteel</a>. All rights reserved.</string>
+
+    <!--Login screen name-->
 
     <string name="image_compression_error_text">Image not compressed</string>
     <string name="image_capture_cancel_text">User cancelled image process</string>
@@ -68,4 +73,16 @@
     <string name="permission_denied_explanation">Permission was denied, but is needed for core
         functionality.</string>
     <string name="settings">Settings</string>
+
+    <!--                                Attendence                            -->
+
+    <string name="justification_button">Justify</string>
+    <string name="grace_radio">Grace</string>
+    <string name="od_radio">O/D</string>
+    <string name="hd_radio">H/D</string>
+    <string name="fd_radio">F/D</string>
+    <string name="deviation_label">Deviation Time: </string>
+    <string name="deviation_remarks">Justification </string>
+
+
 </resources>

@@ -233,6 +233,9 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
                 try {
                     if (response.code() == 201 || response.code() == 200) {
                         String responseString = response.body().string();
+
+                        System.out.println("reportResponse: "+response.body().string());
+
                         Gson gson = new Gson();
                         ReportListModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);

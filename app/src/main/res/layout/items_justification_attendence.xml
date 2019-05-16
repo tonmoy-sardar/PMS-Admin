@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/attandence_bg"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvDeviationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deviation_label"
+            android:textColor="#000000"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvDeviationValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_toRightOf="@+id/tvDeviationLabel"
+            android:text="feffewff"
+            android:textColor="#000000"
+            android:textSize="@dimen/_12sdp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvReasonLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="Leave type"
+        android:textColor="#000000"
+        android:textSize="@dimen/_12sdp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/tvReasonLabel"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:background="@color/gray_view_color"
+        android:visibility="visible" />
+
+    <RadioGroup
+        android:id="@+id/rgLeaveType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp">
+
+        <!--<RadioButton
+            android:id="@+id/rdGrace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/grace_radio"
+            android:textSize="@dimen/_12sdp" />-->
+
+        <RadioButton
+            android:id="@+id/rdOD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/od_radio"
+            android:textSize="@dimen/_12sdp" />
+
+        <RadioButton
+            android:id="@+id/rdHD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/hd_radio"
+            android:textSize="@dimen/_12sdp" />
+
+        <RadioButton
+            android:id="@+id/rdFD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/fd_radio"
+            android:textSize="@dimen/_12sdp" />
+
+    </RadioGroup>
+
+
+    <EditText
+        android:id="@+id/etJustification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@android:color/white"
+        android:hint="@string/deviation_remarks"
+        android:padding="@dimen/_7sdp"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_12sdp" />
+
+
+
+
+    <Button
+        android:id="@+id/btSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:background="@color/link_color"
+        android:text="Submit"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_12sdp"/>
+
+    <!--<android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/deviation_remarks" />
+
+    </android.support.design.widget.TextInputLayout>-->
+
+
+</LinearLayout>

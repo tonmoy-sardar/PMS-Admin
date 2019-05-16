@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/attandence_bg">
 
+    <!--                Arghya's end                    -->
+
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
@@ -16,6 +18,18 @@
         android:textColor="#000000"/>
 
     <TextView
+        android:id="@+id/tvDateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_date"
+        android:text="DateValue"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="#000000" />
+
+    <TextView
         android:id="@+id/tv_date_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +39,8 @@
         android:paddingBottom="@dimen/_4sdp"
         android:paddingRight="@dimen/_8sdp"
         android:textSize="@dimen/_12sdp"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:visibility="gone"/>
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
@@ -47,8 +62,107 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingBottom="@dimen/_4sdp"
         android:textSize="@dimen/_12sdp"
-        android:text="Log Out Time"
+        android:text="Log in Time"
         android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tvLoginValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDateValue"
+        android:layout_toRightOf="@+id/tv_login"
+        android:paddingTop="@dimen/_4sdp"
+        android:text="LoginValue"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="#000000" />
+
+
+    <TextView
+        android:id="@+id/tvLogoutLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_login"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12sdp"
+        android:text="Log out"
+        android:textColor="#000000"/>
+
+
+    <TextView
+        android:id="@+id/tvLogoutValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLoginValue"
+        android:layout_toRightOf="@+id/tvLogoutLabel"
+        android:paddingTop="@dimen/_4sdp"
+        android:text="LoginValue"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tvStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLogoutLabel"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12sdp"
+        android:text="Status"
+        android:textColor="@color/red_text_color" />
+
+    <TextView
+        android:id="@+id/tvStatusValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLogoutValue"
+        android:layout_toRightOf="@+id/tvStatusLabel"
+        android:paddingTop="@dimen/_4sdp"
+        android:text="LoginValue"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="#000000" />
+
+
+    <Button
+        android:id="@+id/btJustify"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@+id/tvLogoutValue"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/link_color"
+        android:text="@string/justification_button"
+        android:textColor="@android:color/white"/>
+
+
+    <!--<com.google.android.material.button.MaterialButton
+        android:id="@+id/btJustify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvLogoutValue"
+        android:text="@string/justification_button"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@color/red_material_color"/>-->
+
+
+
+    <!--                Arghya's end                    -->
 
     <TextView
         android:id="@+id/tv_login_value"
@@ -86,7 +200,8 @@
         android:paddingBottom="@dimen/_10sdp"
         android:textSize="@dimen/_12sdp"
         android:text="Justification:"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_logout_value"
@@ -100,7 +215,7 @@
         android:paddingRight="@dimen/_8sdp"
         android:textSize="@dimen/_15sdp"
         android:visibility="gone"
-        android:textColor="#000000"/>
+        android:textColor="#000000" />
 
     <View
         android:id="@+id/view3"
@@ -127,6 +242,10 @@
         android:visibility="gone"
         android:textColor="#000000"/>
 
+    <!--<TextView
+        android:layout_width=""
+        android:layout_height="" />-->
+
     <TextView
         android:id="@+id/tv_holiday"
         android:layout_width="wrap_content"
@@ -136,8 +255,8 @@
         android:paddingBottom="@dimen/_10sdp"
         android:textSize="@dimen/_12sdp"
         android:text="Status: "
-        android:visibility="visible"
-        android:textColor="#ff0000"/>
+        android:visibility="gone"
+        android:textColor="#ff0000" />
 
 
 </RelativeLayout>

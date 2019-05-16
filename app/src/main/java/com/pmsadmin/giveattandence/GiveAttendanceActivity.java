@@ -638,8 +638,10 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.call_employeeListApi("Token "
-                + LoginShared.getLoginDataModel(GiveAttendanceActivity.this).getToken(),
+                        + LoginShared.getLoginDataModel(GiveAttendanceActivity.this).getToken(),
                 LoginShared.getLoginDataModel(GiveAttendanceActivity.this).getUserId().toString());
+
+        //System.out.println("registerGiveAttendence: "+register.toString());
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -649,6 +651,9 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
                 try {
                     if (response.code() == 201 || response.code()==200) {
                         String responseString = response.body().string();
+
+                        System.out.println("responseStringAttendence: "+responseString);
+
                         Gson gson = new Gson();
                         UpdatedAttendanceListModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);

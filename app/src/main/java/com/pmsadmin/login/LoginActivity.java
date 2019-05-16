@@ -10,6 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pmsadmin.MethodUtils;
@@ -25,7 +32,11 @@ import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -52,6 +63,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setFont();
         et_login.setText("santanu.pal@shyamfuture.com");
         et_password.setText("hvNzeqhkTR");
+        /*et_login.setText("admin");
+        et_password.setText("admin");*/
     }
 
     private void clickEvent() {
@@ -69,7 +82,87 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.no_internet));
         } else {
             callLoginApi();
+
+            //callLogin();
         }
+    }
+
+    private void callLogin() {
+
+        loader.show_with_label("Loading");
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+        String url = "http://166.62.54.122:8001/login/";
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                Gson gson = new Gson();
+                LoginModel loginModel;
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.optInt("request_status") == 1) {
+                        LoginShared.setLoginToken(LoginActivity.this, jsonObject.optString("token"));
+                        loginModel = gson.fromJson(response, LoginModel.class);
+                        LoginShared.setLoginDataModel(LoginActivity.this, loginModel);
+
+                        navigateToHome();
+                    }else if (jsonObject.optInt("request_status") == 0) {
+                        errorMsg(LoginActivity.this, jsonObject.optString("msg"));
+                        et_login.setText("");
+                        et_password.setText("");
+                    } else {
+                        errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //This code is executed if there is an error.
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                et_login.setText("");
+                et_password.setText("");
+                errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
+            }
+        }){
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String>();
+                MyData.put("username", et_login.getText().toString().trim()); //Add the data you'd like to send to the server.
+                MyData.put("password", et_password.getText().toString().trim()); //Add the data you'd like to send to the server.
+
+
+                System.out.println("MyData: "+MyData.toString());
+
+                return MyData;
+            }
+
+            /*@Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }*/
+
+
+            /*@Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }*/
+
+
+        };
+
+        MyStringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MyRequestQueue.add(MyStringRequest);
+
     }
 
     private void callLoginApi() {
