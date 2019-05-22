@@ -700,7 +700,7 @@ int second;
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
+                    //errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
                 }
 
 
@@ -759,7 +759,7 @@ int second;
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
+                    //errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
                 }
 
 
@@ -860,7 +860,7 @@ public void SendData()
             catch (Exception e)
             {
                 e.printStackTrace();
-                errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
+               // errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
             }
 
 

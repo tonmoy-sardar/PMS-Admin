@@ -304,7 +304,7 @@ public class LabourFragment extends Fragment {
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
+                    //errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
                 }
 
 
@@ -664,7 +664,7 @@ public class LabourFragment extends Fragment {
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
+                    //errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
                 }
 
 
@@ -723,7 +723,7 @@ public class LabourFragment extends Fragment {
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
+                   // errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
                 }
 
 

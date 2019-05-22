@@ -178,7 +178,7 @@ public class PandMfragment extends Fragment {
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
+                   // errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
                 }
 
 
@@ -237,7 +237,7 @@ public class PandMfragment extends Fragment {
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
+                   // errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
                 }
 
 

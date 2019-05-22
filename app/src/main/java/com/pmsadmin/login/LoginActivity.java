@@ -62,11 +62,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         viewBind();
         clickEvent();
         setFont();
-     // et_login.setText("mangal.das@shyamfuture.com");
-       // et_password.setText("mangal@123");
+          et_login.setText("mangal.das@shyamfuture.com");
+             et_password.setText("mangal@123");
 
-        et_login.setText("admin");
-        et_password.setText("Shyam2019");
+        //et_login.setText("admin");
+        //et_password.setText("Shyam2019");
        // et_login.setText("santanu.pal@shyamfuture.com");
         //et_password.setText("hvNzeqhkTR");
         /*et_login.setText("admin");
