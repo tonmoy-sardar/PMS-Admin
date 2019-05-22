@@ -240,12 +240,12 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
-                try {
-                    System.out.println("Success: "+response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
+//                try {
+//                 //   System.out.println("Success: "+response.body().string());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
 
             @Override

@@ -34,6 +34,10 @@ import static com.pmsadmin.apilist.ApiList.LOGIN;
 import static com.pmsadmin.apilist.ApiList.LOGOUT;
 import static com.pmsadmin.apilist.ApiList.MARKERGET;
 import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
+import static com.pmsadmin.apilist.ApiList.pms_execution_daily_progress_add;
+import static com.pmsadmin.apilist.ApiList.pms_execution_labour_progress_add;
+import static com.pmsadmin.apilist.ApiList.project_site_management_site_add;
+import static com.pmsadmin.apilist.ApiList.projects_details_by_project_site_id;
 
 public interface ApiInterface {
 
@@ -121,4 +125,21 @@ public interface ApiInterface {
     Call<ResponseBody> call_deviation_listApi(@Header("Authorization") String Bearer,
                                             @Header("Content-Type") String Content_type,
                                               @Query("attandance") Integer attendence_id);
+
+
+    @GET(project_site_management_site_add)
+    Call<ResponseBody> call_projectlistApi(@Header("Authorization") String Bearer);
+
+
+    @GET(projects_details_by_project_site_id)
+    Call<ResponseBody> call_projectid(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Query("site_location") String site_location);
+
+
+
+    @POST(pms_execution_daily_progress_add)
+    Call<ResponseBody> call_ppms_execution_daily_progress_add(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Body JsonObject object);
+
+
+    @POST(pms_execution_labour_progress_add)
+    Call<ResponseBody> pms_execution_labour_progress_add(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Body JsonObject object);
 }

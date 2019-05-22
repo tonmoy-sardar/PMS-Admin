@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,8 +62,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         viewBind();
         clickEvent();
         setFont();
-        et_login.setText("santanu.pal@shyamfuture.com");
-        et_password.setText("hvNzeqhkTR");
+     // et_login.setText("mangal.das@shyamfuture.com");
+       // et_password.setText("mangal@123");
+
+        et_login.setText("admin");
+        et_password.setText("Shyam2019");
+       // et_login.setText("santanu.pal@shyamfuture.com");
+        //et_password.setText("hvNzeqhkTR");
         /*et_login.setText("admin");
         et_password.setText("admin");*/
     }
@@ -182,6 +188,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     if (response.code() == 200) {
                         String responseString = response.body().string();
+                        Log.d("responsestring",responseString);
                         Gson gson = new Gson();
                         LoginModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);

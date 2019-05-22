@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:padding="50dp" >
+    <ScrollView
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/ic_launcher_background"
+        android:id="@+id/txtsort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sort by Project Site"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/txtsort"
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+
+        android:layout_below="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/rlblock1"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:background="@drawable/adapter_background"
+            android:id="@+id/block1"
+            android:layout_width="150dp"
+            android:layout_height="150dp">
+            <ImageView
+                android:src="@drawable/project_plans"
+                android:id="@+id/iv_item"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:id="@+id/tv_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PROJECT PLANS"
+                android:layout_below="@+id/iv_item"
+                android:textSize="@dimen/_10sdp"
+               android:layout_centerInParent="true"/>
+        </RelativeLayout>
+        <View
+            android:id="@+id/v1"
+            android:layout_toRightOf="@+id/block1"
+            android:layout_width="30dp"
+            android:layout_height="100dp"/>
+
+        <RelativeLayout
+            android:background="@drawable/adapter_background"
+            android:layout_toRightOf="@+id/v1"
+            android:id="@+id/block2"
+            android:layout_width="150dp"
+            android:layout_height="150dp">
+            <ImageView
+                android:src="@drawable/progress_reports"
+                android:id="@+id/iv_item2"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:id="@+id/tv_item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PROGRESS REPORTS DPR, WPR,MPR"
+                android:layout_below="@+id/iv_item2"
+                android:textSize="@dimen/_10sdp"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+        </RelativeLayout>
+        <View
+            android:id="@+id/v2"
+          android:layout_below="@+id/rlblock1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+        <RelativeLayout
+            android:layout_below="@+id/v2"
+            android:id="@+id/rlblock2"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <RelativeLayout
+                android:background="@drawable/adapter_background"
+
+                android:id="@+id/block3"
+                android:layout_width="150dp"
+                android:layout_height="150dp">
+                <ImageView
+                    android:src="@drawable/add_daily_data"
+                    android:id="@+id/iv_item3"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:textSize="@dimen/_10sdp"
+                    android:id="@+id/tv_item3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD DAILY DATA"
+                    android:layout_below="@+id/iv_item3"
+                   android:gravity="center"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

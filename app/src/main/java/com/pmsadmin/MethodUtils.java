@@ -197,7 +197,7 @@ public class MethodUtils {
 
         {
             DashboardItemsModel dashboardItemsModel=new DashboardItemsModel();
-            dashboardItemsModel.setItem("Plnning & Reports");
+            dashboardItemsModel.setItem("Planning & Reports");
             dashboardItemsModel.setImageId(R.drawable.ic_launcher_plnning_reports);
             list.add(dashboardItemsModel);
         }

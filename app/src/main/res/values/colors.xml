@@ -19,4 +19,7 @@
     <color name="gray_view_color">#c6d3dc</color>
     <color name="deviation_button_blue">#0047D4</color>
     <color name="opacity_blue">#500047D4</color>
+    <color name="card_background_color">#e7e6e6</color>
+    <color name="textcolor">#424141</color>
+    <color name="edittext_background_color">#e7e6e6</color>
 </resources>
