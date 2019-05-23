@@ -42,7 +42,7 @@ import static com.pmsadmin.apilist.ApiList.projects_details_by_project_site_id;
 public interface ApiInterface {
 
     @POST(LOGIN)
-    Call<ResponseBody> call_loginApi(@Body JsonObject object);
+    Call<ResponseBody> call_loginApi(  @Header("Content-Type") String Content_type,@Body JsonObject object);
 
     @POST(FORGOT)
     Call<ResponseBody> call_forgotPasswordApi(@Body JsonObject object);

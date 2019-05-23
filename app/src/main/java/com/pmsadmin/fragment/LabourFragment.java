@@ -247,7 +247,7 @@ public class LabourFragment extends Fragment {
 
    //     loader.show_with_label("Loading");
 
-
+        loader.show();
 
         JsonObject object = new JsonObject();
         object.addProperty("type_of_report", "2");
@@ -308,7 +308,7 @@ public class LabourFragment extends Fragment {
                 }
 
 
-
+                loader.dismiss();
             }
 
             @Override

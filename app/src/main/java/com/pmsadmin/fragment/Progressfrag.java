@@ -796,7 +796,7 @@ public void SendData()
 {
 
    // loader.show_with_label("Loading");
-
+loader.show();
 
 
     JsonObject object = new JsonObject();
@@ -864,7 +864,7 @@ public void SendData()
             }
 
 
-
+loader.dismiss();
         }
 
         @Override
