@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
@@ -47,7 +48,7 @@ public class PlanningReports extends BaseActivity {
     ArrayList<SiteList> siteListList=new ArrayList<SiteList>();
     RecyclerView recyclerview;
     SiteListAdapter siteListAdapter;
-    RelativeLayout block3;
+    LinearLayout block3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class PlanningReports extends BaseActivity {
     private void bindView() {
 
         recyclerview=(RecyclerView)findViewById(R.id.recyclerview);
-        block3=(RelativeLayout)findViewById(R.id.block3);
+        block3=(LinearLayout)findViewById(R.id.block3);
 
         recyclerview.setNestedScrollingEnabled(false);
         recyclerview.setHasFixedSize(true);
