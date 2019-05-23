@@ -46,4 +46,7 @@ public class ApiList {
     public static final String projects_details_by_project_site_id = "projects_details_by_project_site_id/";
     public static final String pms_execution_daily_progress_add="pms_execution_daily_progress_add/";
     public static final String pms_execution_labour_progress_add="pms_execution_daily_progress_labour_add/";
+    public static final String pms_execution_daily_progress_pandm_add="pms_execution_daily_progress_pandm_add/";
+    public static final String machineries_wp_list="machineries_wp_list/";
+    public static final String unit_add="unit_add/";
 }

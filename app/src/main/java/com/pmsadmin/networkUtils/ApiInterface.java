@@ -34,10 +34,13 @@ import static com.pmsadmin.apilist.ApiList.LOGIN;
 import static com.pmsadmin.apilist.ApiList.LOGOUT;
 import static com.pmsadmin.apilist.ApiList.MARKERGET;
 import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
+import static com.pmsadmin.apilist.ApiList.machineries_wp_list;
 import static com.pmsadmin.apilist.ApiList.pms_execution_daily_progress_add;
+import static com.pmsadmin.apilist.ApiList.pms_execution_daily_progress_pandm_add;
 import static com.pmsadmin.apilist.ApiList.pms_execution_labour_progress_add;
 import static com.pmsadmin.apilist.ApiList.project_site_management_site_add;
 import static com.pmsadmin.apilist.ApiList.projects_details_by_project_site_id;
+import static com.pmsadmin.apilist.ApiList.unit_add;
 
 public interface ApiInterface {
 
@@ -142,4 +145,15 @@ public interface ApiInterface {
 
     @POST(pms_execution_labour_progress_add)
     Call<ResponseBody> pms_execution_labour_progress_add(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Body JsonObject object);
+
+  @POST(pms_execution_daily_progress_pandm_add)
+  Call<ResponseBody> pms_execution_daily_progress_pandm_add(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Body JsonObject object);
+
+
+    @GET(machineries_wp_list)
+    Call<ResponseBody> call_machineries_wp_list(@Header("Authorization") String Bearer);
+
+
+    @GET(unit_add)
+    Call<ResponseBody> call_unit_add(@Header("Authorization") String Bearer);
 }
