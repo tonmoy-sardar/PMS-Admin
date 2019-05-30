@@ -16,6 +16,7 @@ import retrofit2.http.Query;
 
 import static com.pmsadmin.apilist.ApiList.ADDSITE;
 import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
+import static com.pmsadmin.apilist.ApiList.ATTANDANCE_JUSTIFICATION;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCEADD;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCELOGOUT;
 import static com.pmsadmin.apilist.ApiList.ATTENDANCELISTING;
@@ -32,8 +33,13 @@ import static com.pmsadmin.apilist.ApiList.LEAVEAPPLYLIST;
 import static com.pmsadmin.apilist.ApiList.LEAVEHISTORY;
 import static com.pmsadmin.apilist.ApiList.LOGIN;
 import static com.pmsadmin.apilist.ApiList.LOGOUT;
+import static com.pmsadmin.apilist.ApiList.LOGOUT_API;
 import static com.pmsadmin.apilist.ApiList.MARKERGET;
+import static com.pmsadmin.apilist.ApiList.PROJECT_LIST;
 import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
+import static com.pmsadmin.apilist.ApiList.TENDERS_ADD;
+import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_LOCATION_ADD;
+import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_LOCATION_LIST;
 
 public interface ApiInterface {
 
@@ -58,9 +64,15 @@ public interface ApiInterface {
     Call<ResponseBody> call_attendanceListingApi(@Header("Authorization") String Bearer,
                                                  @Path("employee_id") String employee_id);
 
+    /*@GET(REPORTLISTING)
+    Call<ResponseBody> call_reportListingApi(@Header("Authorization") String Bearer,
+                                             @Header("Content-Type") String Content_type,
+                                             @Query("page") String page);*/
+
     @GET(REPORTLISTING)
     Call<ResponseBody> call_reportListingApi(@Header("Authorization") String Bearer,
                                              @Header("Content-Type") String Content_type,
+                                             @Query("user_project") String user_project,
                                              @Query("page") String page);
 
     @GET(APPROVALLIST)
@@ -72,9 +84,21 @@ public interface ApiInterface {
                                                 @Path("attendance_id") String attendance_id,
                                                 @Body JsonObject object);
 
+
+    @PUT(LOGOUT_API)
+    Call<ResponseBody> callLogoutApi(@Header("Authorization") String Bearer,
+                                                @Path("attendance_id") String attendance_id,
+                                                @Body JsonObject object);
+
+
+
     @PUT(DEVIATION_JUSTIFICATION)
     Call<ResponseBody> call_deviation_justification(@Header("Authorization") String Bearer,
                                                 @Path("deviation_id") String deviation_id,
+                                                @Body JsonObject object);
+    @PUT(ATTANDANCE_JUSTIFICATION)
+    Call<ResponseBody> call_attandance_justification(@Header("Authorization") String Bearer,
+                                                @Path("attandance_id") Integer attandance_id,
                                                 @Body JsonObject object);
 
     @PUT(ATTENDENCEEDIT)
@@ -90,8 +114,16 @@ public interface ApiInterface {
     Call<ResponseBody> call_employeeListApi(@Header("Authorization") String Bearer,
                                             @Path("employee_id") String employee_id);
 
+    @GET(PROJECT_LIST)
+    Call<ResponseBody> call_projectList(@Header("Authorization") String Bearer);
+
     @POST(LEAVEAPPLY)
     Call<ResponseBody> call_leaveApplyApi(@Header("Authorization") String Bearer,
+                                          @Header("Content-Type") String Content_type,
+                                          @Body JsonObject object);
+
+    @POST(TENDER_SURVEY_LOCATION_ADD)
+    Call<ResponseBody> call_tender_survey_location_add(@Header("Authorization") String Bearer,
                                           @Header("Content-Type") String Content_type,
                                           @Body JsonObject object);
 
@@ -100,10 +132,16 @@ public interface ApiInterface {
                                          @Header("Content-Type") String Content_type,
                                          @Query("page") String page);
 
+    /*@GET(LEAVEHISTORY)
+    Call<ResponseBody> call_leaveHistoryApi(@Header("Authorization") String Bearer,
+                                            @Header("Content-Type") String Content_type,
+                                            @Path("employee_id") String employee_id);*/
+
     @GET(LEAVEHISTORY)
     Call<ResponseBody> call_leaveHistoryApi(@Header("Authorization") String Bearer,
                                             @Header("Content-Type") String Content_type,
-                                            @Path("employee_id") String employee_id);
+                                            @Path("employee_id") String employee_id,
+                                            @Query("page") String page);
 
     @GET(GETSITETYPE)
     Call<ResponseBody> call_siteTypeApi(@Header("Authorization") String Bearer);
@@ -121,4 +159,12 @@ public interface ApiInterface {
     Call<ResponseBody> call_deviation_listApi(@Header("Authorization") String Bearer,
                                             @Header("Content-Type") String Content_type,
                                               @Query("attandance") Integer attendence_id);
+
+    @GET(TENDERS_ADD)
+    Call<ResponseBody> call_tenders_add(@Header("Authorization") String Bearer,
+                                        @Header("Content-Type") String Content_type);
+
+    @GET(TENDER_SURVEY_LOCATION_LIST)
+    Call<ResponseBody> call_tender_survey_location_list(@Header("Authorization") String Bearer,
+                                            @Path("tender_id") String tender_id);
 }

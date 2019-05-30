@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -81,6 +82,7 @@ public class GeoFenceActivity extends BaseActivity
     Button btn_all;
 
     private MapFragment mapFragment;
+    //private RelativeLayout rl_bottom;
 
     private static final String NOTIFICATION_MSG = "NOTIFICATION MSG";
 
@@ -103,6 +105,9 @@ public class GeoFenceActivity extends BaseActivity
         if (getIntent().getExtras() != null) {
             position = Integer.parseInt(getIntent().getStringExtra("position"));
         }
+
+        rl_bottom = (RelativeLayout) findViewById(R.id.rl_bottom);
+
         setData();
         fontSet();
 
@@ -120,20 +125,29 @@ public class GeoFenceActivity extends BaseActivity
     }
 
     private void setData() {
-        tv_name.setText(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName() + " " +
-                LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName());
-        tv_reason.setText("Justification:" + LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getJustification());
-        if(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails().size()>0){
-            tv_deviation.setText("Location Deviation: " + MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
-                    get(position).getDeviationDetails().get(0).getFromTime())+" - "+ MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
-                    get(position).getDeviationDetails().get(0).getToTime()));
 
-            tv_form.setText("Log In: "+ MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
-                    get(position).getDeviationDetails().get(0).getFromTime())+"  |  "+"Log Out: "+MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
-                    get(position).getDeviationDetails().get(0).getToTime()));
-        }else{
-            tv_deviation.setVisibility(View.GONE);
-            tv_form.setVisibility(View.GONE);
+
+        if (LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails().size()>0) {
+
+            rl_bottom.setVisibility(View.VISIBLE);
+
+            tv_name.setText(LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName() + " " +
+                    LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName());
+            tv_reason.setText("Justification:" + LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getJustification());
+            if (LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails().size() > 0) {
+                tv_deviation.setText("Location Deviation: " + MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                        get(position).getDeviationDetails().get(0).getFromTime()) + " - " + MethodUtils.deviationTime(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                        get(position).getDeviationDetails().get(0).getToTime()));
+
+                tv_form.setText("Log In: " + MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                        get(position).getDeviationDetails().get(0).getFromTime()) + "  |  " + "Log Out: " + MethodUtils.deviationDate(LoginShared.getResultList(GeoFenceActivity.this, "result").
+                        get(position).getDeviationDetails().get(0).getToTime()));
+            } else {
+                tv_deviation.setVisibility(View.GONE);
+                tv_form.setVisibility(View.GONE);
+            }
+        }else {
+            rl_bottom.setVisibility(View.GONE);
         }
     }
 
@@ -164,10 +178,16 @@ public class GeoFenceActivity extends BaseActivity
                 // new DeviationDialog(GeoFenceActivity.this).show();
                 break;
             case R.id.btn_all:
-                new DeviationDialog(GeoFenceActivity.this,
-                        LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails(),
-                        LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName() + " " +
-                                LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName()).show();
+
+                if (LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails().size() > 0) {
+
+                    new DeviationDialog(GeoFenceActivity.this,
+                            LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getDeviationDetails(),
+                            LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getFirstName() + " " +
+                                    LoginShared.getResultList(GeoFenceActivity.this, "result").get(position).getEmployeeDetails().get(0).getCuUser().getLastName()).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "No deviation found", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

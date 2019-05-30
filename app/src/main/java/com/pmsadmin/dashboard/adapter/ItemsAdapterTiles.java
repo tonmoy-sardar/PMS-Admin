@@ -14,8 +14,11 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dashboard.model.DashBoardModelImage;
+import com.pmsadmin.giveattandence.GiveAttendanceActivity;
 import com.pmsadmin.tenderdashboard.TenderDashboardActivity;
+import com.pmsadmin.tenders_list.TendorsListing;
 
 import java.util.List;
 
@@ -42,10 +45,20 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
         itemsAdapterTiles.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(items.get(i).getItem().equals("TENDER")){
-                    Intent intent=new Intent(activity, TenderDashboardActivity.class);
+                if(items.get(i).getItem().equals("ATTENDANCE")){
+                    /*Intent intent=new Intent(activity, TenderDashboardActivity.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+
+                    Intent intent = new Intent(activity, GiveAttendanceActivity.class);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else if (items.get(i).getItem().equals("SURVEY")){
+
+                    Intent intent = new Intent(activity, TendorsListing.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    //MethodUtils.errorMsg(activity, "This section is under development");
                 }
             }
         });

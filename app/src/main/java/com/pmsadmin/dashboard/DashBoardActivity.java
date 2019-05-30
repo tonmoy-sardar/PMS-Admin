@@ -48,6 +48,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -102,6 +104,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 
 public class DashBoardActivity extends BaseActivity implements OnCompleteListener<Void> {
@@ -230,10 +233,17 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
                     startService(new Intent(this, BackgroundLocationService.class));
                 }
             } else {
-                addAttendance();
+                //addAttendance();
             }
         }
         BAY_AREA_LANDMARKS.put("KOLKATA", new LatLng(22.5737036, 88.4315579));
+
+
+        /*PeriodicWorkRequest.Builder myWorkBuilder =
+                new PeriodicWorkRequest.Builder(MyWorker.class, 15, TimeUnit.MINUTES);
+        PeriodicWorkRequest myWork = myWorkBuilder.build();
+
+        WorkManager.getInstance().enqueue(myWork);*/
 
         createLocationCallback();
         createLocationRequest();
@@ -241,7 +251,7 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
 
         MethodUtils.setStickyBar(DashBoardActivity.this);
         setRecyclerView();
-        setRecyclerViewChild();
+        //setRecyclerViewChild();
 
         //addGeofencesButtonHandler(view);
     }
@@ -803,11 +813,10 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         }
     }
 
+/*
     private void setRecyclerViewChild() {
         list.addAll(MethodUtils.addDataDashboard());
-       /* if(!LoginShared.getLoginDataModel(DashBoardActivity.this).getEmail().equals("")){
-            list.remove(0);
-        }*/
+
         ItemsAdapter adapter = new ItemsAdapter(DashBoardActivity.this, list);
         rv_child_items.addItemDecoration(new DividerItemDecoration(DashBoardActivity.this, LinearLayoutManager.VERTICAL) {
             @Override
@@ -821,14 +830,9 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 2);
         rv_child_items.addItemDecoration(decoration);
         rv_child_items.setAdapter(adapter);
-        /*rv_child_items.setItemAnimator(new DefaultItemAnimator());
-        mLayoutManager = new GridLayoutManager(this, 2);
-        rv_child_items.setLayoutManager(mLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 2);
-        rv_child_items.addItemDecoration(decoration);
-        ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(DashBoardActivity.this, 2);
-        rv_child_items.addItemDecoration(itemOffset);*/
+
     }
+*/
 
     private void fontSet() {
         /*tv_tender.setTypeface(MethodUtils.getNormalFont(DashBoardActivity.this));
@@ -839,7 +843,7 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
 
     private void bindView() {
         rv_items = findViewById(R.id.rv_items);
-        rv_child_items = findViewById(R.id.rv_child_items);
+        //rv_child_items = findViewById(R.id.rv_child_items);
     }
 
     private void addAttendance() {
@@ -899,8 +903,10 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
                             }
                         } else if (jsonObject.optInt("request_status") == 0) {
                             MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
+                            navigateToLogin();
                         } else {
                             MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.error_occurred));
+                            navigateToLogin();
                         }
                     } else {
                         String responseString = response.errorBody().string();
@@ -952,6 +958,16 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         mLayoutManager.setSpanSizeLookup(headerSpanSizeLookup);
     }
 
+    private void navigateToLogin() {
+        /*LoginShared.destroySessionTypePreference();
+        stopService(new Intent(DashBoardActivity.this, BackgroundLocationService.class));
+        BackgroundLocationService.stoplocationservice();*/
+        Intent logIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
+        startActivity(logIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
+    }
+
     // the scheduler
     //protected FunctionEveryHour scheduler;
 
@@ -996,4 +1012,11 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
             }
         }
     }*/
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

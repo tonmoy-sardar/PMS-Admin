@@ -14,11 +14,12 @@
     <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -26,15 +27,38 @@
         android:name=".application.MyApplication"
         android:allowBackup="true"
         android:appComponentFactory="@string/app_name"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_icon"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".giveattandence.AttendanceJustification"></activity>
+        <activity android:name=".dialog.AddChkInDialogue"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+        <activity android:name=".survey.coordinates.CheckInActivity" />
+        <activity android:name=".survey.coordinates.CoordinatesActivity" />
+        <activity android:name=".survey.SitePhotoSurvey" />
+        <activity
+            android:name=".survey.StartSurveyHome"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenders_list.TendorsListing"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".splash_screen.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".dashboard.LogoutDialogue"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity android:name=".giveattandence.AttendanceJustification" />
         <activity android:name=".tenderdashboard.TendorListActivity" />
         <activity android:name=".giveattandence.JustificationActivity" />
         <activity android:name=".tenderdashboard.TenderDashboardActivity" />
@@ -74,6 +98,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".dashboard.DashBoardActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -82,13 +107,17 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".login.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity> <!-- Google Map. -->
         <meta-data
             android:name="com.google.android.gms.version"

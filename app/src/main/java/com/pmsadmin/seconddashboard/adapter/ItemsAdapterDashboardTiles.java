@@ -11,21 +11,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pmsadmin.R;
 import com.pmsadmin.attendancelist.ApprovalListActivity;
 import com.pmsadmin.attendancelist.AttendanceListActivity;
 import com.pmsadmin.dashboard.model.DashBoardModelImage;
 import com.pmsadmin.seconddashboard.Dashboard2Activity;
+import com.pmsadmin.seconddashboard.project_list_model.Result;
 
 import java.util.List;
 
 public class ItemsAdapterDashboardTiles extends RecyclerView.Adapter<ItemsAdapterDashboardTiles.ItemsAdapterTilesViewHolder> {
     Activity activity;
     public List<DashBoardModelImage> items;
-    public ItemsAdapterDashboardTiles(Activity activity, List<DashBoardModelImage> items){
+    List<Result> projectList;
+    public ItemsAdapterDashboardTiles(Activity activity, List<DashBoardModelImage> items, List<Result> projectList){
         this.activity=activity;
         this.items=items;
+        this.projectList=projectList;
     }
     @NonNull
     @Override
@@ -44,8 +48,31 @@ public class ItemsAdapterDashboardTiles extends RecyclerView.Adapter<ItemsAdapte
         itemsAdapterTiles.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String data = "";
                 if(i==0){
+
+
+                    System.out.println("chi: "+projectList.size());
+                    for (int i = 0; i < projectList.size(); i++){
+                        Result result = projectList.get(i);
+
+                        if (result.isSelected() == true){
+
+                            data = data + "," + result.getId();
+                        }
+                    }
+
+                    String niceString = "";
+
+                    niceString = data.replaceFirst("^,", "");
+
+                    Toast.makeText(activity,niceString,Toast.LENGTH_SHORT).show();
+
+
+
                     Intent profileIntent = new Intent(activity, AttendanceListActivity.class);
+                    profileIntent.putExtra("niceString", niceString);
                     activity.startActivity(profileIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(i==1){

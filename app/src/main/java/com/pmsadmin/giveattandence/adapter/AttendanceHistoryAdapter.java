@@ -6,16 +6,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.giveattandence.AttendanceJustification;
 import com.pmsadmin.giveattandence.JustificationActivity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHistoryAdapter.AttendanceViewHolder> {
@@ -38,7 +48,7 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AttendanceViewHolder attendanceViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final AttendanceViewHolder attendanceViewHolder, final int i) {
 
 
         /*Arghya---------------------------------(10.05.2019)-------------------------------------------*/
@@ -54,7 +64,21 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
 
                 /*String sep1 = separated[0];
                 String sep2 = separated[1];*/
-                attendanceViewHolder.tvLoginValue.setText(separated[1]);
+
+                String timeLogIn = separated[1];
+                String[] sperated2 = timeLogIn.split(":");
+
+                int time = Integer.parseInt(sperated2[0]);
+
+                if (time < 12){
+                    attendanceViewHolder.tvLoginValue.setText(separated[1]+ " AM");
+                }else {
+                    attendanceViewHolder.tvLoginValue.setText(separated[1]+ " PM");
+                }
+
+
+
+
             }
 
             if (results.get(i).getLogoutTime().equals("")) {
@@ -64,14 +88,38 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
                 String logoutTime = results.get(i).getLogoutTime();
                 //String[] separated = logoutTime.split("T");
 
-                attendanceViewHolder.tvLogoutValue.setText(results.get(i).getLogoutTime());
-                //attendanceViewHolder.tvLogoutValue.setText(separated[1]);
+                if (logoutTime.equals("0") ) {
+
+
+                    attendanceViewHolder.tvLogoutValue.setText(results.get(i).getLogoutTime());
+
+                    //attendanceViewHolder.tvLogoutValue.setText(results.get(i).getLogoutTime());
+                    //attendanceViewHolder.tvLogoutValue.setText(separated[1]);
+                }else {
+                    //attendanceViewHolder.tvLogoutValue.setText(results.get(i).getLogoutTime());
+
+                    String[] separated = logoutTime.split("T");
+
+                /*String sep1 = separated[0];
+                String sep2 = separated[1];*/
+
+                    String timeLogOut = separated[1];
+                    String[] sperated2 = timeLogOut.split(":");
+
+                    int time = Integer.parseInt(sperated2[0]);
+
+                    if (time < 12){
+                        attendanceViewHolder.tvLogoutValue.setText(separated[1]+ " AM");
+                    }else {
+                        attendanceViewHolder.tvLogoutValue.setText(separated[1]+ " PM");
+                    }
+                }
             }
 
             if (results.get(i).getPresent() == 0) {
                 attendanceViewHolder.tvStatusValue.setText("Absent");
             } else {
-                attendanceViewHolder.tvStatusValue.setText("Present"+" "+ String.valueOf(results.get(i).getId()));
+                attendanceViewHolder.tvStatusValue.setText("Present"+" "/*+ String.valueOf(results.get(i).getId())*/);
             }
 
 
@@ -80,8 +128,8 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
                 if (results.get(i).getIs_deviation() == 1){
 
                     attendanceViewHolder.btJustify.setVisibility(View.VISIBLE);
-                    attendanceViewHolder.btJustify.setBackgroundColor(attendanceViewHolder.btJustify
-                            .getContext().getResources().getColor(R.color.deviation_button_blue));
+                    /*attendanceViewHolder.btJustify.setBackgroundColor(attendanceViewHolder.btJustify
+                            .getContext().getResources().getColor(R.color.deviation_button_blue));*/
 
                     attendanceViewHolder.btJustify.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -98,20 +146,45 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
                 }
 
 
-                if (results.get(i).getIs_ten_hrs() < 1){
+               /* if (results.get(i).getIs_ten_hrs() < 1){
+                    //attendanceViewHolder.btJustify.setVisibility(View.VISIBLE);
                     attendanceViewHolder.btJustify.setVisibility(View.VISIBLE);
-                    attendanceViewHolder.btJustify.setBackgroundColor(attendanceViewHolder.btJustify
-                            .getContext().getResources().getColor(R.color.link_color));
+
+
+                    setPosition(attendanceViewHolder, i);
+
+                    *//*attendanceViewHolder.btJustify.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(activity, AttendanceJustification.class);
+                            intent.putExtra("attendence_id",results.get(i).getId());
+                            activity.startActivity(intent);
+                        }
+                    });*//*
+
+
                     //attendanceViewHolder.btJustify.setVisibility(View.GONE);
                 }else {
                     attendanceViewHolder.btJustify.setVisibility(View.GONE);
-                }
+                }*/
 
 
 
             }else {
 
+                //attendanceViewHolder.btJustify.setVisibility(View.GONE);
+
                 attendanceViewHolder.btJustify.setVisibility(View.GONE);
+                attendanceViewHolder.btJustify.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(activity, AttendanceJustification.class);
+                        intent.putExtra("attendence_id",results.get(i).getId());
+                        activity.startActivity(intent);
+                    }
+                });
+
+
                 /*attendanceViewHolder.btJustify.setVisibility(View.VISIBLE);
                 attendanceViewHolder.btJustify.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -129,6 +202,16 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
 
             attendanceViewHolder.btJustify.setVisibility(View.GONE);
         }
+
+
+
+
+        attendanceViewHolder.menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showOptionsMenu(attendanceViewHolder.menu, attendanceViewHolder, i);
+            }
+        });
 
 
         /*attendanceViewHolder.btJustify.setOnClickListener(new View.OnClickListener() {
@@ -264,6 +347,65 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
         }*/
     }
 
+    private void showOptionsMenu(ImageView menu, AttendanceViewHolder attendanceViewHolder, int i) {
+
+        PopupMenu popup = new PopupMenu(activity, menu);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_attendance, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PizzaMenuItemClickListener(i));
+        popup.show();
+    }
+
+
+    private class PizzaMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        int i;
+
+        public PizzaMenuItemClickListener(int i) {
+            this.i = i;
+        }
+
+        /**
+         * Display Toast message on click of the options in the menu
+         *
+         * @param item
+         * @return
+         */
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.deviation:
+                    Toast.makeText(activity, "Add to favourite", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(activity, JustificationActivity.class);
+                    intent.putExtra("attendence_id",results.get(i).getId());
+                    activity.startActivity(intent);
+                    return true;
+                case R.id.ten_hrs:
+                    Toast.makeText(activity, "Order Now", Toast.LENGTH_SHORT).show();
+                    Intent myintent = new Intent(activity, AttendanceJustification.class);
+                    myintent.putExtra("attendence_id",results.get(i).getId());
+                    activity.startActivity(myintent);
+                    return true;
+            }
+            return false;
+        }
+    }
+
+
+
+    private void setPosition(AttendanceViewHolder attendanceViewHolder, final int i) {
+
+        attendanceViewHolder.btJustify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, AttendanceJustification.class);
+                intent.putExtra("attendence_id",results.get(i).getId());
+                activity.startActivity(intent);
+            }
+        });
+
+    }
+
     @Override
     public int getItemCount() {
         return results.size();
@@ -278,7 +420,9 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
         TextView tvLogoutValue;
         TextView tvLogoutLabel;
         TextView tvStatusLabel;
-        Button btJustify;
+        Button btJustify,btJustifyAttendance;
+
+        ImageView menu;
 
         //MaterialButton btJustify;
         //TextView tvLoginValue;
@@ -294,6 +438,9 @@ public class AttendanceHistoryAdapter extends RecyclerView.Adapter<AttendanceHis
             tvLogoutLabel = itemView.findViewById(R.id.tvLogoutLabel);
             tvStatusLabel = itemView.findViewById(R.id.tvStatusLabel);
             btJustify = itemView.findViewById(R.id.btJustify);
+            btJustifyAttendance = itemView.findViewById(R.id.btJustifyAttendance);
+
+            menu = itemView.findViewById(R.id.menu);
 
             tvLogoutLabel.setTypeface(MethodUtils.getNormalFont(activity));
             tvStatusLabel.setTypeface(MethodUtils.getNormalFont(activity));

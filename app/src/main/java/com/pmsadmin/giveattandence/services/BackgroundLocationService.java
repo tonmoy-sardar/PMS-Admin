@@ -20,6 +20,7 @@ import android.os.IBinder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,12 +38,18 @@ import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonObject;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
+import com.pmsadmin.dashboard.BaseActivity;
+import com.pmsadmin.login.LoginActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,14 +62,18 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     protected static final String TAG = "BackService";
 
-    //public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 600000;
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 60000;
+    //Context context;
+
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 600000;
+    //public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 60000;
     public static GoogleApiClient mGoogleApiClient;
     public static LocationRequest mLocationRequest;
     private static PendingIntent mPendingIntent;
     IBinder mBinder = new LocalBinder();
     List<Address> addresses1;
     Geocoder geocoder;
+
+
 
     private class LocalBinder extends Binder {
         public BackgroundLocationService getServerInstance() {
@@ -89,7 +100,101 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             Intent mIntentService = new Intent(this, LocationUpdates.class);
             mPendingIntent = PendingIntent.getService(this, 1, mIntentService, PendingIntent.FLAG_UPDATE_CURRENT);
         }
+
+
+
+
+
         buildGoogleApiClient();
+
+
+        System.out.println("check: "+ "checking"+" "
+                +String.valueOf(BaseActivity.latPeriodic)+ " "+String.valueOf(BaseActivity.lonperiodic));
+
+
+
+
+
+
+    }
+
+    private void callLogoutApi() {
+
+
+        JsonObject object = new JsonObject();
+        object.addProperty("logout_time", getTodaysDate() + "T" + getCurrentTimeUsingDate());
+        object.addProperty("logout_latitude", String.valueOf(BaseActivity.latPeriodic));
+        object.addProperty("logout_longitude", String.valueOf(BaseActivity.lonperiodic));
+        if (BaseActivity.addressPeriodic != null) {
+            if (BaseActivity.addressPeriodic.size() > 0) {
+                object.addProperty("logout_address", BaseActivity.addressPeriodic.get(0).getLocality() + "," + BaseActivity.addressPeriodic.get(0).getAdminArea());
+            } else {
+                object.addProperty("logout_address", "");
+            }
+        } else {
+            object.addProperty("logout_address", "");
+        }
+
+
+        System.out.println("objectLogout: " + object.toString());
+
+
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+
+        final Call<ResponseBody> register = apiInterface.callLogoutApi("Token "
+                        + LoginShared.getLoginDataModel(getApplicationContext()).getToken(),
+                LoginShared.getAttendanceAddDataModel(getApplicationContext()).getResult().getId().toString(),
+                object);
+
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if (response.code() == 201 || response.code() == 200) {
+
+                    try {
+                        String responseString = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optString("msg").equals("Success")) {
+
+                            navigateToLogin();
+                            /*new android.os.Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    navigateToLogin();
+                                }
+                            }, GeneralToApp.SPLASH_WAIT_TIME);*/
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
+    private void navigateToLogin() {
+        LoginShared.destroySessionTypePreference();
+        stopService(new Intent(getApplicationContext(), BackgroundLocationService.class));
+        BackgroundLocationService.stoplocationservice();
+        Intent logIntent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(logIntent);
+
     }
 
     @Nullable
@@ -136,8 +241,8 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     protected void createLocationRequest() {
         Log.i(TAG, "createLocationRequest()");
         mLocationRequest = new LocationRequest();
-        //mLocationRequest.setInterval(900000);
-        mLocationRequest.setInterval(6000);
+        mLocationRequest.setInterval(900000);
+        //mLocationRequest.setInterval(60000);
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
@@ -182,7 +287,84 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
         //64985209
         updateLocationUI(location);
+
+
+        call_sixteen_hrsLogout();
+
         //new BackgroundLocationUpdateService().locationWork(this,location);
+    }
+
+    private void call_sixteen_hrsLogout() {
+
+        if (LoginShared.getAttendanceAddDataModel(getApplicationContext())
+                .getResult().getLoginTime() != null) {
+
+            String loginTime = LoginShared.getAttendanceAddDataModel(getApplicationContext())
+                    .getResult().getLoginTime().toString();
+
+
+            String[] separated = loginTime.split("T");
+
+                /*String sep1 = separated[0];
+                String sep2 = separated[1];*/
+            //attendanceViewHolder.tvLoginValue.setText(separated[1]);
+
+            String loginTimeFormat = separated[1];
+
+
+            try {
+
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+                Date date1 = format.parse(loginTimeFormat);
+                Date date2 = format.parse(getCurrentTimeUsingDate());
+                long mills = date2.getTime() - date1.getTime();
+                Log.v("Data1", "" + date1.getTime());
+                Log.v("Data2", "" + date2.getTime());
+                int hours = (int) (mills / (1000 * 60 * 60));
+                int mins = (int) (mills / (1000 * 60)) % 60;
+
+                String diff = hours + ":" + mins; // updated value every1 second
+
+                //Toast.makeText(getApplicationContext(), diff, Toast.LENGTH_SHORT).show();
+
+                System.out.println("differencePeriodick: " + diff);
+
+
+                /*if (hours < 16) {
+
+                    System.out.println("difference: " + diff);
+                    //callAttandance_editApi();
+                } else {
+                    System.out.println("difference: " + diff);
+                    callLogoutApi();
+                    //callAttendandanceLogout();
+                }*/
+
+
+
+                if (hours < 16) {
+
+                    System.out.println("LessMins: "+ String.valueOf(mins));
+                    //System.out.println("difference: " + diff);
+                    //callAttandance_editApi();
+                } else {
+
+                    System.out.println("Mins: "+ String.valueOf(mins));
+
+                    callLogoutApi();
+                    //callAttendandanceLogout();
+                }
+
+
+
+                //txtCurrentTime.setText(diff);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
     }
 
     public String getCurrentTimeUsingDate() {
@@ -230,6 +412,8 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             object.addProperty("address", "");
         }
 
+        System.out.println("add_log: "+ object.toString());
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -240,7 +424,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
                 try {
                     System.out.println("Success: "+response.body().string());
                 } catch (IOException e) {
@@ -250,7 +434,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                //Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),call.toString(),Toast.LENGTH_LONG).show();
             }
         });
     }

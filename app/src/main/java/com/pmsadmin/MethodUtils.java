@@ -13,6 +13,7 @@ import com.pmsadmin.dashboard.model.DashBoardModelImage;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
 import com.pmsadmin.dialog.ErrorMessageDialog;
 import com.pmsadmin.seconddashboard.adapter.ProjectsItem;
+import com.pmsadmin.survey.SurveyStaticModel;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 
 public class MethodUtils {
+
+    public static int tender_id;
 
     public static void fullScreen(Activity activity) {
         Window window = activity.getWindow();
@@ -198,9 +201,87 @@ public class MethodUtils {
         return list;
     }
 
+
+    public static List<SurveyStaticModel> getItemsSurvey(){
+
+        List<SurveyStaticModel> list = new ArrayList<>();
+
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("SITE PHOTOS");
+            surveyStaticModel.setImageId(R.drawable.site_photo);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("COORDINATES");
+            surveyStaticModel.setImageId(R.drawable.coordinates);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("RESOURCE");
+            surveyStaticModel.setImageId(R.drawable.resource);
+            list.add(surveyStaticModel);
+        }
+
+        return list;
+    }
+
+
+    public static List<SurveyStaticModel> getItemCoordinates(){
+
+        List<SurveyStaticModel> list = new ArrayList<>();
+
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("CHECK IN");
+            surveyStaticModel.setImageId(R.drawable.check_in);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("RAW MATERIALS");
+            surveyStaticModel.setImageId(R.drawable.raw_materials);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("CRUSHER");
+            surveyStaticModel.setImageId(R.drawable.crusher);
+            list.add(surveyStaticModel);
+        }
+
+        return list;
+    }
+
+
+
+
+
+
+
     public static List<DashBoardModelImage> getItems(){
         List<DashBoardModelImage> list=new ArrayList<>();
+
+
         {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("ATTENDANCE");
+            dashBoardModelImage.setImageId(R.drawable.tender_icon);
+            list.add(dashBoardModelImage);
+        }
+
+
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("SURVEY");
+            dashBoardModelImage.setImageId(R.drawable.pre_execution_icon);
+            list.add(dashBoardModelImage);
+        }
+
+
+        /*{
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
             dashBoardModelImage.setItem("TENDER");
             dashBoardModelImage.setImageId(R.drawable.tender_icon);
@@ -225,7 +306,7 @@ public class MethodUtils {
             dashBoardModelImage.setItem("POST EXECUTION");
             dashBoardModelImage.setImageId(R.drawable.post_execution_icon);
             list.add(dashBoardModelImage);
-        }
+        }*/
 
         /*{
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();

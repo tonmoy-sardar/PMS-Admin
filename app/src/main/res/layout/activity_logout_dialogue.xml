@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llParent"
+    android:layout_width="@dimen/_250sdp"
+    android:layout_height="@dimen/_250sdp"
+    android:layout_gravity="center"
+    android:background="@color/gray_view_color"
+    android:orientation="vertical"
+    android:padding="@dimen/_5sdp">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_cancel_darkgrey_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/modification_bg"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/etJustification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="Justification for log out"
+                android:inputType="text"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_40sdp"
+                android:text=""
+                android:textColor="#000000"
+                android:textColorHint="#7A8790"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@color/link_color"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_12sdp" />
+
+
+        <!--<android.support.v7.widget.CardView
+            android:id="@+id/cardClinics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/_20sdp"
+            android:background="@color/colorLightGray">
+
+
+            <RelativeLayout
+                android:id="@+id/rlParentDialog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtclose"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:textColor="#ffffff"
+                    android:text="X"
+                    android:textStyle="bold"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_200sdp"
+                    android:background="@drawable/ic_close_black_24dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/txtclose">
+
+                    &lt;!&ndash;<TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorRed"
+                        android:text="Patient name:"
+                        android:textSize="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"/>&ndash;&gt;
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/cardPatientName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/activity_login_tv_signIn"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        card_view:cardCornerRadius="4dp"
+                        card_view:cardElevation="@dimen/_5sdp">
+
+                        <EditText
+                            android:id="@+id/etPatientName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:hint="Patient name"
+                            android:inputType="text"
+                            android:padding="5dp"
+                            android:textColorHint="@color/colorTxtGrey"
+                            android:textSize="@dimen/_14sdp" />
+                    </android.support.v7.widget.CardView>
+
+
+                    &lt;!&ndash;<TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorRed"
+                        android:text="Phone number:"
+                        android:textSize="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"/>&ndash;&gt;
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/cardPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/activity_login_tv_signIn"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        card_view:cardCornerRadius="4dp"
+                        card_view:cardElevation="@dimen/_5sdp">
+
+                        <EditText
+                            android:id="@+id/etPhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:hint="Phone number"
+                            android:inputType="number"
+                            android:padding="5dp"
+                            android:textColorHint="@color/colorTxtGrey"
+                            android:textSize="@dimen/_14sdp" />
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+
+                        android:id="@+id/tvSetDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Set Date"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/blue_clinic_name"
+                        android:textStyle="bold"
+                        android:background="@drawable/rect_blue_border_view"/>
+
+                    &lt;!&ndash;<DatePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </DatePicker>&ndash;&gt;
+
+                    <TextView
+                        android:id="@+id/tvSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"
+                        android:padding="@dimen/_10sdp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:background="@drawable/drawable_rect_blue"
+                        android:textColor="@android:color/white"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:textSize="@dimen/_15sdp"/>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+
+            &lt;!&ndash;<Button
+                android:id="@+id/btnfollow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="Follow Me"
+                android:textColor="#ffffff" />&ndash;&gt;
+
+        </android.support.v7.widget.CardView>-->
+
+    </LinearLayout>
+
+</RelativeLayout>

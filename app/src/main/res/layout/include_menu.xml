@@ -64,7 +64,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="Dashboard"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_17sdp" />
+                android:textSize="@dimen/_15sdp" />
 
             <View
                 android:id="@+id/view5"
@@ -86,7 +86,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="Tender List"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_17sdp" />
+                android:textSize="@dimen/_15sdp" />
 
             <View
                 android:id="@+id/view2"
@@ -94,7 +94,8 @@
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_tender_list"
                 android:layout_margin="@dimen/_8sdp"
-                android:background="#536880" />
+                android:background="#536880"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_attendance"
@@ -107,7 +108,8 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="My attendance"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_17sdp" />
+                android:textSize="@dimen/_17sdp"
+                android:visibility="gone"/>
 
             <View
                 android:id="@+id/view4"
@@ -135,7 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_help"
-                android:layout_margin="@dimen/_8sdp"
+                android:layout_margin="@dimen/_15sdp"
                 android:background="#536880" />
 
 
@@ -150,7 +152,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="Logout"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_17sdp" />
+                android:textSize="@dimen/_15sdp" />
 
         </RelativeLayout>
     </ScrollView>

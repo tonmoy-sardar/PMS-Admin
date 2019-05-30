@@ -1,9 +1,17 @@
 package com.pmsadmin.login;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +30,13 @@ import com.google.gson.JsonObject;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
+import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dashboard.DashBoardActivity;
+import com.pmsadmin.dashboard.LogoutService;
 import com.pmsadmin.dialog.ErrorMessageDialog;
 import com.pmsadmin.dialog.ForgotPasswordDialog;
+import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
+import com.pmsadmin.giveattandence.services.BackgroundLocationService;
 import com.pmsadmin.login.model.LoginModel;
 import com.pmsadmin.netconnection.ConnectionDetector;
 import com.pmsadmin.networkUtils.ApiInterface;
@@ -35,10 +47,21 @@ import com.pmsadmin.utils.progressloader.LoadingData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import im.delight.android.location.SimpleLocation;
 import okhttp3.ResponseBody;
+import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +74,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btn_login;
     private LoadingData loader;
 
+    private SimpleLocation location;
+
+    private double currentLat;
+    private double currentLng;
+    public List<Address> addresses;
+    Geocoder geocoder;
+
+
+    private static final int RC_LOCATION_CONTACTS_PERM = 126;
+    private static final String[] LOCATION_AND_CONTACTS =
+            {Manifest.permission.ACCESS_FINE_LOCATION};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,14 +93,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         MethodUtils.setStickyBar(LoginActivity.this);
         loader = new LoadingData(LoginActivity.this);
+
+        geocoder = new Geocoder(LoginActivity.this, Locale.getDefault());
+
         viewBind();
         clickEvent();
         setFont();
         et_login.setText("santanu.pal@shyamfuture.com");
         et_password.setText("hvNzeqhkTR");
+        /*et_login.setText("");
+        et_password.setText("");*/
         /*et_login.setText("admin");
         et_password.setText("admin");*/
+
+
+        /*---------------------------- Arghya--------------------------------------*/
+
+
+        location = new SimpleLocation(this, false, false, 10000);
+
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(this);
+        }
+
+        /*---------------------------- Arghya--------------------------------------*/
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (location.hasLocationEnabled()) {
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        0);
+
+
+            } else {
+                location.beginUpdates();
+            }
+
+
+        }
+    }
+
 
     private void clickEvent() {
         btn_login.setOnClickListener(this);
@@ -74,98 +149,70 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setValidation() {
-        if (et_login.getText().toString().equals("")) {
-            errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.enter_email));
-        } else if (et_password.getText().toString().equals("")) {
-            errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.enter_password));
-        } else if (!ConnectionDetector.isConnectingToInternet(LoginActivity.this)) {
-            errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.no_internet));
-        } else {
-            callLoginApi();
 
-            //callLogin();
+        if (location.hasLocationEnabled()) {
+
+
+            if (et_login.getText().toString().equals("")) {
+                errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.enter_email));
+            } else if (et_password.getText().toString().equals("")) {
+                errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.enter_password));
+            } else if (!ConnectionDetector.isConnectingToInternet(LoginActivity.this)) {
+                errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.no_internet));
+            } else {
+
+                callLoginApi();
+
+
+            }
+
+        } else {
+            SimpleLocation.openSettings(this);
         }
     }
 
-    private void callLogin() {
-
-        loader.show_with_label("Loading");
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "http://166.62.54.122:8001/login/";
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                if (loader != null && loader.isShowing())
-                    loader.dismiss();
-
-                Gson gson = new Gson();
-                LoginModel loginModel;
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.optInt("request_status") == 1) {
-                        LoginShared.setLoginToken(LoginActivity.this, jsonObject.optString("token"));
-                        loginModel = gson.fromJson(response, LoginModel.class);
-                        LoginShared.setLoginDataModel(LoginActivity.this, loginModel);
-
-                        navigateToHome();
-                    }else if (jsonObject.optInt("request_status") == 0) {
-                        errorMsg(LoginActivity.this, jsonObject.optString("msg"));
-                        et_login.setText("");
-                        et_password.setText("");
-                    } else {
-                        errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() { //Create an error listener to handle errors appropriately.
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
-                if (loader != null && loader.isShowing())
-                    loader.dismiss();
-                et_login.setText("");
-                et_password.setText("");
-                errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
-            }
-        }){
-            protected Map<String, String> getParams() {
-                Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("username", et_login.getText().toString().trim()); //Add the data you'd like to send to the server.
-                MyData.put("password", et_password.getText().toString().trim()); //Add the data you'd like to send to the server.
 
 
-                System.out.println("MyData: "+MyData.toString());
-
-                return MyData;
-            }
-
-            /*@Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
-            }*/
 
 
-            /*@Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
-            }*/
-
-
-        };
-
-        MyStringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                5000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MyRequestQueue.add(MyStringRequest);
-
-    }
 
     private void callLoginApi() {
+
+
+        location.setListener(new SimpleLocation.Listener() {
+
+            public void onPositionChanged() {
+                // new location data has been received and can be accessed
+
+                currentLat = location.getLatitude();
+                currentLng = location.getLongitude();
+
+            }
+
+        });
+
+        if (currentLat == 0.0 && currentLng == 0.0) {
+            int i = 0;
+            while (i < 5) {
+                currentLat = location.getLatitude();
+                currentLng = location.getLongitude();
+                if (currentLat == 0.0 && currentLng == 0.0) {
+                    i++;
+                } else {
+                    break;
+                }
+            }
+
+
+            try {
+                addresses = geocoder.getFromLocation(currentLat, currentLng, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
         loader.show_with_label("Loading");
         JsonObject object = new JsonObject();
         object.addProperty("username", et_login.getText().toString().trim());
@@ -180,6 +227,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
                 try {
+                    //String responseString = response.body().string();
                     if (response.code() == 200) {
                         String responseString = response.body().string();
                         Gson gson = new Gson();
@@ -191,7 +239,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             loginModel = gson.fromJson(responseString, LoginModel.class);
                             LoginShared.setLoginDataModel(LoginActivity.this, loginModel);
 
-                            navigateToHome();
+                            if (LoginShared.getAttendanceFirstLoginTime(LoginActivity.this).equals("1")) {
+                                //MethodUtils.errorMsg(DashBoardActivity.this,"You are already Logged in");
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    // perform Opertaion
+                                    startForegroundService(new Intent(LoginActivity.this, BackgroundLocationService.class));
+                                } else {
+                                    startService(new Intent(LoginActivity.this, BackgroundLocationService.class));
+                                }
+
+                                navigateToDashBoard();
+                            } else {
+                                addAttendance();
+                            }
+                            //navigateToHome();
                         } else if (jsonObject.optInt("request_status") == 0) {
                             errorMsg(LoginActivity.this, jsonObject.optString("msg"));
                             et_login.setText("");
@@ -207,6 +268,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         errorMsg(LoginActivity.this, jsonObject.optString("msg"));
                     }
                 } catch (Exception e) {
+
+                    System.out.println("exception: "+e.toString());
                     et_login.setText("");
                     et_password.setText("");
                     errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
@@ -224,8 +287,100 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    private void addAttendance() {
+        loader.show_with_label("Loading");
+        JsonObject object = new JsonObject();
+        object.addProperty("type", 1);
+        //object.addProperty("employee", LoginShared.getLoginDataModel(DashBoardActivity.this).getUserId());
+        object.addProperty("date", getTodaysDate() + "T" + getCurrentTimeUsingDate());
+        object.addProperty("login_time", getTodaysDate() + "T" + getCurrentTimeUsingDate());
+        //object.addProperty("login_latitude", gpsTracker.getLatitude());
+        object.addProperty("login_latitude", currentLat);
+        //object.addProperty("login_longitude", gpsTracker.getLongitude());
+        object.addProperty("login_longitude", currentLng);
+        //object.addProperty("user_project_id", 1);
+        if(addresses!=null) {
+            if (addresses.size() > 0) {
+                object.addProperty("login_address", addresses.get(0).getLocality() + "," + addresses.get(0).getAdminArea());
+            } else {
+                object.addProperty("login_address", "");
+            }
+        }else{
+            object.addProperty("login_address", "");
+        }
+        //object.addProperty("justification", "");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register = apiInterface.call_attendanceAddApi("Token "
+                        + LoginShared.getLoginDataModel(LoginActivity.this).getToken(),
+                object);
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    if (response.code() == 201 || response.code() == 200) {
+                        String responseString = response.body().string();
+                        Gson gson = new Gson();
+                        AttendanceAddModel loginModel;
+                        JSONObject jsonObject = new JSONObject(responseString);
+
+                        if (jsonObject.optInt("request_status") == 1) {
+                            loginModel = gson.fromJson(responseString, AttendanceAddModel.class);
+                            LoginShared.setAttendanceAddDataModel(LoginActivity.this, loginModel);
+                            LoginShared.setAttendanceFirstLoginTime(LoginActivity.this, "1");
+                            //MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                startForegroundService(new Intent(LoginActivity.this, BackgroundLocationService.class));
+                            }else{
+                                startService(new Intent(LoginActivity.this, BackgroundLocationService.class));
+                            }
+
+                            navigateToDashBoard();
+                            /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                startForegroundService(new Intent(LoginActivity.this, LogoutService.class));
+                            }else{
+                                startService(new Intent(LoginActivity.this, LogoutService.class));
+                            }*/
+                        } else if (jsonObject.optInt("request_status") == 0) {
+                            MethodUtils.errorMsg(LoginActivity.this, jsonObject.optString("msg"));
+                            //navigateToLogin();
+                        } else {
+                            MethodUtils.errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
+                            //navigateToLogin();
+                        }
+                    } else {
+                        String responseString = response.errorBody().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        MethodUtils.errorMsg(LoginActivity.this, jsonObject.optString("msg"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
+            }
+        });
+    }
+
+    private void navigateToDashBoard() {
+
+        Intent profileIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
+        startActivity(profileIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
+    }
+
     private void navigateToHome() {
-         //Toast.makeText(LoginActivity.this,LoginShared.getLoginDataModel(LoginActivity.this).getToken().toString(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(LoginActivity.this,LoginShared.getLoginDataModel(LoginActivity.this).getToken().toString(), Toast.LENGTH_LONG).show();
         Intent profileIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
         startActivity(profileIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -267,8 +422,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.tv_forgot:
-               new ForgotPasswordDialog(LoginActivity.this).show();
+                new ForgotPasswordDialog(LoginActivity.this).show();
                 break;
         }
+    }
+
+
+
+    private String getTodaysDate() {
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c);
+        return formattedDate;
+    }
+
+
+    public String getCurrentTimeUsingDate() {
+        Date date = new Date();
+        String strDateFormat = "HH:mm:ss";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String formattedDate = dateFormat.format(date);
+        System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
+        return formattedDate;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

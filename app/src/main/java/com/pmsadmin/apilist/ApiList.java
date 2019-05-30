@@ -7,7 +7,8 @@ public class ApiList {
     //public static final String BASE_URL = "http://166.62.54.122:8001/";
     //public static final String BASE_URL = "http://192.168.28.126:8000/";
 
-    public static final String BASE_URL = "http://166.62.54.122:8001/";
+    //public static final String BASE_URL = "http://166.62.54.122:8001/";
+    public static final String BASE_URL = "http://192.168.24.243:8000/";
 
     //Live Server
 
@@ -21,6 +22,7 @@ public class ApiList {
     public static final String REPORTLISTING = "attandance_approval_log_list/?";
     public static final String ATTENDANCELOCATIONUPDATE = "attandance_log_add/";
     public static final String ATTANDENCELOGOUT = "attandance_edit/{attendance_id}/";
+    public static final String LOGOUT_API = "attandance_logout/{attendance_id}/";
     public static final String EMPLOYEELIST = "attandance_list_by_employee/{employee_id}/";
     public static final String APPROVALLIST="attandance_approval_list/?";
     public static final String ATTENDENCEEDIT="attandance_edit/{attendance_id}/";
@@ -33,4 +35,8 @@ public class ApiList {
     public static final String ATTENDENCE_DEVIATION_LIST="attandance_deviation_by_attandance_list/?";
     public static final String DEVIATION_JUSTIFICATION="attandance_deviation_justification/{deviation_id}/";
     public static final String ATTANDANCE_JUSTIFICATION="attandance_justification_edit/{attandance_id}/";
+    public static final String PROJECT_LIST = "projects_list/";
+    public static final String TENDERS_ADD="tenders_add/";
+    public static final String TENDER_SURVEY_LOCATION_ADD ="tender_survey_location_add/";
+    public static final String TENDER_SURVEY_LOCATION_LIST = "tender_survey_location_list/{tender_id}/";
 }

@@ -10,7 +10,7 @@
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"
+        android:text="Date: "
         android:paddingTop="@dimen/_10sdp"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingBottom="@dimen/_4sdp"
@@ -28,6 +28,16 @@
         android:paddingBottom="@dimen/_4sdp"
         android:textSize="@dimen/_12sdp"
         android:textColor="#000000" />
+
+
+    <ImageView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_circle_outline_black_24dp"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_date_value"
@@ -62,7 +72,7 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingBottom="@dimen/_4sdp"
         android:textSize="@dimen/_12sdp"
-        android:text="Log in Time"
+        android:text="Log in Time: "
         android:textColor="#000000"/>
 
     <TextView
@@ -88,7 +98,7 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingBottom="@dimen/_4sdp"
         android:textSize="@dimen/_12sdp"
-        android:text="Log out"
+        android:text="Log out Time: "
         android:textColor="#000000"/>
 
 
@@ -114,7 +124,7 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingBottom="@dimen/_4sdp"
         android:textSize="@dimen/_12sdp"
-        android:text="Status"
+        android:text="Status: "
         android:textColor="@color/red_text_color" />
 
     <TextView
@@ -142,6 +152,18 @@
         android:background="@color/link_color"
         android:text="@string/justification_button"
         android:textColor="@android:color/white"/>
+    <Button
+        android:id="@+id/btJustifyAttendance"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@+id/tvLogoutValue"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/link_color"
+        android:text="@string/justification_button"
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
 
 
     <!--<com.google.android.material.button.MaterialButton

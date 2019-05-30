@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
@@ -52,6 +53,7 @@ import com.pmsadmin.location.TrackerGPS;
 import com.pmsadmin.login.LoginActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.seconddashboard.Dashboard2Activity;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.utils.MarshMallowPermissions;
 import com.pmsadmin.utils.SpacesItemDecoration;
@@ -144,6 +146,8 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
      */
     private String mLastUpdateTime;
 
+    private TextView tv_universal_header;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +160,13 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mSettingsClient = LocationServices.getSettingsClient(this);
         final MarshMallowPermissions mmPermission = new MarshMallowPermissions(GiveAttendanceActivity.this);
+
+
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+        tv_universal_header.setText("My Daily Attendance");
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(GiveAttendanceActivity.this));
+
+
         if (mmPermission.isAllGpsPermissionAllowed()) {
             //buildAlertMessageNoGps();
         }
@@ -175,6 +186,11 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
         setClickEvent();
         //getAttandenceListing();
         getAttendanceListingUpdated();
+
+
+
+
+
     }
 
     private void callservice() {
@@ -472,6 +488,11 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.btn_logout:
                 //Toast.makeText(GiveAttendanceActivity.this,String.valueOf(diffTime()),Toast.LENGTH_LONG).show();
+
+
+
+
+
                 if (diffTime() > 600) {
                     logoutApi();
                 } else {
@@ -802,6 +823,14 @@ public class GiveAttendanceActivity extends BaseActivity implements View.OnClick
             }
         });
     }
+
+
+
+
+
+
+
+
 
     @Override
     public void onBackPressed() {

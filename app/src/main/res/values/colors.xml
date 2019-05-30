@@ -5,7 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="statusBarColor">#2a3f54</color>
-    <color name="link_color">#00BCD4</color>
+    <color name="link_color">#29B2E6</color>
 
     <!--Progress Bar Color Chart-->
     <color name="kprogresshud_default_color">#b1000000</color>
@@ -19,4 +19,5 @@
     <color name="gray_view_color">#c6d3dc</color>
     <color name="deviation_button_blue">#0047D4</color>
     <color name="opacity_blue">#500047D4</color>
+    <color name="bgcolor">#edf5fe</color>
 </resources>

@@ -66,9 +66,12 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
     List<Result> list = new ArrayList<>();
     List<com.pmsadmin.attendancelist.approvallistmodel.Result> approvalList = new ArrayList<>();
 
+    String user_project = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         view = View.inflate(this, R.layout.activity_attendance_list, null);
         addContentView(view);
         loader = new LoadingData(AttendanceListActivity.this);
@@ -79,6 +82,23 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
         setClickEvent();
         list.clear();
         approvalList.clear();
+
+
+        Intent intent = getIntent();
+
+// Get the extras (if there are any)
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey("niceString")) {
+                user_project  = extras.getString("niceString");
+
+                // TODO: Do something with the value of isNew.
+            }
+
+            System.out.println("project_id: "+ user_project );
+        }
+
+
         try {
             setReportsRecyclerView();
             getAttandenceListing();
@@ -212,9 +232,13 @@ public class AttendanceListActivity extends BaseActivity implements View.OnClick
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
+        /*final Call<ResponseBody> register = apiInterface.call_reportListingApi("Token "
+                + LoginShared.getLoginDataModel(AttendanceListActivity.this).getToken(),
+                "application/json",  String.valueOf(page));*/
+
         final Call<ResponseBody> register = apiInterface.call_reportListingApi("Token "
                 + LoginShared.getLoginDataModel(AttendanceListActivity.this).getToken(),
-                "application/json", String.valueOf(page));
+                "application/json", user_project, String.valueOf(page));
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
