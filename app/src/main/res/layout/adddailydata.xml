@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+       android:layout_above="@+id/lltablayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frame"/>
+
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/lltablayout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+>
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:id="@+id/tabLayout1">
+            <com.google.android.material.tabs.TabItem
+                android:text="Progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tabItem1" />
+            <com.google.android.material.tabs.TabItem
+                android:text="Labour Report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tabItem2" />
+
+            <com.google.android.material.tabs.TabItem
+                android:text="P AND M"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tabItem3" />
+
+        </com.google.android.material.tabs.TabLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

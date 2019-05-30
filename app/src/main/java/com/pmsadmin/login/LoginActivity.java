@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,6 +100,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         viewBind();
         clickEvent();
         setFont();
+          //et_login.setText("mangal.das@shyamfuture.com");
+            // et_password.setText("mangal@123");
+
+       // et_login.setText("admin");//local
+       // et_password.setText("Shyam2019");
         et_login.setText("santanu.pal@shyamfuture.com");
         et_password.setText("hvNzeqhkTR");
         /*et_login.setText("");
@@ -220,7 +226,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register = apiInterface.call_loginApi(object);
+        final Call<ResponseBody> register = apiInterface.call_loginApi("application/json",object);
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -230,6 +236,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //String responseString = response.body().string();
                     if (response.code() == 200) {
                         String responseString = response.body().string();
+                        Log.d("responsestring",responseString);
                         Gson gson = new Gson();
                         LoginModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);

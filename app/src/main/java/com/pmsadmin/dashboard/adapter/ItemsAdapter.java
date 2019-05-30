@@ -18,6 +18,7 @@ import com.pmsadmin.R;
 import com.pmsadmin.addsite.AddSiteActivity;
 import com.pmsadmin.attendancelist.AttendanceListActivity;
 import com.pmsadmin.dashboard.model.DashboardItemsModel;
+import com.pmsadmin.planreport.PlanningReports;
 import com.pmsadmin.seconddashboard.Dashboard2Activity;
 import com.pmsadmin.sharedhandler.LoginShared;
 
@@ -53,10 +54,18 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
                     Intent profileIntent = new Intent(activity, Dashboard2Activity.class);
                     activity.startActivity(profileIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else if(list.get(i).getItem().equals("Projects")){
+                }
+
+                else if(list.get(i).getItem().equals("Projects")){
                     /*Intent profileIntent = new Intent(activity, AddSiteActivity.class);
                     activity.startActivity(profileIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+                }
+
+                else if(list.get(i).getItem().equals("Planning & Reports")){
+                    Intent profileIntent = new Intent(activity, PlanningReports.class);
+                   activity.startActivity(profileIntent);
+                   activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

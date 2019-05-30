@@ -87,19 +87,19 @@ public interface ApiInterface {
 
     @PUT(LOGOUT_API)
     Call<ResponseBody> callLogoutApi(@Header("Authorization") String Bearer,
-                                                @Path("attendance_id") String attendance_id,
-                                                @Body JsonObject object);
+                                     @Path("attendance_id") String attendance_id,
+                                     @Body JsonObject object);
 
 
 
     @PUT(DEVIATION_JUSTIFICATION)
     Call<ResponseBody> call_deviation_justification(@Header("Authorization") String Bearer,
-                                                @Path("deviation_id") String deviation_id,
-                                                @Body JsonObject object);
+                                                    @Path("deviation_id") String deviation_id,
+                                                    @Body JsonObject object);
     @PUT(ATTANDANCE_JUSTIFICATION)
     Call<ResponseBody> call_attandance_justification(@Header("Authorization") String Bearer,
-                                                @Path("attandance_id") Integer attandance_id,
-                                                @Body JsonObject object);
+                                                     @Path("attandance_id") Integer attandance_id,
+                                                     @Body JsonObject object);
 
     @PUT(ATTENDENCEEDIT)
     Call<ResponseBody> call_attendanceEditApi(@Header("Authorization") String Bearer,
@@ -122,10 +122,10 @@ public interface ApiInterface {
                                           @Header("Content-Type") String Content_type,
                                           @Body JsonObject object);
 
-    @POST(TENDER_SURVEY_LOCATION_ADD)
-    Call<ResponseBody> call_tender_survey_location_add(@Header("Authorization") String Bearer,
+    /*@POST(TENDER_SURVEY_LOCATION_ADD)
+    Call<ResponseBody> call_leaveApplyApi(@Header("Authorization") String Bearer,
                                           @Header("Content-Type") String Content_type,
-                                          @Body JsonObject object);
+                                          @Body JsonObject object);*/
 
     @GET(LEAVEAPPLYLIST)
     Call<ResponseBody> call_leaveListApi(@Header("Authorization") String Bearer,
@@ -148,8 +148,8 @@ public interface ApiInterface {
 
     @POST(ADDSITE)
     Call<ResponseBody> call_siteAddApi(@Header("Authorization") String Bearer,
-                                          @Header("Content-Type") String Content_type,
-                                          @Body JsonObject object);
+                                       @Header("Content-Type") String Content_type,
+                                       @Body JsonObject object);
 
     @GET(MARKERGET)
     Call<ResponseBody> call_markerGetApi(@Header("Authorization") String Bearer,
@@ -157,14 +157,20 @@ public interface ApiInterface {
 
     @GET(ATTENDENCE_DEVIATION_LIST)
     Call<ResponseBody> call_deviation_listApi(@Header("Authorization") String Bearer,
-                                            @Header("Content-Type") String Content_type,
+                                              @Header("Content-Type") String Content_type,
                                               @Query("attandance") Integer attendence_id);
 
     @GET(TENDERS_ADD)
     Call<ResponseBody> call_tenders_add(@Header("Authorization") String Bearer,
                                         @Header("Content-Type") String Content_type);
 
+
+    @POST(TENDER_SURVEY_LOCATION_ADD)
+    Call<ResponseBody> call_tender_survey_location_add(@Header("Authorization") String Bearer,
+                                                       @Header("Content-Type") String Content_type,
+                                                       @Body JsonObject object);
+
     @GET(TENDER_SURVEY_LOCATION_LIST)
     Call<ResponseBody> call_tender_survey_location_list(@Header("Authorization") String Bearer,
-                                            @Path("tender_id") String tender_id);
+                                                        @Path("tender_id") String tender_id);
 }
