@@ -60,4 +60,21 @@ public class ApiList {
     public static final String machineries_wp_list="machineries_wp_list/";
     public static final String unit_add="unit_add/";
 
+
+    public static final String RAW_MATERIALS_LIST="materials_list/";
+    public static final String CRUSHER_LIST="external_users_list/?user_type=7";
+    public static final String ESTABLISHMENT_ADD="tender_survey_resource_establishment_add/";
+    public static final String ADD_SITE_PHOTOSF="tender_survey_site_photos_add/";
+    public static final String ADD_HYDROLOGICAL="tender_survey_resource_hydrological_add/";
+
+    public static final String GET_SITE_PHOTO_LIST = "tender_survey_site_photos_list/{tender_id}/";
+
+    public static final String GET_RESOURCE_ESTABLISHMENT="tender_survey_resource_establishment_add/?";
+    public static final String GET_RESOURCE_HYDRO="tender_survey_resource_hydrological_add/?";
+    public static final String ADD_CONTRACT_VENDOR="tender_survey_resource_contractors_o_vendors_contarctor_w_type_add/";
+
+
+
+
+
 }

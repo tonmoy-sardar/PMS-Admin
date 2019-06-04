@@ -35,15 +35,30 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".dialog.AddChkInDialogue"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+        <activity android:name=".survey.resource.hydrological_data.AddHydrologicalData"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
+
+        </activity>
+        <activity android:name=".survey.resource.hydrological_data.HydrologicalActivity" />
+        <activity android:name=".survey.SitePhotoDetailsActivity" />
+        <activity
+            android:name=".survey.resource.AddEstablishmentActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity android:name=".survey.resource.EstablishmentActivity" />
+        <activity android:name=".survey.coordinates.CrusherActivity" />
+        <activity android:name=".survey.resource.ResourceActivity" />
+        <activity android:name=".survey.coordinates.RawMaterialsActivity" />
+        <activity
+            android:name=".dialog.AddChkInDialogue"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity android:name=".survey.coordinates.CheckInActivity" />
         <activity android:name=".survey.coordinates.CoordinatesActivity" />
         <activity android:name=".survey.SitePhotoSurvey" />
         <activity
             android:name=".survey.StartSurveyHome"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".tenders_list.TendorsListing"
             android:launchMode="singleTask"
@@ -109,7 +124,8 @@
             android:name=".login.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:noHistory="true">
 
             <!--
             <intent-filter>
@@ -123,11 +139,11 @@
             android:name=".planreport.PlanningReports"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
-            android:name=".planreport.AddDailyData"
+            android:name=".add_daily_report.AddDailyData"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- The API key for Google Maps-based APIs. -->

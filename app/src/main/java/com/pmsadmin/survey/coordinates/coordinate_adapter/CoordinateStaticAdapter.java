@@ -15,6 +15,8 @@ import com.pmsadmin.survey.SurveyStaticModel;
 import com.pmsadmin.survey.adapter.StartSurveyStaticAdapter;
 import com.pmsadmin.survey.coordinates.CheckInActivity;
 import com.pmsadmin.survey.coordinates.CoordinatesActivity;
+import com.pmsadmin.survey.coordinates.CrusherActivity;
+import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
 
 import java.util.List;
 
@@ -55,6 +57,12 @@ public class CoordinateStaticAdapter extends RecyclerView.Adapter<CoordinateStat
                 if(itemCoordinates.get(position).getItem().equals("CHECK IN")){
 
                     Intent intent = new Intent(activity, CheckInActivity.class);
+                    activity.startActivity(intent);
+                }else if (itemCoordinates.get(position).getItem().equals("RAW MATERIALS")){
+                    Intent intent = new Intent(activity, RawMaterialsActivity.class);
+                    activity.startActivity(intent);
+                }else if (itemCoordinates.get(position).getItem().equals("CRUSHER")){
+                    Intent intent = new Intent(activity, CrusherActivity.class);
                     activity.startActivity(intent);
                 }
             }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pmsadmin.survey.resource.AddEstablishmentActivity"
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp"
+    android:background="@color/gray_view_color">
+
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_border_solid_white"
+        android:hint="Name"
+        android:padding="@dimen/_10sdp"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/textcolor"/>
+
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_border_solid_white"
+        android:hint="Deatails"
+        android:padding="@dimen/_10sdp"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/textcolor"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <Button
+        android:id="@+id/btSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:background="@drawable/ok_button"
+        android:textSize="@dimen/_15sdp"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

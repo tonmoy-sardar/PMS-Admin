@@ -42,11 +42,12 @@
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/editext_bg">
+        android:background="@drawable/editext_bg"
+        android:visibility="gone">
 
-        <TextView
+        <EditText
             android:id="@+id/tvSearchLocation"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
@@ -57,7 +58,8 @@
             android:paddingLeft="@dimen/_10sdp"
             android:textColor="#000000"
             android:textColorHint="#7A8790"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_11sdp"
+            android:editable="false" />
     </RelativeLayout>
 
     <LinearLayout
@@ -67,7 +69,8 @@
         android:layout_below="@+id/rl_reason"
         android:gravity="center"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp">
 
         <Button
             android:id="@+id/btn_submit"

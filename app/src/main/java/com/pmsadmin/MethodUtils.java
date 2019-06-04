@@ -235,6 +235,44 @@ public class MethodUtils {
         return list;
     }
 
+    public static List<SurveyStaticModel> getResourceItems(){
+
+        List<SurveyStaticModel> list = new ArrayList<>();
+
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("MATERIAL");
+            surveyStaticModel.setImageId(R.drawable.site_photo);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("ESTABLISHMENT");
+            surveyStaticModel.setImageId(R.drawable.coordinates);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("HYDROLOGIAL DATA");
+            surveyStaticModel.setImageId(R.drawable.resource);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("CONTRACTORS/VENDORS");
+            surveyStaticModel.setImageId(R.drawable.resource);
+            list.add(surveyStaticModel);
+        }
+        {
+            SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
+            surveyStaticModel.setItem("CONTACT DETAILS");
+            surveyStaticModel.setImageId(R.drawable.resource);
+            list.add(surveyStaticModel);
+        }
+
+        return list;
+    }
+
 
     public static List<SurveyStaticModel> getItemCoordinates(){
 
@@ -284,6 +322,13 @@ public class MethodUtils {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
             dashBoardModelImage.setItem("SURVEY");
             dashBoardModelImage.setImageId(R.drawable.pre_execution_icon);
+            list.add(dashBoardModelImage);
+        }
+
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("UPDATE DAILY PROGRESS");
+            dashBoardModelImage.setImageId(R.drawable.add_daily_data);
             list.add(dashBoardModelImage);
         }
 

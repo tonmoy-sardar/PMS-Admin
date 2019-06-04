@@ -1,6 +1,8 @@
 package com.pmsadmin.dialog;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import im.delight.android.location.SimpleLocation;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -11,6 +13,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,13 +38,19 @@ import com.pmsadmin.leavesection.LeaveActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
+import com.pmsadmin.survey.coordinates.CheckInActivity;
+import com.pmsadmin.survey.coordinates.coordinate_adapter.CheckInAdapter;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class AddChkInDialogue extends Activity {
 
-    private TextView tvSearchLocation;
+    private EditText tvSearchLocation;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 4;
 
     private double placesLat;
@@ -51,6 +61,20 @@ public class AddChkInDialogue extends Activity {
 
     private LoadingData loader;
 
+    private CheckInAdapter checkInAdapter;
+
+
+    public List<Address> addresses;
+    Geocoder geocoder;
+
+    private double currentLat;
+    private double currentLng;
+
+    private SimpleLocation location;
+    private Button btn_cancel;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,29 +83,94 @@ public class AddChkInDialogue extends Activity {
         loader = new LoadingData(AddChkInDialogue.this);
 
 
+        geocoder = new Geocoder(AddChkInDialogue.this, Locale.getDefault());
+
+        location = new SimpleLocation(this, false, false, 10000);
+
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(this);
+
+
+        }
+
+
+        location.setListener(new SimpleLocation.Listener() {
+
+            public void onPositionChanged() {
+                // new location data has been received and can be accessed
+
+                currentLat = location.getLatitude();
+                currentLng = location.getLongitude();
+
+            }
+
+        });
+
+        if (currentLat == 0.0 && currentLng == 0.0) {
+            int i = 0;
+            while (i < 5) {
+                currentLat = location.getLatitude();
+                currentLng = location.getLongitude();
+                if (currentLat == 0.0 && currentLng == 0.0) {
+                    i++;
+                } else {
+                    break;
+                }
+            }
+        }
+
+
+        try {
+            addresses = geocoder.getFromLocation(currentLat, currentLng, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("adress: "+ addresses.get(0).getAddressLine(0));
+
+
+
         initLayout();
     }
 
     private void initLayout() {
 
-        tvSearchLocation = (TextView) findViewById(R.id.tvSearchLocation);
+        tvSearchLocation = (EditText) findViewById(R.id.tvSearchLocation);
+
+        tvSearchLocation.setText(addresses.get(0).getAddressLine(0));
+        tvSearchLocation.setEnabled(false);
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_cancel = (Button) findViewById(R.id.btn_cancel);
 
         etProject = (EditText) findViewById(R.id.etProject);
 
-        tvSearchLocation.setOnClickListener(new View.OnClickListener() {
+        /*tvSearchLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openAutocompleteActivity();
             }
-        });
+        });*/
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                callAddSurveyApi();
+                if (currentLat == 0.0 && currentLng == 0.0) {
+                    MethodUtils.errorMsg(AddChkInDialogue.this, "Unable to find Location");
+                }else {
+                    callAddSurveyApi();
+                }
+            }
+        });
+
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -92,9 +181,9 @@ public class AddChkInDialogue extends Activity {
         JsonObject object = new JsonObject();
         object.addProperty("tender", String.valueOf(MethodUtils.tender_id));
         object.addProperty("name", etProject.getText().toString().trim());
-        object.addProperty("latitude", String.valueOf(placesLat));
-        object.addProperty("longitude", String.valueOf(placesLng));
-        object.addProperty("address", tvSearchLocation.getText().toString().trim());
+        object.addProperty("latitude", String.valueOf(currentLat));
+        object.addProperty("longitude", String.valueOf(currentLng));
+        object.addProperty("address", addresses.get(0).getAddressLine(0));
 
 
         System.out.println("objectsurvey: "+object.toString());
@@ -126,9 +215,6 @@ public class AddChkInDialogue extends Activity {
                             tvSearchLocation.setText("");
                             finish();
                         }
-
-
-
 
 
                     } else {

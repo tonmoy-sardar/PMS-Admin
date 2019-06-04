@@ -40,6 +40,7 @@ import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.login.LoginActivity;
+import com.pmsadmin.netconnection.ConnectionDetector;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
@@ -344,14 +345,20 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
                 if (hours < 16) {
 
-                    System.out.println("LessMins: "+ String.valueOf(mins));
+                    //System.out.println("LessMins: "+ String.valueOf(mins));
+                    System.out.println("LessMins: "+ String.valueOf(hours));
                     //System.out.println("difference: " + diff);
                     //callAttandance_editApi();
                 } else {
 
-                    System.out.println("Mins: "+ String.valueOf(mins));
-
+                    //System.out.println("Mins: "+ String.valueOf(mins));
+                    System.out.println("Mins: "+ String.valueOf(hours));
                     callLogoutApi();
+                    /*if(ConnectionDetector.isConnectingToInternet(getApplicationContext())){
+                        callLogoutApi();
+                    }else {
+                        //callLogoutApi();
+                    }*/
                     //callAttendandanceLogout();
                 }
 

@@ -2,6 +2,8 @@ package com.pmsadmin.networkUtils;
 
 import com.google.gson.JsonObject;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -9,12 +11,18 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 import static com.pmsadmin.apilist.ApiList.ADDSITE;
+//import static com.pmsadmin.apilist.ApiList.ADD_CONTRACT_HYDRO;
+import static com.pmsadmin.apilist.ApiList.ADD_CONTRACT_VENDOR;
+import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL;
+import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
 import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
 import static com.pmsadmin.apilist.ApiList.ATTANDANCE_JUSTIFICATION;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCEADD;
@@ -24,10 +32,15 @@ import static com.pmsadmin.apilist.ApiList.ATTENDANCELOCATIONUPDATE;
 import static com.pmsadmin.apilist.ApiList.ATTENDENCEEDIT;
 import static com.pmsadmin.apilist.ApiList.ATTENDENCE_DEVIATION_LIST;
 import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
+import static com.pmsadmin.apilist.ApiList.CRUSHER_LIST;
 import static com.pmsadmin.apilist.ApiList.DEVIATION_JUSTIFICATION;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
+import static com.pmsadmin.apilist.ApiList.ESTABLISHMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
 import static com.pmsadmin.apilist.ApiList.GETSITETYPE;
+import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_ESTABLISHMENT;
+import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_HYDRO;
+import static com.pmsadmin.apilist.ApiList.GET_SITE_PHOTO_LIST;
 import static com.pmsadmin.apilist.ApiList.LEAVEAPPLY;
 import static com.pmsadmin.apilist.ApiList.LEAVEAPPLYLIST;
 import static com.pmsadmin.apilist.ApiList.LEAVEHISTORY;
@@ -36,15 +49,26 @@ import static com.pmsadmin.apilist.ApiList.LOGOUT;
 import static com.pmsadmin.apilist.ApiList.LOGOUT_API;
 import static com.pmsadmin.apilist.ApiList.MARKERGET;
 import static com.pmsadmin.apilist.ApiList.PROJECT_LIST;
+import static com.pmsadmin.apilist.ApiList.RAW_MATERIALS_LIST;
 import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
 import static com.pmsadmin.apilist.ApiList.TENDERS_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_LOCATION_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_LOCATION_LIST;
+import static com.pmsadmin.apilist.ApiList.machineries_wp_list;
+import static com.pmsadmin.apilist.ApiList.pms_execution_daily_progress_add;
+import static com.pmsadmin.apilist.ApiList.pms_execution_daily_progress_pandm_add;
+import static com.pmsadmin.apilist.ApiList.pms_execution_labour_progress_add;
+import static com.pmsadmin.apilist.ApiList.project_site_management_site_add;
+import static com.pmsadmin.apilist.ApiList.projects_details_by_project_site_id;
+import static com.pmsadmin.apilist.ApiList.unit_add;
 
 public interface ApiInterface {
 
+//    @POST(LOGIN)
+//    Call<ResponseBody> call_loginApi(@Body JsonObject object);
+
     @POST(LOGIN)
-    Call<ResponseBody> call_loginApi(@Body JsonObject object);
+    Call<ResponseBody> call_loginApi(  @Header("Content-Type") String Content_type,@Body JsonObject object);
 
     @POST(FORGOT)
     Call<ResponseBody> call_forgotPasswordApi(@Body JsonObject object);
@@ -170,7 +194,89 @@ public interface ApiInterface {
                                                        @Header("Content-Type") String Content_type,
                                                        @Body JsonObject object);
 
+
+
+    @GET(project_site_management_site_add)
+    Call<ResponseBody> call_projectlistApi(@Header("Authorization") String Bearer);
+
+    @POST(pms_execution_daily_progress_pandm_add)
+    Call<ResponseBody> pms_execution_daily_progress_pandm_add(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Body JsonObject object);
+
+    @GET(machineries_wp_list)
+    Call<ResponseBody> call_machineries_wp_list(@Header("Authorization") String Bearer);
+
+    @GET(projects_details_by_project_site_id)
+    Call<ResponseBody> call_projectid(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Query("site_location") String site_location);
+
+    @POST(pms_execution_labour_progress_add)
+    Call<ResponseBody> pms_execution_labour_progress_add(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JsonObject object);
+
+    @GET(unit_add)
+    Call<ResponseBody> call_unit_add(@Header("Authorization") String Bearer);
+
+    @POST(pms_execution_daily_progress_add)
+    Call<ResponseBody> call_ppms_execution_daily_progress_add(@Header("Authorization") String Bearer,
+                                                              @Header("Content-Type") String Content_type,
+                                                              @Body JsonObject object);
+
+    @GET(RAW_MATERIALS_LIST)
+    Call<ResponseBody> call_raw_materials_listing(@Header("Authorization") String Bearer,
+                                        @Header("Content-Type") String Content_type);
+
+    @GET(CRUSHER_LIST)
+    Call<ResponseBody> call_crusher_list_api(@Header("Authorization") String Bearer,
+                                        @Header("Content-Type") String Content_type);
+
+    @POST(ESTABLISHMENT_ADD)
+    Call<ResponseBody> call_establishment_add(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JsonObject object);
+
+    @POST(ADD_HYDROLOGICAL)
+    Call<ResponseBody> call_add_hydrological(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JsonObject object);
+
+    @POST(ADD_CONTRACT_VENDOR)
+    Call<ResponseBody> call_(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JsonObject object);
+    @Multipart
+    @POST(ADD_SITE_PHOTOSF)
+    Call<ResponseBody> call_add_site_photos(@Part MultipartBody.Part file,
+                                            @Part("tender") RequestBody tender,
+                                            @Part("latitude") RequestBody latitude,
+                                            @Part("longitude") RequestBody longitude,
+                                            @Part("address") RequestBody address,
+                                            @Part("additional_notes") RequestBody additional_notes,
+                                            @Part("document_name") RequestBody document_name);
+
     @GET(TENDER_SURVEY_LOCATION_LIST)
     Call<ResponseBody> call_tender_survey_location_list(@Header("Authorization") String Bearer,
                                                         @Path("tender_id") String tender_id);
+
+
+    @GET(GET_SITE_PHOTO_LIST)
+    Call<ResponseBody> call_get_site_photo_list(@Header("Authorization") String Bearer,
+                                                        @Path("tender_id") String tender_id);
+
+
+
+    @GET(GET_RESOURCE_ESTABLISHMENT)
+    Call<ResponseBody> call_get_establishment(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type,
+                                              @Query("tender") Integer tender);
+
+    @GET(GET_RESOURCE_HYDRO)
+    Call<ResponseBody> call_get_hydro(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type,
+                                              @Query("tender") Integer tender);
+
+
+
+
 }
+
+

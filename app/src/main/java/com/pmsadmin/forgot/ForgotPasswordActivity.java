@@ -156,6 +156,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     private void generateFile() {
         String fileName = PICTURE_NAME + new SimpleDateFormat("mm_dd_yyyy_HH_mm_ss").format(new Date());
         mFile = MediaUtils.getOutputMediaFile(ForgotPasswordActivity.this, MediaUtils.MEDIA_TYPE_IMAGE, FOLDER_NAME, fileName);
+
+        System.out.println("mFile---"+String.valueOf(mFile));
     }
 
     /*
@@ -222,6 +224,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
                     try {
                         mFile = FileUtil.from(this, data.getData());
+                        System.out.println("gallerYFilie: "+String.valueOf(data.getData()));
                         compressImage();
                     } catch (IOException e) {
                         e.printStackTrace();

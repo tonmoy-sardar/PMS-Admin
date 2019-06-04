@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pmsadmin.survey.SitePhotoDetailsActivity"
+    android:orientation="vertical"
+    android:padding="@dimen/_15sdp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:padding="@dimen/_15sdp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bgcolor">
+
+            <ImageView
+                android:id="@+id/ivDocument"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_icon"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Additional Notes: "
+        android:paddingTop="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:textColor="@color/textcolor"/>
+
+
+    <TextView
+        android:id="@+id/tvAdditionalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:background="@color/bgcolor"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/textcolor"/>
+
+
+    <TextView
+        android:id="@+id/tvEdit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/button_icon"
+        android:text="Edit"
+        android:textSize="@dimen/_15sdp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+</LinearLayout>

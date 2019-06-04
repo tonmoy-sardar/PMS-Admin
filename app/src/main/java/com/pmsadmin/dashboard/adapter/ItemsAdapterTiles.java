@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.add_daily_report.AddDailyData;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dashboard.model.DashBoardModelImage;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
@@ -58,6 +59,15 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
                     Intent intent = new Intent(activity, TendorsListing.class);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    //MethodUtils.errorMsg(activity, "This section is under development");
+                }else if (items.get(i).getItem().equals("UPDATE DAILY PROGRESS")){
+
+                    Intent intent = new Intent(activity, AddDailyData.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    /*Intent intent = new Intent(activity, AddDailyData.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                     //MethodUtils.errorMsg(activity, "This section is under development");
                 }
             }

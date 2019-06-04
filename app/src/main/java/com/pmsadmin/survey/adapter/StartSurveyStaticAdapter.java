@@ -16,6 +16,10 @@ import com.pmsadmin.survey.SitePhotoSurvey;
 import com.pmsadmin.survey.StartSurveyHome;
 import com.pmsadmin.survey.SurveyStaticModel;
 import com.pmsadmin.survey.coordinates.CoordinatesActivity;
+import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
+import com.pmsadmin.survey.resource.EstablishmentActivity;
+import com.pmsadmin.survey.resource.ResourceActivity;
+import com.pmsadmin.survey.resource.hydrological_data.HydrologicalActivity;
 
 import java.util.List;
 
@@ -60,6 +64,30 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
                 }else if (itemsSurvey.get(position).getItem().equals("COORDINATES")){
                     Intent intent = new Intent(activity, CoordinatesActivity.class);
                     activity.startActivity(intent);
+                } else if (itemsSurvey.get(position).getItem().equals("RESOURCE")){
+
+                    Intent intent = new Intent(activity, ResourceActivity.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else if (itemsSurvey.get(position).getItem().equals("MATERIAL")){
+
+                    Intent intent = new Intent(activity, RawMaterialsActivity.class);
+                    activity.startActivity(intent);
+                }else if (itemsSurvey.get(position).getItem().equals("ESTABLISHMENT")){
+
+                    //MethodUtils.errorMsg(activity, "This section is under development");
+                    Intent intent = new Intent(activity, EstablishmentActivity.class);
+                    activity.startActivity(intent);
+                }else if (itemsSurvey.get(position).getItem().equals("HYDROLOGIAL DATA")){
+
+                    //MethodUtils.errorMsg(activity, "This section is under development");
+                    Intent intent = new Intent(activity, HydrologicalActivity.class);
+                    activity.startActivity(intent);
+                }else if (itemsSurvey.get(position).getItem().equals("CONTRACTORS/VENDORS")){
+
+                    MethodUtils.errorMsg(activity, "This section is under development");
+                    /*Intent intent = new Intent(activity, EstablishmentActivity.class);
+                    activity.startActivity(intent);*/
                 }
             }
         });

@@ -23,11 +23,20 @@
             android:background="@color/bgcolor"
             android:padding="@dimen/_30sdp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/iv_profile"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/attachment_icon"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="0dp" />
+
+            <!--<ImageView
                 android:id="@+id/ivSelcetImage"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-                android:src="@drawable/attachment_icon" />
+                android:src="@drawable/attachment_icon" />-->
 
         </RelativeLayout>
 
