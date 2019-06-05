@@ -60,11 +60,11 @@ public class SitePhotoAdapter extends RecyclerView.Adapter<SitePhotoAdapter.MyVi
         holder.llStartSurveyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent = new Intent(activity, SitePhotoDetailsActivity.class);
                 intent.putExtra("document",sitePhotoResultList.get(position).getDocument());
                 intent.putExtra("additional_info",sitePhotoResultList.get(position).getAdditionalNotes());
+                intent.putExtra("id",sitePhotoResultList.get(position).getId());
+                System.out.println("id===========>>>"+sitePhotoResultList.get(position).getId());
                 activity.startActivity(intent);
             }
         });

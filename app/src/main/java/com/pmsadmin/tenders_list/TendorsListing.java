@@ -128,7 +128,7 @@ public class TendorsListing extends BaseActivity {
 
                         JSONObject jsonObject = new JSONObject(responseString);
 
-                        if (jsonObject.optInt("request_status") == 1) {
+                        //if (jsonObject.optInt("request_status") == 1) {
 
                             Gson gson = new Gson();
                             TendorsListingPojo tendorsListingPojo;
@@ -139,7 +139,7 @@ public class TendorsListing extends BaseActivity {
                             System.out.println("tendorsResultList: " + tendorsResultList.size());
 
                             tendorsAdapter.notifyDataSetChanged();
-                        }
+                        //}
 
 
                     } catch (IOException e) {

@@ -65,23 +65,23 @@
         android:id="@+id/tvSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
-        android:padding="@dimen/_10sdp"
-        android:background="@drawable/rounded_corner_button"
-        android:textSize="@dimen/_15sdp"
-        android:layout_marginRight="@dimen/_30sdp"
-        android:layout_marginLeft="@dimen/_30sdp"
-        android:textColor="@android:color/white"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:background="@drawable/rounded_corner_button"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Save"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_15sdp" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSiteImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_10sdp"
-        android:layout_margin="@dimen/_10sdp">
+        android:layout_margin="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
