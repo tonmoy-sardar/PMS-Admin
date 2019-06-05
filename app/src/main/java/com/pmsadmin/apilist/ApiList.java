@@ -49,6 +49,7 @@ public class ApiList {
     public static final String ATTANDANCE_JUSTIFICATION="attandance_justification_edit/{attandance_id}/";
     public static final String PROJECT_LIST = "projects_list/";
     public static final String TENDERS_ADD="tenders_add/";
+    //public static final String TENDERS_ADD="tenders_list/";
     public static final String TENDER_SURVEY_LOCATION_ADD ="tender_survey_location_add/";
     public static final String TENDER_SURVEY_LOCATION_LIST = "tender_survey_location_list/{tender_id}/";
 
@@ -72,6 +73,9 @@ public class ApiList {
     public static final String GET_RESOURCE_ESTABLISHMENT="tender_survey_resource_establishment_add/?";
     public static final String GET_RESOURCE_HYDRO="tender_survey_resource_hydrological_add/?";
     public static final String ADD_CONTRACT_VENDOR="tender_survey_resource_contractors_o_vendors_contarctor_w_type_add/";
+    public static final String GET_CONTRACT_VENDOR="tender_survey_resource_contractors_o_vendors_contarctor_w_type_add/?";
+    public static final String CONTRACT_VENDOR_DOC_ADD="tender_survey_resource_contractors_o_vendors_contarctor_w_type_document_add/";
+    public static final String MACHINERY_TYPE_ADD="tender_survey_resource_contractors_o_vendors_machinery_type_add/";
 
 
 

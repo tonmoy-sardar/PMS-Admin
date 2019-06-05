@@ -111,6 +111,8 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -371,7 +373,9 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                 openCalendarToDate(et_to);
                 break;
             case R.id.btn_apply:
+
                 checkValidation();
+
                 //leaveApplyApi();
                 break;
             case R.id.et_type:
@@ -392,12 +396,17 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                 btn_approval.setBackgroundColor(Color.parseColor("#2daada"));
                 rv_items.setVisibility(View.GONE);
                 rl_bottom.setVisibility(View.VISIBLE);
+                //btn_approval.setClickable(true);
                 break;
             case R.id.btn_approval:
                 btn_report.setBackgroundColor(Color.parseColor("#2daada"));
                 btn_approval.setBackgroundColor(Color.parseColor("#2a4e68"));
                 rv_items.setVisibility(View.VISIBLE);
                 rl_bottom.setVisibility(View.GONE);
+                //btn_approval.setClickable(false);
+                list.clear();
+                page1 = 1;
+                adapter.notifyDataSetChanged();
                 setLeaveHistoryApi();
                 break;
 

@@ -32,12 +32,14 @@ import static com.pmsadmin.apilist.ApiList.ATTENDANCELOCATIONUPDATE;
 import static com.pmsadmin.apilist.ApiList.ATTENDENCEEDIT;
 import static com.pmsadmin.apilist.ApiList.ATTENDENCE_DEVIATION_LIST;
 import static com.pmsadmin.apilist.ApiList.CHANGEPASSWORD;
+import static com.pmsadmin.apilist.ApiList.CONTRACT_VENDOR_DOC_ADD;
 import static com.pmsadmin.apilist.ApiList.CRUSHER_LIST;
 import static com.pmsadmin.apilist.ApiList.DEVIATION_JUSTIFICATION;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
 import static com.pmsadmin.apilist.ApiList.ESTABLISHMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
 import static com.pmsadmin.apilist.ApiList.GETSITETYPE;
+import static com.pmsadmin.apilist.ApiList.GET_CONTRACT_VENDOR;
 import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_ESTABLISHMENT;
 import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_HYDRO;
 import static com.pmsadmin.apilist.ApiList.GET_SITE_PHOTO_LIST;
@@ -240,7 +242,7 @@ public interface ApiInterface {
                                                          @Body JsonObject object);
 
     @POST(ADD_CONTRACT_VENDOR)
-    Call<ResponseBody> call_(@Header("Authorization") String Bearer,
+    Call<ResponseBody> call_add_contract_vendor(@Header("Authorization") String Bearer,
                                                          @Header("Content-Type") String Content_type,
                                                          @Body JsonObject object);
     @Multipart
@@ -252,6 +254,15 @@ public interface ApiInterface {
                                             @Part("address") RequestBody address,
                                             @Part("additional_notes") RequestBody additional_notes,
                                             @Part("document_name") RequestBody document_name);
+    @Multipart
+    @POST(CONTRACT_VENDOR_DOC_ADD)
+    Call<ResponseBody> call_add_contract_vendor_w_doc(@Part MultipartBody.Part file,
+                                                       @Part("tender") RequestBody tender,
+                                                       @Part("module_id") RequestBody module_id,
+                                                       @Part("document_name") RequestBody document_name);
+
+
+
 
     @GET(TENDER_SURVEY_LOCATION_LIST)
     Call<ResponseBody> call_tender_survey_location_list(@Header("Authorization") String Bearer,
@@ -271,6 +282,11 @@ public interface ApiInterface {
 
     @GET(GET_RESOURCE_HYDRO)
     Call<ResponseBody> call_get_hydro(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type,
+                                              @Query("tender") Integer tender);
+
+    @GET(GET_CONTRACT_VENDOR)
+    Call<ResponseBody> call_get_contract_vendor(@Header("Authorization") String Bearer,
                                               @Header("Content-Type") String Content_type,
                                               @Query("tender") Integer tender);
 

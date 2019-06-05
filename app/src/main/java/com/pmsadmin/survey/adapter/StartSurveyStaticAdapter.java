@@ -19,6 +19,7 @@ import com.pmsadmin.survey.coordinates.CoordinatesActivity;
 import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
 import com.pmsadmin.survey.resource.EstablishmentActivity;
 import com.pmsadmin.survey.resource.ResourceActivity;
+import com.pmsadmin.survey.resource.contractor_vendor.ContractorsVendorsActivity;
 import com.pmsadmin.survey.resource.hydrological_data.HydrologicalActivity;
 
 import java.util.List;
@@ -60,10 +61,12 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
                 if(itemsSurvey.get(position).getItem().equals("SITE PHOTOS")) {
                     Intent intent = new Intent(activity, SitePhotoSurvey.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     //intent.putExtra()
                 }else if (itemsSurvey.get(position).getItem().equals("COORDINATES")){
                     Intent intent = new Intent(activity, CoordinatesActivity.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else if (itemsSurvey.get(position).getItem().equals("RESOURCE")){
 
                     Intent intent = new Intent(activity, ResourceActivity.class);
@@ -73,21 +76,25 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
 
                     Intent intent = new Intent(activity, RawMaterialsActivity.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemsSurvey.get(position).getItem().equals("ESTABLISHMENT")){
 
                     //MethodUtils.errorMsg(activity, "This section is under development");
                     Intent intent = new Intent(activity, EstablishmentActivity.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemsSurvey.get(position).getItem().equals("HYDROLOGIAL DATA")){
 
                     //MethodUtils.errorMsg(activity, "This section is under development");
                     Intent intent = new Intent(activity, HydrologicalActivity.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemsSurvey.get(position).getItem().equals("CONTRACTORS/VENDORS")){
 
-                    MethodUtils.errorMsg(activity, "This section is under development");
-                    /*Intent intent = new Intent(activity, EstablishmentActivity.class);
-                    activity.startActivity(intent);*/
+                    //MethodUtils.errorMsg(activity, "This section is under development");
+                    Intent intent = new Intent(activity, ContractorsVendorsActivity.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

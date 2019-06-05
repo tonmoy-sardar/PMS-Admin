@@ -42,11 +42,15 @@ public class HydrologicalActivity extends BaseActivity {
     List<Result> resultHydroList = new ArrayList<>();
 
     private HydroAdapter hydroAdapter;
+    public View view;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hydrological);
+        view = View.inflate(this, R.layout.activity_hydrological, null);
+        addContentView(view);
+        //setContentView(R.layout.activity_hydrological);
 
         tvAdd = findViewById(R.id.tvAdd);
 

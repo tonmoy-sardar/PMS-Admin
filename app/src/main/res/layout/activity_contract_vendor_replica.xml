@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pmsadmin.survey.resource.contractor_vendor.ContractorsVendorsActivity"
+    android:orientation="vertical"
+    android:background="@color/bgcolor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvContractors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/inactive_button_color"
+            android:padding="@dimen/_17sdp"
+            android:textColor="@android:color/white"
+            android:text="CONTRACTORS"
+            android:textSize="@dimen/_12sdp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvPM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_17sdp"
+            android:layout_weight="1"
+
+            android:background="@color/link_color"
+            android:textColor="@android:color/white"
+            android:text="@string/p_and_m"
+            android:textSize="@dimen/_12sdp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvAdd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/button_icon"
+        android:text="ADD"
+        android:gravity="center"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"/>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>

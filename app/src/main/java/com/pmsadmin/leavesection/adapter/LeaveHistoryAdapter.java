@@ -53,16 +53,16 @@ public class LeaveHistoryAdapter extends RecyclerView.Adapter<LeaveHistoryAdapte
             holder.tv_reason.setText("");
         }
 
-        if(list.get(i).getApprovedStatus()==1){
+        if(list.get(i).getApprovedStatus()==2){
             holder.btn_status.setBackgroundResource(R.drawable.survey_btn);
             holder.btn_status.setText("Approved");
-        }else if (list.get(i).getApprovedStatus()==2){
+        }else if (list.get(i).getApprovedStatus()==3){
             holder.btn_status.setBackgroundResource(R.drawable.survey_pending);
-            holder.btn_status.setText("Pending");
+            holder.btn_status.setText("Rejected");
         }
         else{
             holder.btn_status.setBackgroundResource(R.drawable.survey_pending);
-            holder.btn_status.setText("Rejected");
+            holder.btn_status.setText("Pending");
         }
 
         if(list.get(i).getLeaveType() != null || !list.get(i).getLeaveType().equals("") ||

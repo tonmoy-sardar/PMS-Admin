@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_300sdp"
+    android:layout_height="@dimen/_300sdp"
+    tools:context="com.pmsadmin.dialog.AddContractorVendorDialogue"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/editext_bg"
+        android:padding="@dimen/_10sdp"
+        android:hint="Name"
+        android:textColor="@color/textcolor"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"/>
+
+    <EditText
+        android:id="@+id/etDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/editext_bg"
+        android:padding="@dimen/_10sdp"
+        android:hint="Detail"
+        android:textColor="@color/textcolor"
+        android:layout_margin="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:background="@drawable/button_icon"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Submit"
+        android:gravity="center"
+        android:textColor="@android:color/white"/>
+
+
+
+</LinearLayout>

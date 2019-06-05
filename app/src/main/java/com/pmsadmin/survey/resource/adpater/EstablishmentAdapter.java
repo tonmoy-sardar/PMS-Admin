@@ -32,6 +32,8 @@ public class EstablishmentAdapter extends RecyclerView.Adapter<EstablishmentAdap
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.raw_materials_item, parent, false);
 
+
+
         return new EstablishmentAdapter.MyViewHolder(itemView,activity);
     }
 
