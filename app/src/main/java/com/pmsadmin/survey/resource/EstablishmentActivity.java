@@ -31,6 +31,8 @@ import com.pmsadmin.survey.resource.establishment_pojo.Result;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,7 @@ public class EstablishmentActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_establishment, null);
         addContentView(view);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
         //setContentView(R.layout.activity_establishment);
 
@@ -76,16 +79,13 @@ public class EstablishmentActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        getEstablishmentList();
-
         setAdapter();
-
+        getEstablishmentList();
     }
 
     private void setAdapter() {
 
-        establishmentAdapter = new EstablishmentAdapter(EstablishmentActivity.this,resultEstablishment);
+       /* establishmentAdapter = new EstablishmentAdapter(EstablishmentActivity.this,resultEstablishment);
         rvEstablishment.setAdapter(establishmentAdapter);
         rvEstablishment.setItemAnimator(new DefaultItemAnimator());
         //mLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
@@ -93,12 +93,17 @@ public class EstablishmentActivity extends BaseActivity {
 
         LinearLayoutManager horizontalLayoutManager =
                 new LinearLayoutManager(EstablishmentActivity.this, RecyclerView.VERTICAL, false);
-
         rvEstablishment.setLayoutManager(horizontalLayoutManager);
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         rvEstablishment.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(EstablishmentActivity.this, 2);
-        rvEstablishment.addItemDecoration(itemOffset);
+        rvEstablishment.addItemDecoration(itemOffset);*/
+
+        establishmentAdapter = new EstablishmentAdapter(EstablishmentActivity.this,resultEstablishment);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        rvEstablishment.setLayoutManager(layoutManager);
+        rvEstablishment.setHasFixedSize(true);
+        rvEstablishment.setAdapter(establishmentAdapter);
 
     }
 
@@ -117,10 +122,7 @@ public class EstablishmentActivity extends BaseActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 if (response.code() == 201 || response.code() == 200) {
-
-                    if (resultEstablishment!=null){
-                        resultEstablishment.clear();
-                    }
+                    resultEstablishment.clear();
                     try {
                         String responseString = response.body().string();
                         EstablishmentPojo establishmentPojo;
@@ -129,7 +131,7 @@ public class EstablishmentActivity extends BaseActivity {
                         //tendorsResultList = tendorsListingPojo.getResult();
                         resultEstablishment.addAll(establishmentPojo.getResult());
                         establishmentAdapter.notifyDataSetChanged();
-
+                        System.out.println("establishment list=================>>>"+responseString);
 
                     } catch (IOException e) {
                         e.printStackTrace();

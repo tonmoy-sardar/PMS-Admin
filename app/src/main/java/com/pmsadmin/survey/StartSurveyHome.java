@@ -7,27 +7,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.pmsadmin.GridSpanSizeLookUp.GridSpanSizeLookupForListDetailsAdapter;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dashboard.DashBoardActivity;
 import com.pmsadmin.dashboard.adapter.ItemsAdapterTiles;
 import com.pmsadmin.survey.adapter.StartSurveyStaticAdapter;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
 
-public class StartSurveyHome extends AppCompatActivity {
+public class StartSurveyHome extends BaseActivity {
 
     private String tenderGID = "";
     private TextView tvTenderID;
     private RecyclerView rv_items;
 
+    public View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_survey_home2);
+        view = View.inflate(this, R.layout.activity_start_survey_home2, null);
+        //setContentView(R.layout.activity_start_survey_home2);
 
         Intent intent = getIntent();
         tenderGID = intent.getStringExtra("tenderGID");

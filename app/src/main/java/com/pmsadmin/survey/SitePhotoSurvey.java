@@ -138,6 +138,7 @@ public class SitePhotoSurvey extends BaseActivity {
         view = View.inflate(this, R.layout.activity_site_photo_survey, null);
         addContentView(view);
 
+
 //        a_token = LoginShared.getLoginToken(this);
         a_token = LoginShared.getLoginDataModel(this).getToken();
 
@@ -215,12 +216,17 @@ public class SitePhotoSurvey extends BaseActivity {
 
 
 
-        getSitePhotoList();
+        /*getSitePhotoList();
 
 
-        setAdapter();
+        setAdapter();*/
 
     }
+
+
+
+
+
 
     private void setAdapter() {
 
@@ -254,6 +260,10 @@ public class SitePhotoSurvey extends BaseActivity {
 
                 if (response.code() == 201 || response.code() == 200) {
 
+                    if (sitePhotoResultList!= null){
+                        sitePhotoResultList.clear();
+                    }
+
                     try {
                         String responseString = response.body().string();
                         Gson gson = new Gson();
@@ -285,6 +295,11 @@ public class SitePhotoSurvey extends BaseActivity {
         super.onResume();
 
         location.beginUpdates();
+
+
+        getSitePhotoList();
+        setAdapter();
+
     }
 
 

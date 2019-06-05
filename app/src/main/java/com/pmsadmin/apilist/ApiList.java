@@ -8,8 +8,8 @@ public class ApiList {
     //public static final String BASE_URL = "http://192.168.28.126:8000/";
 
 
-    //public static final String BASE_URL = "http://166.62.54.122:8001/";
-    public static final String BASE_URL = "http://192.168.24.243:8000/";
+    public static final String BASE_URL = "http://166.62.54.122:8001/";
+    //public static final String BASE_URL = "http://192.168.24.243:8000/";
 
    // public static final String BASE_URL = "http://166.62.54.122:8001/";
 
@@ -48,8 +48,12 @@ public class ApiList {
     public static final String DEVIATION_JUSTIFICATION="attandance_deviation_justification/{deviation_id}/";
     public static final String ATTANDANCE_JUSTIFICATION="attandance_justification_edit/{attandance_id}/";
     public static final String PROJECT_LIST = "projects_list/";
+
     public static final String TENDERS_ADD="tenders_add/";
     //public static final String TENDERS_ADD="tenders_list/";
+    //public static final String TENDERS_ADD="tenders_add/";
+   // public static final String TENDERS_ADD="tenders_list/";
+
     public static final String TENDER_SURVEY_LOCATION_ADD ="tender_survey_location_add/";
     public static final String TENDER_SURVEY_LOCATION_LIST = "tender_survey_location_list/{tender_id}/";
 
@@ -66,6 +70,11 @@ public class ApiList {
     public static final String CRUSHER_LIST="external_users_list/?user_type=7";
     public static final String ESTABLISHMENT_ADD="tender_survey_resource_establishment_add/";
     public static final String ADD_SITE_PHOTOSF="tender_survey_site_photos_add/";
+    public static final String TENDER_SURVEY_SITE_PHOTOS_EDIT="tender_survey_site_photos_edit/{id}/";
+    public static final String TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD="tender_survey_resource_establishment_document_add/";
+
+
+
     public static final String ADD_HYDROLOGICAL="tender_survey_resource_hydrological_add/";
 
     public static final String GET_SITE_PHOTO_LIST = "tender_survey_site_photos_list/{tender_id}/";

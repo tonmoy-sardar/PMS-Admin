@@ -6,59 +6,81 @@
     android:layout_height="match_parent"
     tools:context="com.pmsadmin.survey.SitePhotoDetailsActivity"
     android:orientation="vertical"
-    android:padding="@dimen/_15sdp">
+    android:background="@color/bgcolor"
+    >
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:padding="@dimen/_15sdp"
-        android:layout_gravity="center">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bgcolor">
-
-            <ImageView
-                android:id="@+id/ivDocument"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/logo_icon"
-                android:layout_gravity="center" />
-
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/ivDocument"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/logo_icon"
+        android:layout_margin="15dp"
+        />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Additional Notes: "
-        android:paddingTop="@dimen/_15sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:textColor="@color/textcolor"/>
+        android:text="Additional Notes : "
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/textcolor"
+        android:textSize="18dp"
+        />
 
 
-    <TextView
+    <EditText
         android:id="@+id/tvAdditionalInfo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:background="@color/bgcolor"
+        android:layout_height="150dp"
+        android:textColor="@color/textcolor"
+        android:layout_margin="15dp"
+        android:text="Additional Notes Details"
+        android:textSize="16dp"
+        android:background="@drawable/rectangle_border_solid_white"
         android:padding="@dimen/_10sdp"
-        android:textColor="@color/textcolor"/>
+        android:gravity="start"
+        />
 
 
-    <TextView
-        android:id="@+id/tvEdit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:background="@drawable/button_icon"
-        android:text="Edit"
-        android:textSize="@dimen/_15sdp"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="@dimen/_10sdp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        >
+
+
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="250dp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/button_icon"
+            android:text="Edit"
+            android:textSize="@dimen/_15sdp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textAllCaps="true"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="250dp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/button_icon"
+            android:text="submit"
+            android:textSize="@dimen/_15sdp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textAllCaps="true"
+            android:visibility="gone"
+            />
+
+
+    </RelativeLayout>
+
+
 
 </LinearLayout>

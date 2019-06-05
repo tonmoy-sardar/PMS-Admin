@@ -23,6 +23,8 @@ import static com.pmsadmin.apilist.ApiList.ADDSITE;
 import static com.pmsadmin.apilist.ApiList.ADD_CONTRACT_VENDOR;
 import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL;
 import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
+import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD;
+import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_SITE_PHOTOS_EDIT;
 import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
 import static com.pmsadmin.apilist.ApiList.ATTANDANCE_JUSTIFICATION;
 import static com.pmsadmin.apilist.ApiList.ATTANDENCEADD;
@@ -261,6 +263,26 @@ public interface ApiInterface {
                                                        @Part("module_id") RequestBody module_id,
                                                        @Part("document_name") RequestBody document_name);
 
+
+
+
+    @Multipart
+    @PUT(TENDER_SURVEY_SITE_PHOTOS_EDIT)
+    Call<ResponseBody> call_site_photos_edit(@Path("id") Integer id,
+                                             @Part MultipartBody.Part file,
+                                            @Part("latitude") RequestBody latitude,
+                                            @Part("longitude") RequestBody longitude,
+                                            @Part("address") RequestBody address,
+                                            @Part("additional_notes") RequestBody additional_notes,
+                                            @Part("document_name") RequestBody document_name);
+
+
+    @Multipart
+    @POST(TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD)
+    Call<ResponseBody> call_add_establishment_document(@Part MultipartBody.Part file,
+                                            @Part("tender") RequestBody tender,
+                                            @Part("module_id") RequestBody module_id,
+                                            @Part("document_name") RequestBody document_name);
 
 
 
