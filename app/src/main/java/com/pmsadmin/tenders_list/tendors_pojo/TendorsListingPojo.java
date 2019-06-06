@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class TendorsListingPojo implements Serializable
 {
 
-    @SerializedName("results")
+    @SerializedName("result")
     @Expose
     private List<Result> result = null;
     @SerializedName("request_status")

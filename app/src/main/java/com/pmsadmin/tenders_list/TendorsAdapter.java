@@ -51,6 +51,7 @@ public class TendorsAdapter extends RecyclerView.Adapter<TendorsAdapter.MyViewHo
 
                     Intent intent = new Intent(activity, StartSurveyHome.class);
                     intent.putExtra("tenderGID", tendorsResultList.get(position).getTenderGId());
+
                     intent.putExtra("tender_id", tendorsResultList.get(position).getId());
                     activity.startActivity(intent);
 

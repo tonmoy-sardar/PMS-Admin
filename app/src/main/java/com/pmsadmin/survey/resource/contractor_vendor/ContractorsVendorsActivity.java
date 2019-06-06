@@ -174,8 +174,6 @@ public class ContractorsVendorsActivity extends BaseActivity {
                 new LinearLayoutManager(ContractorsVendorsActivity.this, RecyclerView.VERTICAL, false);
 
         rvItems.setLayoutManager(horizontalLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rvItems.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(ContractorsVendorsActivity.this, 2);
         rvItems.addItemDecoration(itemOffset);
 

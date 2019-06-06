@@ -85,7 +85,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
     private SimpleLocation location;
     private LoadingData loader;
 
-    private ImageView ivSelect;
+    private ImageView ivSelect,ivPdf;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private int PICK_PDF_REQUEST = 1;
 
@@ -94,9 +94,10 @@ public class AddContractorVendorDialogue extends BaseActivity {
 
     public static String a_token;
 
-    Integer moduleID;
+    Integer moduleID = 0;
 
     private TextView tvUpload;
+    public View view;
 
 
     @Override
@@ -104,6 +105,8 @@ public class AddContractorVendorDialogue extends BaseActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_add_contractor_vendor_dialogue);
         setContentView(R.layout.add_contract_layout);
+        view = View.inflate(this, R.layout.add_contract_layout, null);
+        addContentView(view);
         //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
        /* etName = findViewById(R.id.etName);
@@ -115,6 +118,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
         etDocumentName = findViewById(R.id.etDocumentName);
         tvSubmit = findViewById(R.id.tvSubmit);
         ivSelect = findViewById(R.id.ivSelect);
+        ivPdf = findViewById(R.id.ivPdf);
         tvUpload = findViewById(R.id.tvUpload);
 
 
@@ -198,7 +202,10 @@ public class AddContractorVendorDialogue extends BaseActivity {
             public void onClick(View v) {
 
                 System.out.println("Uploadfile: "+String.valueOf(file)+" id: "+String.valueOf(moduleID));
-                UploadDocuments(file);
+
+                if (moduleID != 0) {
+                    UploadDocuments(file);
+                }
             }
         });
 
@@ -268,6 +275,10 @@ public class AddContractorVendorDialogue extends BaseActivity {
             try {
                 file = FileUtil.from(this, data.getData());
                 System.out.println("filePath: " + String.valueOf(file));
+                if (file!= null){
+                    ivSelect.setVisibility(View.GONE);
+                    ivPdf.setVisibility(View.VISIBLE);
+                }
 
                 String str = String.valueOf(file);
 
@@ -328,7 +339,10 @@ public class AddContractorVendorDialogue extends BaseActivity {
                         Gson gson = new Gson();
                         addContractVendorResponse = gson.fromJson(responseString,AddContractVendorResponse.class);
 
+                        MethodUtils.errorMsg(getApplicationContext(),"Now you can upload Document.");
+
                         moduleID = addContractVendorResponse.getId();
+                        tvUpload.setVisibility(View.VISIBLE);
 
 
 
@@ -390,6 +404,9 @@ public class AddContractorVendorDialogue extends BaseActivity {
                         Log.d("responseString", responseString);
                         System.out.println("respons_save_data===========>>>" + responseString);
                         Toast.makeText(AddContractorVendorDialogue.this, "Data uploaded sucessfully", Toast.LENGTH_SHORT).show();
+
+                        ivSelect.setVisibility(View.VISIBLE);
+                        ivPdf.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
