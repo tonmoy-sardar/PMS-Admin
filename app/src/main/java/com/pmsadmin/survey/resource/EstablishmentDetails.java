@@ -267,6 +267,8 @@ public class EstablishmentDetails extends BaseActivity {
                         Log.d("responseString",responseString);
                         System.out.println("respons_save_data===========>>>"+responseString);
                         Toast.makeText(EstablishmentDetails.this,"Document Added sucessfully",Toast.LENGTH_SHORT).show();
+                        arrayList_obj.add(new JSONObject(responseString));
+                        establishmentDocumentListAdapter.notifyDataSetChanged();
                     }
                 }
                 catch (Exception e) {
