@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:id="@+id/ll_doc_view"
     >
 
     <ImageView

@@ -49,8 +49,8 @@ public class ApiList {
     public static final String ATTANDANCE_JUSTIFICATION="attandance_justification_edit/{attandance_id}/";
     public static final String PROJECT_LIST = "projects_list/";
 
-    public static final String TENDERS_ADD="tenders_add/";
-    //public static final String TENDERS_ADD="tenders_list/";
+    //public static final String TENDERS_ADD="tenders_add/";
+    public static final String TENDERS_ADD="tenders_list/";
     //public static final String TENDERS_ADD="tenders_add/";
    // public static final String TENDERS_ADD="tenders_list/";
 

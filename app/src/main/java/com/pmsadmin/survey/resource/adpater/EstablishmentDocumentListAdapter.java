@@ -1,11 +1,14 @@
 package com.pmsadmin.survey.resource.adpater;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pmsadmin.R;
@@ -39,9 +42,22 @@ public class EstablishmentDocumentListAdapter extends RecyclerView.Adapter<Estab
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         try {
             holder.tv_doc_name.setText(arrayList.get(position).getString("document_name"));
+
+            holder.ll_doc_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = null;
+                    try {
+                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(arrayList.get(position).getString("document")));
+                        context.startActivity(browserIntent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -57,11 +73,12 @@ public class EstablishmentDocumentListAdapter extends RecyclerView.Adapter<Estab
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_doc_name;
-        CheckBox checkBox;
+        LinearLayout ll_doc_view;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_doc_name = itemView.findViewById(R.id.tv_doc_name);
+            ll_doc_view = itemView.findViewById(R.id.ll_doc_view);
         }
     }
 }

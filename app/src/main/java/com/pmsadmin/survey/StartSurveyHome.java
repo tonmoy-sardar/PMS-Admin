@@ -32,6 +32,7 @@ public class StartSurveyHome extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_start_survey_home2, null);
+        addContentView(view);
         //setContentView(R.layout.activity_start_survey_home2);
 
         Intent intent = getIntent();
