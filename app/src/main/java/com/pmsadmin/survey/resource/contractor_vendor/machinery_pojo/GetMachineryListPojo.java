@@ -1,15 +1,15 @@
 
-package com.pmsadmin.tenders_list.tendors_pojo;
+package com.pmsadmin.survey.resource.contractor_vendor.machinery_pojo;
 
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TendorsListingPojo implements Serializable
+public class GetMachineryListPojo implements Serializable
 {
 
-    @SerializedName("results")
+    @SerializedName("result")
     @Expose
     private List<Result> result = null;
     @SerializedName("request_status")
@@ -18,7 +18,7 @@ public class TendorsListingPojo implements Serializable
     @SerializedName("msg")
     @Expose
     private String msg;
-    private final static long serialVersionUID = 5032412476343698766L;
+    private final static long serialVersionUID = -5882121739643199513L;
 
     public List<Result> getResult() {
         return result;

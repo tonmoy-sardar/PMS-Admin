@@ -84,9 +84,11 @@
     <string name="deviation_label">Deviation Time: </string>
     <string name="deviation_remarks">Justification </string>
     <string name="p_and_m">P &amp; M </string>
+    <string name="p_and_m_type">P &amp; M Type</string>
 
 
     <string name="rationale_location_contacts">This app needs access to your location and contacts to know where and who you are.</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 
 </resources>

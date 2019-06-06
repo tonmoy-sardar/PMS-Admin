@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -44,6 +45,8 @@ public class HydrologicalActivity extends BaseActivity {
     private HydroAdapter hydroAdapter;
     public View view;
 
+    ImageView ivAdd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +56,28 @@ public class HydrologicalActivity extends BaseActivity {
         //setContentView(R.layout.activity_hydrological);
 
         tvAdd = findViewById(R.id.tvAdd);
+        ivAdd = findViewById(R.id.ivAdd);
 
         rvItems = findViewById(R.id.rvItems);
 
-        tvAdd.setOnClickListener(new View.OnClickListener() {
+        /*tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddHydrologicalData.class);
                 startActivity(intent);
             }
+        });*/
+
+
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddHydrologicalData.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
         });
+
     }
 
 
@@ -87,8 +102,6 @@ public class HydrologicalActivity extends BaseActivity {
                 new LinearLayoutManager(HydrologicalActivity.this, RecyclerView.VERTICAL, false);
 
         rvItems.setLayoutManager(horizontalLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rvItems.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(HydrologicalActivity.this, 2);
         rvItems.addItemDecoration(itemOffset);
     }

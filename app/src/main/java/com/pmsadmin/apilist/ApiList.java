@@ -76,6 +76,7 @@ public class ApiList {
 
 
     public static final String ADD_HYDROLOGICAL="tender_survey_resource_hydrological_add/";
+    public static final String ADD_HYDROLOGICAL_DOC="tender_survey_resource_hydrological_document_add/";
 
     public static final String GET_SITE_PHOTO_LIST = "tender_survey_site_photos_list/{tender_id}/";
 
@@ -85,6 +86,8 @@ public class ApiList {
     public static final String GET_CONTRACT_VENDOR="tender_survey_resource_contractors_o_vendors_contarctor_w_type_add/?";
     public static final String CONTRACT_VENDOR_DOC_ADD="tender_survey_resource_contractors_o_vendors_contarctor_w_type_document_add/";
     public static final String MACHINERY_TYPE_ADD="tender_survey_resource_contractors_o_vendors_machinery_type_add/";
+    public static final String MACHINERY_TYPE_ADD_DOC="tender_survey_resource_contractors_o_vendors_machinery_type_document_add/";
+    public static final String GET_MACHINERY_TYPE_="tender_survey_resource_contractors_o_vendors_machinery_type_add/?";
 
 
 
