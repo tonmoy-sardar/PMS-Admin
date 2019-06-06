@@ -8,8 +8,8 @@ public class ApiList {
     //public static final String BASE_URL = "http://192.168.28.126:8000/";
 
 
-    //public static final String BASE_URL = "http://166.62.54.122:8001/";
-    public static final String BASE_URL = "http://192.168.24.243:8000/";
+    public static final String BASE_URL = "http://166.62.54.122:8001/";
+    //public static final String BASE_URL = "http://192.168.24.243:8000/";
 
    // public static final String BASE_URL = "http://166.62.54.122:8001/";
 

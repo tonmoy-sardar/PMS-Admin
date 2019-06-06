@@ -104,7 +104,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_add_contractor_vendor_dialogue);
-        setContentView(R.layout.add_contract_layout);
+        //setContentView(R.layout.add_contract_layout);
         view = View.inflate(this, R.layout.add_contract_layout, null);
         addContentView(view);
         //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

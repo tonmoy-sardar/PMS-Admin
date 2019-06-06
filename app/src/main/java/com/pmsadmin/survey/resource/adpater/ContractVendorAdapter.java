@@ -39,9 +39,8 @@ public class ContractVendorAdapter extends RecyclerView.Adapter<ContractVendorAd
 
     @Override
     public void onBindViewHolder(@NonNull ContractVendorAdapter.MyViewHolder holder, int position) {
-
-
         holder.tvMaterial.setText(resultContract.get(position).getName());
+
 
     }
 

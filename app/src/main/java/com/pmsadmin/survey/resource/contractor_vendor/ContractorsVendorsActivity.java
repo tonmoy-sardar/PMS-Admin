@@ -55,6 +55,7 @@ public class ContractorsVendorsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_contractors_vendors, null);
         addContentView(view);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
         tv_universal_header = findViewById(R.id.tv_universal_header);
         tv_universal_header.setText("Contractors/Vendor");

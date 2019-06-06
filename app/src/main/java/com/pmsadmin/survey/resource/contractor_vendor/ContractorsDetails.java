@@ -1,43 +1,37 @@
-package com.pmsadmin.survey.resource;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.pmsadmin.survey.resource.contractor_vendor;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.dashboard.BaseActivity;
-import com.pmsadmin.login.model.SiteList;
 import com.pmsadmin.netconnection.ConnectionDetector;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.sharedhandler.LoginShared;
-import com.pmsadmin.survey.SitePhotoDetailsActivity;
+import com.pmsadmin.survey.resource.adpater.ContractorsDocumentListAdapter;
 import com.pmsadmin.survey.resource.adpater.EstablishmentDocumentListAdapter;
 import com.pmsadmin.survey.resource.establishment_pojo.Result;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -64,12 +58,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.pmsadmin.apilist.ApiList.BASE_URL;
 
-public class EstablishmentDetails extends BaseActivity {
+public class ContractorsDetails extends BaseActivity {
 
     public View view;
     private TextView tv_universal_header,tv_details,tv_add_documents;
     RecyclerView rv_establishment_document_list;
-    EstablishmentDocumentListAdapter establishmentDocumentListAdapter;
+    ContractorsDocumentListAdapter contractorsDocumentListAdapter;
     private int PICK_PDF_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 123;
     public static String a_token;
@@ -99,7 +93,7 @@ public class EstablishmentDetails extends BaseActivity {
 
         Intent intent = getIntent();
         tv_universal_header.setText(intent.getStringExtra("establishment_name"));
-        tv_universal_header.setTypeface(MethodUtils.getNormalFont(EstablishmentDetails.this));
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(ContractorsDetails.this));
         tv_details.setText(intent.getStringExtra("establishment_details"));
         tender_id = intent.getIntExtra("establishment_tender",0);
         id = intent.getIntExtra("establishment_id",0);
@@ -128,18 +122,18 @@ public class EstablishmentDetails extends BaseActivity {
         });
 
 
-        if (!ConnectionDetector.isConnectingToInternet(EstablishmentDetails.this)) {
+        if (!ConnectionDetector.isConnectingToInternet(ContractorsDetails.this)) {
 
         }else {
 
         }
 
 
-        establishmentDocumentListAdapter = new EstablishmentDocumentListAdapter(EstablishmentDetails.this, arrayList_obj);
+        contractorsDocumentListAdapter = new ContractorsDocumentListAdapter(ContractorsDetails.this, arrayList_obj);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,4);
         rv_establishment_document_list.setLayoutManager(layoutManager);
         rv_establishment_document_list.setHasFixedSize(true);
-        rv_establishment_document_list.setAdapter(establishmentDocumentListAdapter);
+        rv_establishment_document_list.setAdapter(contractorsDocumentListAdapter);
 
         requestStoragePermission();
     }
@@ -266,9 +260,9 @@ public class EstablishmentDetails extends BaseActivity {
                         String responseString = response.body().string();
                         Log.d("responseString",responseString);
                         System.out.println("respons_save_data===========>>>"+responseString);
-                        Toast.makeText(EstablishmentDetails.this,"Document Added sucessfully",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ContractorsDetails.this,"Document Added sucessfully",Toast.LENGTH_SHORT).show();
                         arrayList_obj.add(new JSONObject(responseString));
-                        establishmentDocumentListAdapter.notifyDataSetChanged();
+                        contractorsDocumentListAdapter.notifyDataSetChanged();
                     }
                 }
                 catch (Exception e) {

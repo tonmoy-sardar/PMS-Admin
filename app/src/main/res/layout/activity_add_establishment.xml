@@ -1,50 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pmsadmin.survey.resource.AddEstablishmentActivity"
-    android:orientation="vertical"
-    android:padding="@dimen/_10sdp"
-    android:background="@color/gray_view_color">
-
+    android:background="@color/bgcolor"
+    android:padding="@dimen/_10sdp">
 
     <EditText
         android:id="@+id/etEstablishmentName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle_border_solid_white"
-        android:hint="Establishment Name"
         android:padding="@dimen/_10sdp"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/_15sdp"
-        android:textColor="@color/textcolor"/>
-
+        android:hint="Establishment Name"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        />
 
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_90sdp"
         android:background="@drawable/rectangle_border_solid_white"
-        android:hint="Deatails"
         android:padding="@dimen/_10sdp"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/_15sdp"
-        android:textColor="@color/textcolor"
-        android:layout_marginTop="@dimen/_10sdp"/>
-
-    <Button
-        android:id="@+id/btSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:hint="Details"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Submit"
-        android:textAllCaps="false"
+        android:gravity="start"
+        />
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_button"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="ADD"
         android:textColor="@android:color/white"
-        android:background="@drawable/ok_button"
-        android:textSize="@dimen/_15sdp"
         android:gravity="center"
-        android:layout_gravity="center"/>
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_add_document_fields"
+        android:visibility="gone"
+        >
+
+        <EditText
+            android:id="@+id/etDocumentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_border_solid_white"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginTop="20dp"
+            android:hint="Document name"
+            android:singleLine="true"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/llImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/gray_view_color"
+                >
+
+                <ImageView
+                    android:id="@+id/ivSelect"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/attachment_icon"
+                    android:padding="10dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivPdf"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_picture_as_pdf_blue_24dp"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tvUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/llImage"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_upload_file"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_file_upload"
+                    android:padding="10dp"
+                    android:background="@color/gray_view_color"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload File"
+                    android:textColor="@color/textcolor"
+                    android:layout_marginTop="3dp"
+                    />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
 
 </LinearLayout>

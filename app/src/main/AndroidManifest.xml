@@ -37,20 +37,20 @@
         tools:replace="android:appComponentFactory">
 
         <activity android:name=".survey.resource.contractor_vendor.ContractVendorReplica"></activity>
-        <activity
-            android:name=".dialog.AddContractorVendorDialogue"></activity>
+        <activity android:name=".dialog.AddContractorVendorDialogue"></activity>
         <activity android:name=".survey.resource.contractor_vendor.ContractorsVendorsActivity" />
 
         <activity android:name=".survey.resource.EstablishmentDetails"></activity>
+        <activity android:name=".survey.resource.contractor_vendor.ContractorsDetails"></activity>
         <activity
             android:name=".survey.resource.hydrological_data.AddHydrologicalData"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
 
         <activity android:name=".survey.resource.hydrological_data.HydrologicalActivity" />
         <activity android:name=".survey.SitePhotoDetailsActivity" />
-        <activity
-            android:name=".survey.resource.AddEstablishmentActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+
+        <activity android:name=".survey.resource.AddEstablishmentActivity" />
+
         <activity android:name=".survey.resource.EstablishmentActivity" />
         <activity android:name=".survey.coordinates.CrusherActivity" />
         <activity android:name=".survey.resource.ResourceActivity" />
