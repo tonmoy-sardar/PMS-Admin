@@ -94,6 +94,7 @@ public class ContractorsVendorsActivity extends BaseActivity {
                 tvContractors.setBackgroundColor(getResources().getColor(R.color.inactive_button_color));*/
                 Intent intent = new Intent(getApplicationContext(),ContractVendorReplica.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             }
         });
@@ -108,7 +109,7 @@ public class ContractorsVendorsActivity extends BaseActivity {
             Intent intent = new Intent(getApplicationContext(), AddContractorVendorDialogue.class);
             intent.putExtra("flag","contractor");
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
 
 

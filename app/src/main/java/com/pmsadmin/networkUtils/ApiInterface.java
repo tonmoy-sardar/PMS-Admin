@@ -22,7 +22,11 @@ import static com.pmsadmin.apilist.ApiList.ADDSITE;
 //import static com.pmsadmin.apilist.ApiList.ADD_CONTRACT_HYDRO;
 import static com.pmsadmin.apilist.ApiList.ADD_CONTRACT_VENDOR;
 import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL;
+import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL_DOC;
 import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
+import static com.pmsadmin.apilist.ApiList.GET_MACHINERY_TYPE_;
+import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
+import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_SITE_PHOTOS_EDIT;
 import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
@@ -247,6 +251,12 @@ public interface ApiInterface {
     Call<ResponseBody> call_add_contract_vendor(@Header("Authorization") String Bearer,
                                                          @Header("Content-Type") String Content_type,
                                                          @Body JsonObject object);
+
+
+    @POST(MACHINERY_TYPE_ADD)
+    Call<ResponseBody> call_add_machinery(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JsonObject object);
     @Multipart
     @POST(ADD_SITE_PHOTOSF)
     Call<ResponseBody> call_add_site_photos(@Part MultipartBody.Part file,
@@ -259,6 +269,20 @@ public interface ApiInterface {
     @Multipart
     @POST(CONTRACT_VENDOR_DOC_ADD)
     Call<ResponseBody> call_add_contract_vendor_w_doc(@Part MultipartBody.Part file,
+                                                       @Part("tender") RequestBody tender,
+                                                       @Part("module_id") RequestBody module_id,
+                                                       @Part("document_name") RequestBody document_name);
+
+    @Multipart
+    @POST(MACHINERY_TYPE_ADD_DOC)
+    Call<ResponseBody> call_add_machinery_doc(@Part MultipartBody.Part file,
+                                                       @Part("tender") RequestBody tender,
+                                                       @Part("module_id") RequestBody module_id,
+                                                       @Part("document_name") RequestBody document_name);
+
+    @Multipart
+    @POST(ADD_HYDROLOGICAL_DOC)
+    Call<ResponseBody> call_add_Hydro_doc(@Part MultipartBody.Part file,
                                                        @Part("tender") RequestBody tender,
                                                        @Part("module_id") RequestBody module_id,
                                                        @Part("document_name") RequestBody document_name);
@@ -309,6 +333,11 @@ public interface ApiInterface {
 
     @GET(GET_CONTRACT_VENDOR)
     Call<ResponseBody> call_get_contract_vendor(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type,
+                                              @Query("tender") Integer tender);
+
+    @GET(GET_MACHINERY_TYPE_)
+    Call<ResponseBody> call_get_machinery(@Header("Authorization") String Bearer,
                                               @Header("Content-Type") String Content_type,
                                               @Query("tender") Integer tender);
 

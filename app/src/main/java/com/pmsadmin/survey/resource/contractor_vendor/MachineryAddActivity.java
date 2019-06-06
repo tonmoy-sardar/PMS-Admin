@@ -1,4 +1,4 @@
-package com.pmsadmin.dialog;
+package com.pmsadmin.survey.resource.contractor_vendor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +19,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -42,11 +39,11 @@ import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
+import com.pmsadmin.dialog.AddContractorVendorDialogue;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
-import com.pmsadmin.survey.resource.AddEstablishmentActivity;
-import com.pmsadmin.survey.resource.contractor_vendor.contract_vendor_pojo.AddContractVendorResponse;
+import com.pmsadmin.survey.resource.contractor_vendor.contract_vendor_pojo.AddMachineryResponsePojo;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
 import java.io.File;
@@ -65,16 +62,11 @@ import javax.net.ssl.X509TrustManager;
 
 import static com.pmsadmin.apilist.ApiList.BASE_URL;
 
-public class AddContractorVendorDialogue extends BaseActivity {
+public class MachineryAddActivity extends BaseActivity {
 
-    private EditText etName;
-    private EditText etDetail;
+    private View view;
+    EditText etPMType, etHire, etKhoraki, etDocumentName;
 
-    private TextView tvSubmit;
-
-    private EditText etContractType;
-    private EditText etDescription;
-    private EditText etDocumentName;
 
     public List<Address> addresses;
     Geocoder geocoder;
@@ -85,47 +77,33 @@ public class AddContractorVendorDialogue extends BaseActivity {
     private SimpleLocation location;
     private LoadingData loader;
 
-    private ImageView ivSelect,ivPdf;
+    public static String a_token;
+
     private static final int STORAGE_PERMISSION_CODE = 123;
-    private int PICK_PDF_REQUEST = 1;
+
+    private TextView tvSubmit, tvUpload;
+
+    Integer moduleID = 0;
+
 
     private String pdfFilePath = "";
     File file;
 
-    public static String a_token;
+    ImageView ivSelect, ivPdf;
 
-    Integer moduleID = 0;
-
-    private TextView tvUpload;
-    public View view;
-
+    private int PICK_PDF_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_add_contractor_vendor_dialogue);
-        //setContentView(R.layout.add_contract_layout);
-        view = View.inflate(this, R.layout.add_contract_layout, null);
+        view = View.inflate(this, R.layout.activity_machinery_add, null);
         addContentView(view);
-        //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-       /* etName = findViewById(R.id.etName);
-        etDetail = findViewById(R.id.etDetail);
-        tvSubmit = findViewById(R.id.tvSubmit);*/
-
-        etContractType = findViewById(R.id.etContractType);
-        etDescription = findViewById(R.id.etDescription);
-        etDocumentName = findViewById(R.id.etDocumentName);
-        tvSubmit = findViewById(R.id.tvSubmit);
-        ivSelect = findViewById(R.id.ivSelect);
-        ivPdf = findViewById(R.id.ivPdf);
-        tvUpload = findViewById(R.id.tvUpload);
+        //setContentView(R.layout.activity_machinery_add);
+        loader = new LoadingData(MachineryAddActivity.this);
 
 
-        loader = new LoadingData(AddContractorVendorDialogue.this);
-
-
-        geocoder = new Geocoder(AddContractorVendorDialogue.this, Locale.getDefault());
+        geocoder = new Geocoder(MachineryAddActivity.this, Locale.getDefault());
 
         location = new SimpleLocation(this, false, false, 10000);
 
@@ -176,63 +154,31 @@ public class AddContractorVendorDialogue extends BaseActivity {
         a_token = LoginShared.getLoginDataModel(this).getToken();
 
 
+        tvSubmit = findViewById(R.id.tvSubmit);
+        tvUpload = findViewById(R.id.tvUpload);
+        etPMType = findViewById(R.id.etPMType);
+        etHire = findViewById(R.id.etHire);
+        etKhoraki = findViewById(R.id.etKhoraki);
+        etDocumentName = findViewById(R.id.etDocumentName);
+
+
+        ivSelect = findViewById(R.id.ivSelect);
+        ivPdf = findViewById(R.id.ivPdf);
+
+
         requestStoragePermission();
 
 
-        tvSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                postData();
-            }
-        });
-
-
-        ivSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showFileChooser();
-            }
-        });
-
-
-        tvUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                System.out.println("Uploadfile: "+String.valueOf(file)+" id: "+String.valueOf(moduleID));
-
-                if (moduleID != 0) {
-
-                    if (!pdfFilePath.equals("")){
-                        UploadDocuments(file);
-                    }else {
-                        MethodUtils.errorMsg(getApplicationContext(), "Please select any Document");
-                    }
-
-                }
-            }
-        });
-
+        clickListners();
     }
 
-    private void showFileChooser() {
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        try {
-            startActivityForResult(
-                    Intent.createChooser(intent, "Select a File to Upload"),
-                    PICK_PDF_REQUEST);
-        } catch (android.content.ActivityNotFoundException ex) {
-            // Potentially direct the user to the Market with a Dialog
-            Toast.makeText(this, "Please install a File Manager.",
-                    Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        location.beginUpdates();
     }
+
 
     //Requesting permission
     private void requestStoragePermission() {
@@ -266,46 +212,47 @@ public class AddContractorVendorDialogue extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void clickListners() {
 
-        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            String PathHolder = data.getData().getPath();
-//            UploadDocuments(PathHolder);
-            Uri uri = data.getData();
-            //Log.d(TAG, "File Uri: " + uri.toString());
-            // Get the path
-            String path = "";
-            //file = new File()
-            try {
-                file = FileUtil.from(this, data.getData());
-                System.out.println("filePath: " + String.valueOf(file));
-                pdfFilePath = String.valueOf(file);
-                if (file!= null){
-                    ivSelect.setVisibility(View.GONE);
-                    ivPdf.setVisibility(View.VISIBLE);
-                }
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                String str = String.valueOf(file);
-
-                //UploadDocuments(file);
-            } catch (Exception e) {
-                e.printStackTrace();
+                postData();
             }
-            //Log.d(TAG, "File Path: " + path);
-
-            /*filePath = data.getData();
-            System.out.println("filePath: "+String.valueOf(filePath));
-            UploadDocuments(String.valueOf(filePath));*/
-        }
-    }
+        });
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        location.beginUpdates();
+        ivSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showFileChooser();
+            }
+        });
+
+
+        tvUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("Uploadfile: " + String.valueOf(file) + " id: " + String.valueOf(moduleID));
+
+                if (moduleID != 0) {
+
+                    if (pdfFilePath.equals("")) {
+                        MethodUtils.errorMsg(MachineryAddActivity.this, "Please select any Document");
+                    } else if (etDocumentName.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(MachineryAddActivity.this, "Please enter Document name");
+                    } else {
+
+                        UploadDocuments(file);
+                    }
+
+                }
+            }
+        });
+
     }
 
     private void postData() {
@@ -313,19 +260,23 @@ public class AddContractorVendorDialogue extends BaseActivity {
         loader.show_with_label("Please wait");
         JsonObject object = new JsonObject();
         object.addProperty("tender", String.valueOf(MethodUtils.tender_id));
-        object.addProperty("name", etContractType.getText().toString().trim());
-        object.addProperty("details", etDescription.getText().toString().trim());
+        object.addProperty("name", etPMType.getText().toString().trim());
+        object.addProperty("make", "");
+        object.addProperty("hire", etHire.getText().toString());
+        object.addProperty("khoraki", etKhoraki.getText().toString());
+        object.addProperty("description", "");
         object.addProperty("latitude", String.valueOf(currentLat));
         object.addProperty("longitude", String.valueOf(currentLng));
         object.addProperty("address", addresses.get(0).getAddressLine(0));
 
-        System.out.println("Esta: " + object.toString());
+        System.out.println("objectMachinery: " + object.toString());
+
 
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register = apiInterface.call_add_contract_vendor("Token "
-                        + LoginShared.getLoginDataModel(AddContractorVendorDialogue.this).getToken(),
+        final Call<ResponseBody> register = apiInterface.call_add_machinery("Token "
+                        + LoginShared.getLoginDataModel(MachineryAddActivity.this).getToken(),
                 "application/json",
                 object);
 
@@ -338,23 +289,21 @@ public class AddContractorVendorDialogue extends BaseActivity {
                     loader.dismiss();
 
                 if (response.code() == 201 || response.code() == 200) {
+
                     try {
                         String responseString = response.body().string();
-                        System.out.println("resContruct: " + responseString);
-
-                        AddContractVendorResponse addContractVendorResponse;
+                        System.out.println("responseStringMachinery: " + responseString);
                         Gson gson = new Gson();
-                        addContractVendorResponse = gson.fromJson(responseString,AddContractVendorResponse.class);
 
-                        MethodUtils.errorMsg(getApplicationContext(),"Now you can upload Document.");
+                        AddMachineryResponsePojo addMachineryResponsePojo;
+                        addMachineryResponsePojo = gson.fromJson(responseString, AddMachineryResponsePojo.class);
+                        MethodUtils.errorMsg(MachineryAddActivity.this, "Now you can upload Document.");
 
-                        moduleID = addContractVendorResponse.getId();
+                        moduleID = addMachineryResponsePojo.getId();
+                        tvSubmit.setClickable(false);
+                        tvSubmit.setVisibility(View.INVISIBLE);
                         tvUpload.setVisibility(View.VISIBLE);
-                        tvSubmit.setVisibility(View.GONE);
 
-
-
-                        //finish();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -366,10 +315,52 @@ public class AddContractorVendorDialogue extends BaseActivity {
 
             }
         });
-
-
     }
 
+
+    private void showFileChooser() {
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, "Select a File to Upload"),
+                    PICK_PDF_REQUEST);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+
+            try {
+                file = FileUtil.from(this, data.getData());
+                System.out.println("filePath: " + String.valueOf(file));
+                pdfFilePath = String.valueOf(file);
+                if (file != null) {
+                    ivSelect.setVisibility(View.GONE);
+                    ivPdf.setVisibility(View.VISIBLE);
+                }
+
+                String str = String.valueOf(file);
+
+                //UploadDocuments(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 
     public void UploadDocuments(final File file) {
         // loader.show_with_label("Loading");
@@ -396,7 +387,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
 //        Retrofit retrofit = AppConfig.getRetrofit("http://192.168.24.243:8000/tender_survey_site_photos_add/");
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register = apiInterface.call_add_contract_vendor_w_doc(pdf, tender, module_id, document_name);
+        final Call<ResponseBody> register = apiInterface.call_add_machinery_doc(pdf, tender, module_id, document_name);
 
         register.enqueue(new Callback<ResponseBody>() {
 
@@ -411,7 +402,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
                         String responseString = response.body().string();
                         Log.d("responseString", responseString);
                         System.out.println("respons_save_data===========>>>" + responseString);
-                        Toast.makeText(AddContractorVendorDialogue.this, "Data uploaded sucessfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MachineryAddActivity.this, "Data uploaded sucessfully", Toast.LENGTH_SHORT).show();
 
                         pdfFilePath = "";
                         ivSelect.setVisibility(View.VISIBLE);
@@ -438,12 +429,10 @@ public class AddContractorVendorDialogue extends BaseActivity {
     }
 
 
-
-
     private static OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
@@ -469,7 +458,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.sslSocketFactory(sslSocketFactory);
             builder.connectTimeout(2, TimeUnit.MINUTES)
-                    .readTimeout(2,TimeUnit.MINUTES).build();
+                    .readTimeout(2, TimeUnit.MINUTES).build();
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
@@ -483,7 +472,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
                 public okhttp3.Response intercept(Chain chain) throws IOException {
                     okhttp3.Request originalRequest = chain.request();
 
-                    okhttp3.Request.Builder builder = originalRequest.newBuilder().header("Authorization","Token "+a_token);
+                    okhttp3.Request.Builder builder = originalRequest.newBuilder().header("Authorization", "Token " + a_token);
 
                     okhttp3.Request newRequest = builder.build();
                     return chain.proceed(newRequest);

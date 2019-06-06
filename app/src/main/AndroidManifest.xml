@@ -42,10 +42,11 @@
 
         <activity android:name=".survey.resource.EstablishmentDetails"></activity>
         <activity android:name=".survey.resource.contractor_vendor.ContractorsDetails"></activity>
-        <activity
-            android:name=".survey.resource.hydrological_data.AddHydrologicalData"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
 
+        <activity android:name=".survey.resource.contractor_vendor.MachineryAddActivity" />
+
+        <activity
+            android:name=".survey.resource.hydrological_data.AddHydrologicalData" />
         <activity android:name=".survey.resource.hydrological_data.HydrologicalActivity" />
         <activity android:name=".survey.SitePhotoDetailsActivity" />
 
