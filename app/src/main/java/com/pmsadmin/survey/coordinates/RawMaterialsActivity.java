@@ -10,8 +10,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -19,6 +21,7 @@ import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
+import com.pmsadmin.dialog.add_material_dialogue.AddMaterialDialogue;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
@@ -50,6 +53,8 @@ public class RawMaterialsActivity extends BaseActivity {
 
     private LoadingData loader;
 
+    private ImageView ivAdd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,20 @@ public class RawMaterialsActivity extends BaseActivity {
     private void initLayout() {
 
         rvMaterials = findViewById(R.id.rvMaterials);
+
+        ivAdd = findViewById(R.id.ivAdd);
+
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(RawMaterialsActivity.this, AddMaterialActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            }
+        });
+
     }
 
     private void setAdapter() {

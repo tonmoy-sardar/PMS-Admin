@@ -2,6 +2,8 @@ package com.pmsadmin.networkUtils;
 
 import com.google.gson.JsonObject;
 
+import org.json.JSONObject;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -24,9 +26,11 @@ import static com.pmsadmin.apilist.ApiList.ADD_CONTRACT_VENDOR;
 import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL;
 import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL_DOC;
 import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
+import static com.pmsadmin.apilist.ApiList.GET_ALL_UNIT;
 import static com.pmsadmin.apilist.ApiList.GET_MACHINERY_TYPE_;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
+import static com.pmsadmin.apilist.ApiList.MATERIAL_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_SITE_PHOTOS_EDIT;
 import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
@@ -247,6 +251,16 @@ public interface ApiInterface {
                                                          @Header("Content-Type") String Content_type,
                                                          @Body JsonObject object);
 
+    @POST(MATERIAL_ADD)
+    Call<ResponseBody> call_add_materials(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JsonObject object);
+
+    @POST(MATERIAL_ADD)
+    Call<ResponseBody> call_add_material(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JSONObject object);
+
     @POST(ADD_CONTRACT_VENDOR)
     Call<ResponseBody> call_add_contract_vendor(@Header("Authorization") String Bearer,
                                                          @Header("Content-Type") String Content_type,
@@ -340,6 +354,10 @@ public interface ApiInterface {
     Call<ResponseBody> call_get_machinery(@Header("Authorization") String Bearer,
                                               @Header("Content-Type") String Content_type,
                                               @Query("tender") Integer tender);
+
+    @GET(GET_ALL_UNIT)
+    Call<ResponseBody> call_get_unit(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type);
 
 
 

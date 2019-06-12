@@ -14,4 +14,18 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <ImageView
+        android:id="@+id/ivAdd"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/_18sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:clickable="true"
+        android:src="@drawable/ic_add_item"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_30sdp"/>
+
 </RelativeLayout>

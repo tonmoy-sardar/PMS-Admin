@@ -8,8 +8,8 @@ public class ApiList {
     //public static final String BASE_URL = "http://192.168.28.126:8000/";
 
 
-    public static final String BASE_URL = "http://166.62.54.122:8001/";
-    //public static final String BASE_URL = "http://192.168.24.243:8000/";
+    //public static final String BASE_URL = "http://166.62.54.122:8001/";
+    public static final String BASE_URL = "http://192.168.24.243:8000/";
 
    // public static final String BASE_URL = "http://166.62.54.122:8001/";
 
@@ -88,6 +88,10 @@ public class ApiList {
     public static final String MACHINERY_TYPE_ADD="tender_survey_resource_contractors_o_vendors_machinery_type_add/";
     public static final String MACHINERY_TYPE_ADD_DOC="tender_survey_resource_contractors_o_vendors_machinery_type_document_add/";
     public static final String GET_MACHINERY_TYPE_="tender_survey_resource_contractors_o_vendors_machinery_type_add/?";
+    public static final String GET_ALL_UNIT="unit_add/";
+
+
+    public static final String MATERIAL_ADD="materials_add/";
 
 
 

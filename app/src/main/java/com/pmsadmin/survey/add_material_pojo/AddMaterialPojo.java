@@ -1,20 +1,26 @@
 
-package com.pmsadmin.survey.coordinates.raw_materials_pojo;
+package com.pmsadmin.survey.add_material_pojo;
 
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result implements Serializable
+public class AddMaterialPojo implements Serializable
 {
 
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("materials_unit_details")
+    @SerializedName("created_by")
     @Expose
-    private List<MaterialsUnitDetail> materialsUnitDetails = null;
+    private String createdBy;
+    @SerializedName("owned_by")
+    @Expose
+    private String ownedBy;
+    @SerializedName("materials_unit")
+    @Expose
+    private List<MaterialsUnit> materialsUnit = null;
     @SerializedName("mat_code")
     @Expose
     private String matCode;
@@ -33,26 +39,10 @@ public class Result implements Serializable
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("created_by")
-    @Expose
-    private Object createdBy;
-    @SerializedName("owned_by")
-    @Expose
-    private Object ownedBy;
     @SerializedName("updated_by")
     @Expose
     private Object updatedBy;
-
-    private final static long serialVersionUID = -6584490660879099887L;
-
-
-    public Result() {
-    }
-
-    public Result(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    private final static long serialVersionUID = 6063032631228577721L;
 
     public Integer getId() {
         return id;
@@ -62,12 +52,28 @@ public class Result implements Serializable
         this.id = id;
     }
 
-    public List<MaterialsUnitDetail> getMaterialsUnitDetails() {
-        return materialsUnitDetails;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setMaterialsUnitDetails(List<MaterialsUnitDetail> materialsUnitDetails) {
-        this.materialsUnitDetails = materialsUnitDetails;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getOwnedBy() {
+        return ownedBy;
+    }
+
+    public void setOwnedBy(String ownedBy) {
+        this.ownedBy = ownedBy;
+    }
+
+    public List<MaterialsUnit> getMaterialsUnit() {
+        return materialsUnit;
+    }
+
+    public void setMaterialsUnit(List<MaterialsUnit> materialsUnit) {
+        this.materialsUnit = materialsUnit;
     }
 
     public String getMatCode() {
@@ -116,22 +122,6 @@ public class Result implements Serializable
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Object getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Object createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Object getOwnedBy() {
-        return ownedBy;
-    }
-
-    public void setOwnedBy(Object ownedBy) {
-        this.ownedBy = ownedBy;
     }
 
     public Object getUpdatedBy() {
