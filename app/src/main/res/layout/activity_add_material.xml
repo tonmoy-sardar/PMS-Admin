@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp"
+    tools:context="com.pmsadmin.survey.coordinates.AddMaterialActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/etMaterialName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_border_solid_white"
+                android:hint="Material Name"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textcolor" />
+
+            <EditText
+                android:id="@+id/etItemCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rectangle_border_solid_white"
+                android:hint="Item Code"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textcolor" />
+
+
+            <TextView
+                android:id="@+id/tvSelectUnit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rectangle_border_solid_white"
+                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                android:padding="@dimen/_10sdp"
+                android:text="Select" />
+
+            <LinearLayout
+                android:id="@+id/llDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bgcolor"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvUnit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/btAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_30sdp"
+                    android:background="@drawable/rounded_corner_button"
+                    android:text="ADD"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rectangle_border_solid_white"
+                android:hint="Description"
+                android:padding="@dimen/_10sdp" />
+
+            <Button
+                android:id="@+id/btSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:background="@drawable/rounded_corner_button"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
