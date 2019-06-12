@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgcolor"
+    >
+
+
+    <TextView
+        android:id="@+id/tv_add_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_corner_button"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="ADD CONTACT"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_15sdp"
+        android:layout_margin="20dp"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/rv_designation_wise_contact_list"
+        android:layout_marginTop="10dp"
+        />
+
+
+</LinearLayout>

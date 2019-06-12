@@ -13,6 +13,17 @@
         android:padding="@dimen/_10sdp"
         android:hint="@string/p_and_m_type"/>
 
+
+    <EditText
+        android:id="@+id/etPMmake"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_border_solid_white"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="10dp"
+        android:hint="Make"/>
+
+
     <EditText
         android:id="@+id/etHire"
         android:layout_width="match_parent"

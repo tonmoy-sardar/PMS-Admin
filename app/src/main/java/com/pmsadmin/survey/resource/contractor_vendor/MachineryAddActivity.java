@@ -65,7 +65,7 @@ import static com.pmsadmin.apilist.ApiList.BASE_URL;
 public class MachineryAddActivity extends BaseActivity {
 
     private View view;
-    EditText etPMType, etHire, etKhoraki, etDocumentName;
+    EditText etPMType, etHire, etKhoraki, etDocumentName,etPMmake;
 
 
     public List<Address> addresses;
@@ -98,8 +98,18 @@ public class MachineryAddActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_machinery_add, null);
         addContentView(view);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
-        //setContentView(R.layout.activity_machinery_add);
+        tvSubmit = findViewById(R.id.tvSubmit);
+        tvUpload = findViewById(R.id.tvUpload);
+        etPMType = findViewById(R.id.etPMType);
+        etHire = findViewById(R.id.etHire);
+        etKhoraki = findViewById(R.id.etKhoraki);
+        etDocumentName = findViewById(R.id.etDocumentName);
+        etPMmake = findViewById(R.id.etPMmake);
+        ivSelect = findViewById(R.id.ivSelect);
+        ivPdf = findViewById(R.id.ivPdf);
+
         loader = new LoadingData(MachineryAddActivity.this);
 
 
@@ -154,16 +164,6 @@ public class MachineryAddActivity extends BaseActivity {
         a_token = LoginShared.getLoginDataModel(this).getToken();
 
 
-        tvSubmit = findViewById(R.id.tvSubmit);
-        tvUpload = findViewById(R.id.tvUpload);
-        etPMType = findViewById(R.id.etPMType);
-        etHire = findViewById(R.id.etHire);
-        etKhoraki = findViewById(R.id.etKhoraki);
-        etDocumentName = findViewById(R.id.etDocumentName);
-
-
-        ivSelect = findViewById(R.id.ivSelect);
-        ivPdf = findViewById(R.id.ivPdf);
 
 
         requestStoragePermission();
@@ -261,7 +261,7 @@ public class MachineryAddActivity extends BaseActivity {
         JsonObject object = new JsonObject();
         object.addProperty("tender", String.valueOf(MethodUtils.tender_id));
         object.addProperty("name", etPMType.getText().toString().trim());
-        object.addProperty("make", "");
+        object.addProperty("make", etPMmake.getText().toString());
         object.addProperty("hire", etHire.getText().toString());
         object.addProperty("khoraki", etKhoraki.getText().toString());
         object.addProperty("description", "");

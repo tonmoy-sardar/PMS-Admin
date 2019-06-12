@@ -269,6 +269,8 @@ public class EstablishmentDetails extends BaseActivity {
                         Toast.makeText(EstablishmentDetails.this,"Document Added sucessfully",Toast.LENGTH_SHORT).show();
                         arrayList_obj.add(new JSONObject(responseString));
                         establishmentDocumentListAdapter.notifyDataSetChanged();
+                        doc_no = "DOC "+ (arrayList_obj.size()+1);
+                        System.out.println("doc_no================>>>>"+doc_no);
                     }
                 }
                 catch (Exception e) {

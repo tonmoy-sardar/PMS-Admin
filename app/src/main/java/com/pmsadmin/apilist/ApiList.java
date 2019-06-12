@@ -8,8 +8,8 @@ public class ApiList {
     //public static final String BASE_URL = "http://192.168.28.126:8000/";
 
 
-    public static final String BASE_URL = "http://166.62.54.122:8001/";
-    //public static final String BASE_URL = "http://192.168.24.243:8000/";
+    //public static final String BASE_URL = "http://166.62.54.122:8001/"; //live server
+    public static final String BASE_URL = "http://192.168.24.243:8000/"; //local server
 
    // public static final String BASE_URL = "http://166.62.54.122:8001/";
 
@@ -90,7 +90,13 @@ public class ApiList {
     public static final String GET_MACHINERY_TYPE_="tender_survey_resource_contractors_o_vendors_machinery_type_add/?";
 
 
-
+    public static final String CONTRACTOR_DETAILS_DOCUMENT_ADD="tender_survey_resource_contractors_o_vendors_contarctor_w_type_document_add/";
+    public static final String P_AND_M_DETAILS_DOCUMENT_ADD="tender_survey_resource_contractors_o_vendors_machinery_type_document_add/";
+    public static final String HYDROLOGICAL_DETAILS_DOCUMENT_ADD="tender_survey_resource_hydrological_document_add/";
+    public static final String GET_RESOURCE_CONTACT_DESIGNATIONS="tender_survey_resource_contact_designation_add/?";
+    public static final String DESIGNATION_ADD="tender_survey_resource_contact_designation_add/";
+    public static final String CONTACT_DETAILS_ADD="tender_survey_resource_contact_details_add/";
+    public static final String GET_RESOURCE_CONTACT_DETAILS_ADD="tender_survey_resource_contact_details_add/?";
 
 
 }

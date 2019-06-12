@@ -36,15 +36,11 @@ import java.util.List;
 
 public class HydrologicalActivity extends BaseActivity {
 
-    private TextView tvAdd;
-
+    private TextView tvAdd,tv_universal_header;
     private RecyclerView rvItems;
-
     List<Result> resultHydroList = new ArrayList<>();
-
     private HydroAdapter hydroAdapter;
     public View view;
-
     ImageView ivAdd;
 
 
@@ -53,12 +49,15 @@ public class HydrologicalActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_hydrological, null);
         addContentView(view);
-        //setContentView(R.layout.activity_hydrological);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
         tvAdd = findViewById(R.id.tvAdd);
         ivAdd = findViewById(R.id.ivAdd);
-
         rvItems = findViewById(R.id.rvItems);
+
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+        tv_universal_header.setText("Hydrological Data");
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(HydrologicalActivity.this));
 
         /*tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override

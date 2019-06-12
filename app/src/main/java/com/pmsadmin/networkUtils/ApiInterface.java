@@ -28,6 +28,9 @@ import static com.pmsadmin.apilist.ApiList.GET_MACHINERY_TYPE_;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD;
+import static com.pmsadmin.apilist.ApiList.CONTRACTOR_DETAILS_DOCUMENT_ADD;
+import static com.pmsadmin.apilist.ApiList.P_AND_M_DETAILS_DOCUMENT_ADD;
+import static com.pmsadmin.apilist.ApiList.HYDROLOGICAL_DETAILS_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_SITE_PHOTOS_EDIT;
 import static com.pmsadmin.apilist.ApiList.APPROVALLIST;
 import static com.pmsadmin.apilist.ApiList.ATTANDANCE_JUSTIFICATION;
@@ -43,12 +46,16 @@ import static com.pmsadmin.apilist.ApiList.CRUSHER_LIST;
 import static com.pmsadmin.apilist.ApiList.DEVIATION_JUSTIFICATION;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEELIST;
 import static com.pmsadmin.apilist.ApiList.ESTABLISHMENT_ADD;
+import static com.pmsadmin.apilist.ApiList.DESIGNATION_ADD;
+import static com.pmsadmin.apilist.ApiList.CONTACT_DETAILS_ADD;
+import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_CONTACT_DETAILS_ADD;
 import static com.pmsadmin.apilist.ApiList.FORGOT;
 import static com.pmsadmin.apilist.ApiList.GETSITETYPE;
 import static com.pmsadmin.apilist.ApiList.GET_CONTRACT_VENDOR;
 import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_ESTABLISHMENT;
 import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_HYDRO;
 import static com.pmsadmin.apilist.ApiList.GET_SITE_PHOTO_LIST;
+import static com.pmsadmin.apilist.ApiList.GET_RESOURCE_CONTACT_DESIGNATIONS;
 import static com.pmsadmin.apilist.ApiList.LEAVEAPPLY;
 import static com.pmsadmin.apilist.ApiList.LEAVEAPPLYLIST;
 import static com.pmsadmin.apilist.ApiList.LEAVEHISTORY;
@@ -76,7 +83,7 @@ public interface ApiInterface {
 //    Call<ResponseBody> call_loginApi(@Body JsonObject object);
 
     @POST(LOGIN)
-    Call<ResponseBody> call_loginApi(  @Header("Content-Type") String Content_type,@Body JsonObject object);
+    Call<ResponseBody> call_loginApi(@Header("Content-Type") String Content_type, @Body JsonObject object);
 
     @POST(FORGOT)
     Call<ResponseBody> call_forgotPasswordApi(@Body JsonObject object);
@@ -123,11 +130,11 @@ public interface ApiInterface {
                                      @Body JsonObject object);
 
 
-
     @PUT(DEVIATION_JUSTIFICATION)
     Call<ResponseBody> call_deviation_justification(@Header("Authorization") String Bearer,
                                                     @Path("deviation_id") String deviation_id,
                                                     @Body JsonObject object);
+
     @PUT(ATTANDANCE_JUSTIFICATION)
     Call<ResponseBody> call_attandance_justification(@Header("Authorization") String Bearer,
                                                      @Path("attandance_id") Integer attandance_id,
@@ -203,18 +210,17 @@ public interface ApiInterface {
                                                        @Body JsonObject object);
 
 
-
     @GET(project_site_management_site_add)
     Call<ResponseBody> call_projectlistApi(@Header("Authorization") String Bearer);
 
     @POST(pms_execution_daily_progress_pandm_add)
-    Call<ResponseBody> pms_execution_daily_progress_pandm_add(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Body JsonObject object);
+    Call<ResponseBody> pms_execution_daily_progress_pandm_add(@Header("Authorization") String Bearer, @Header("Content-Type") String Content_type, @Body JsonObject object);
 
     @GET(machineries_wp_list)
     Call<ResponseBody> call_machineries_wp_list(@Header("Authorization") String Bearer);
 
     @GET(projects_details_by_project_site_id)
-    Call<ResponseBody> call_projectid(@Header("Authorization") String Bearer,@Header("Content-Type") String Content_type,@Query("site_location") String site_location);
+    Call<ResponseBody> call_projectid(@Header("Authorization") String Bearer, @Header("Content-Type") String Content_type, @Query("site_location") String site_location);
 
     @POST(pms_execution_labour_progress_add)
     Call<ResponseBody> pms_execution_labour_progress_add(@Header("Authorization") String Bearer,
@@ -231,32 +237,44 @@ public interface ApiInterface {
 
     @GET(RAW_MATERIALS_LIST)
     Call<ResponseBody> call_raw_materials_listing(@Header("Authorization") String Bearer,
-                                        @Header("Content-Type") String Content_type);
+                                                  @Header("Content-Type") String Content_type);
 
     @GET(CRUSHER_LIST)
     Call<ResponseBody> call_crusher_list_api(@Header("Authorization") String Bearer,
-                                        @Header("Content-Type") String Content_type);
+                                             @Header("Content-Type") String Content_type);
 
     @POST(ESTABLISHMENT_ADD)
     Call<ResponseBody> call_establishment_add(@Header("Authorization") String Bearer,
-                                                         @Header("Content-Type") String Content_type,
-                                                         @Body JsonObject object);
+                                              @Header("Content-Type") String Content_type,
+                                              @Body JsonObject object);
+
+    @POST(DESIGNATION_ADD)
+    Call<ResponseBody> call_designation_add(@Header("Authorization") String Bearer,
+                                            @Header("Content-Type") String Content_type,
+                                            @Body JsonObject object);
+
+    @POST(CONTACT_DETAILS_ADD)
+    Call<ResponseBody> call_contact_details_add(@Header("Authorization") String Bearer,
+                                                @Header("Content-Type") String Content_type,
+                                                @Body JsonObject object);
+
 
     @POST(ADD_HYDROLOGICAL)
     Call<ResponseBody> call_add_hydrological(@Header("Authorization") String Bearer,
-                                                         @Header("Content-Type") String Content_type,
-                                                         @Body JsonObject object);
+                                             @Header("Content-Type") String Content_type,
+                                             @Body JsonObject object);
 
     @POST(ADD_CONTRACT_VENDOR)
     Call<ResponseBody> call_add_contract_vendor(@Header("Authorization") String Bearer,
-                                                         @Header("Content-Type") String Content_type,
-                                                         @Body JsonObject object);
+                                                @Header("Content-Type") String Content_type,
+                                                @Body JsonObject object);
 
 
     @POST(MACHINERY_TYPE_ADD)
     Call<ResponseBody> call_add_machinery(@Header("Authorization") String Bearer,
-                                                         @Header("Content-Type") String Content_type,
-                                                         @Body JsonObject object);
+                                          @Header("Content-Type") String Content_type,
+                                          @Body JsonObject object);
+
     @Multipart
     @POST(ADD_SITE_PHOTOSF)
     Call<ResponseBody> call_add_site_photos(@Part MultipartBody.Part file,
@@ -266,48 +284,70 @@ public interface ApiInterface {
                                             @Part("address") RequestBody address,
                                             @Part("additional_notes") RequestBody additional_notes,
                                             @Part("document_name") RequestBody document_name);
+
     @Multipart
     @POST(CONTRACT_VENDOR_DOC_ADD)
     Call<ResponseBody> call_add_contract_vendor_w_doc(@Part MultipartBody.Part file,
-                                                       @Part("tender") RequestBody tender,
-                                                       @Part("module_id") RequestBody module_id,
-                                                       @Part("document_name") RequestBody document_name);
+                                                      @Part("tender") RequestBody tender,
+                                                      @Part("module_id") RequestBody module_id,
+                                                      @Part("document_name") RequestBody document_name);
 
     @Multipart
     @POST(MACHINERY_TYPE_ADD_DOC)
     Call<ResponseBody> call_add_machinery_doc(@Part MultipartBody.Part file,
-                                                       @Part("tender") RequestBody tender,
-                                                       @Part("module_id") RequestBody module_id,
-                                                       @Part("document_name") RequestBody document_name);
+                                              @Part("tender") RequestBody tender,
+                                              @Part("module_id") RequestBody module_id,
+                                              @Part("document_name") RequestBody document_name);
 
     @Multipart
     @POST(ADD_HYDROLOGICAL_DOC)
     Call<ResponseBody> call_add_Hydro_doc(@Part MultipartBody.Part file,
-                                                       @Part("tender") RequestBody tender,
-                                                       @Part("module_id") RequestBody module_id,
-                                                       @Part("document_name") RequestBody document_name);
-
-
+                                          @Part("tender") RequestBody tender,
+                                          @Part("module_id") RequestBody module_id,
+                                          @Part("document_name") RequestBody document_name);
 
 
     @Multipart
     @PUT(TENDER_SURVEY_SITE_PHOTOS_EDIT)
     Call<ResponseBody> call_site_photos_edit(@Path("id") Integer id,
                                              @Part MultipartBody.Part file,
-                                            @Part("latitude") RequestBody latitude,
-                                            @Part("longitude") RequestBody longitude,
-                                            @Part("address") RequestBody address,
-                                            @Part("additional_notes") RequestBody additional_notes,
-                                            @Part("document_name") RequestBody document_name);
+                                             @Part("latitude") RequestBody latitude,
+                                             @Part("longitude") RequestBody longitude,
+                                             @Part("address") RequestBody address,
+                                             @Part("additional_notes") RequestBody additional_notes,
+                                             @Part("document_name") RequestBody document_name);
 
 
     @Multipart
     @POST(TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD)
     Call<ResponseBody> call_add_establishment_document(@Part MultipartBody.Part file,
-                                            @Part("tender") RequestBody tender,
-                                            @Part("module_id") RequestBody module_id,
-                                            @Part("document_name") RequestBody document_name);
+                                                       @Part("tender") RequestBody tender,
+                                                       @Part("module_id") RequestBody module_id,
+                                                       @Part("document_name") RequestBody document_name);
 
+
+    @Multipart
+    @POST(CONTRACTOR_DETAILS_DOCUMENT_ADD)
+    Call<ResponseBody> call_add_contractor_document(@Part MultipartBody.Part file,
+                                                    @Part("tender") RequestBody tender,
+                                                    @Part("module_id") RequestBody module_id,
+                                                    @Part("document_name") RequestBody document_name);
+
+
+    @Multipart
+    @POST(P_AND_M_DETAILS_DOCUMENT_ADD)
+    Call<ResponseBody> call_add_p_and_m_type_document(@Part MultipartBody.Part file,
+                                                      @Part("tender") RequestBody tender,
+                                                      @Part("module_id") RequestBody module_id,
+                                                      @Part("document_name") RequestBody document_name);
+
+
+    @Multipart
+    @POST(HYDROLOGICAL_DETAILS_DOCUMENT_ADD)
+    Call<ResponseBody> call_add_hydrological_document(@Part MultipartBody.Part file,
+                                                      @Part("tender") RequestBody tender,
+                                                      @Part("module_id") RequestBody module_id,
+                                                      @Part("document_name") RequestBody document_name);
 
 
     @GET(TENDER_SURVEY_LOCATION_LIST)
@@ -317,8 +357,7 @@ public interface ApiInterface {
 
     @GET(GET_SITE_PHOTO_LIST)
     Call<ResponseBody> call_get_site_photo_list(@Header("Authorization") String Bearer,
-                                                        @Path("tender_id") String tender_id);
-
+                                                @Path("tender_id") String tender_id);
 
 
     @GET(GET_RESOURCE_ESTABLISHMENT)
@@ -328,20 +367,31 @@ public interface ApiInterface {
 
     @GET(GET_RESOURCE_HYDRO)
     Call<ResponseBody> call_get_hydro(@Header("Authorization") String Bearer,
-                                              @Header("Content-Type") String Content_type,
-                                              @Query("tender") Integer tender);
+                                      @Header("Content-Type") String Content_type,
+                                      @Query("tender") Integer tender);
 
     @GET(GET_CONTRACT_VENDOR)
     Call<ResponseBody> call_get_contract_vendor(@Header("Authorization") String Bearer,
-                                              @Header("Content-Type") String Content_type,
-                                              @Query("tender") Integer tender);
+                                                @Header("Content-Type") String Content_type,
+                                                @Query("tender") Integer tender);
 
     @GET(GET_MACHINERY_TYPE_)
     Call<ResponseBody> call_get_machinery(@Header("Authorization") String Bearer,
-                                              @Header("Content-Type") String Content_type,
-                                              @Query("tender") Integer tender);
+                                          @Header("Content-Type") String Content_type,
+                                          @Query("tender") Integer tender);
 
 
+    @GET(GET_RESOURCE_CONTACT_DESIGNATIONS)
+    Call<ResponseBody> call_get_contact_designations(@Header("Authorization") String Bearer,
+                                                     @Header("Content-Type") String Content_type,
+                                                     @Query("tender") Integer tender);
+
+
+    @GET(GET_RESOURCE_CONTACT_DETAILS_ADD)
+    Call<ResponseBody> call_get_designation_wise_contact_list(@Header("Authorization") String Bearer,
+                                                              @Header("Content-Type") String Content_type,
+                                                              @Query("tender") Integer tender,
+                                                              @Query("designation") Integer designation);
 
 
 }

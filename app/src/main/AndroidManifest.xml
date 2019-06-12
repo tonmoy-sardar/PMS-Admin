@@ -35,23 +35,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-
-        <activity android:name=".survey.resource.contractor_vendor.ContractVendorReplica"></activity>
-        <activity android:name=".dialog.AddContractorVendorDialogue"></activity>
+        <activity android:name=".survey.resource.AddContactActivity"></activity>
+        <activity android:name=".survey.resource.ContactDetailsActivity" />
+        <activity android:name=".survey.resource.DesignationWiseContactListActivity" />
+        <activity android:name=".survey.resource.contractor_vendor.ContractVendorReplica" />
+        <activity android:name=".dialog.AddContractorVendorDialogue" />
         <activity android:name=".survey.resource.contractor_vendor.ContractorsVendorsActivity" />
-
-        <activity android:name=".survey.resource.EstablishmentDetails"></activity>
-        <activity android:name=".survey.resource.contractor_vendor.ContractorsDetails"></activity>
-
+        <activity android:name=".survey.resource.EstablishmentDetails" />
+        <activity android:name=".survey.resource.contractor_vendor.ContractorsDetails" />
+        <activity android:name=".survey.resource.contractor_vendor.PandMDetails" />
         <activity android:name=".survey.resource.contractor_vendor.MachineryAddActivity" />
-
-        <activity
-            android:name=".survey.resource.hydrological_data.AddHydrologicalData" />
+        <activity android:name=".survey.resource.hydrological_data.AddHydrologicalData" />
         <activity android:name=".survey.resource.hydrological_data.HydrologicalActivity" />
+        <activity android:name=".survey.resource.hydrological_data.HydrologicalDetails" />
         <activity android:name=".survey.SitePhotoDetailsActivity" />
-
         <activity android:name=".survey.resource.AddEstablishmentActivity" />
-
         <activity android:name=".survey.resource.EstablishmentActivity" />
         <activity android:name=".survey.coordinates.CrusherActivity" />
         <activity android:name=".survey.resource.ResourceActivity" />

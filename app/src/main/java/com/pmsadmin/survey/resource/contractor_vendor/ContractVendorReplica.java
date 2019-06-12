@@ -54,9 +54,9 @@ public class ContractVendorReplica extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         view = View.inflate(this, R.layout.activity_contract_vendor_replica, null);
         addContentView(view);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
         tv_universal_header = findViewById(R.id.tv_universal_header);
         tv_universal_header.setText("Contractors/Vendor");

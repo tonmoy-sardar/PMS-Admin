@@ -47,7 +47,7 @@ public class Result implements Serializable
     private String ownedBy;
     @SerializedName("document_details")
     @Expose
-    private List<DocumentDetail> documentDetails = null;
+    private List<Object> documentDetails = null;
     private final static long serialVersionUID = -3878344156227098839L;
 
     public Integer getId() {
@@ -146,11 +146,11 @@ public class Result implements Serializable
         this.ownedBy = ownedBy;
     }
 
-    public List<DocumentDetail> getDocumentDetails() {
+    public List<Object> getDocumentDetails() {
         return documentDetails;
     }
 
-    public void setDocumentDetails(List<DocumentDetail> documentDetails) {
+    public void setDocumentDetails(List<Object> documentDetails) {
         this.documentDetails = documentDetails;
     }
 

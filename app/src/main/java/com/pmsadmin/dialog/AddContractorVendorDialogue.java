@@ -351,9 +351,6 @@ public class AddContractorVendorDialogue extends BaseActivity {
                         moduleID = addContractVendorResponse.getId();
                         tvUpload.setVisibility(View.VISIBLE);
                         tvSubmit.setVisibility(View.GONE);
-
-
-
                         //finish();
                     } catch (IOException e) {
                         e.printStackTrace();

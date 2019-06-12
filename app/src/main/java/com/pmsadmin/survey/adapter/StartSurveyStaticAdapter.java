@@ -17,6 +17,7 @@ import com.pmsadmin.survey.StartSurveyHome;
 import com.pmsadmin.survey.SurveyStaticModel;
 import com.pmsadmin.survey.coordinates.CoordinatesActivity;
 import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
+import com.pmsadmin.survey.resource.ContactDetailsActivity;
 import com.pmsadmin.survey.resource.EstablishmentActivity;
 import com.pmsadmin.survey.resource.ResourceActivity;
 import com.pmsadmin.survey.resource.contractor_vendor.ContractorsVendorsActivity;
@@ -90,9 +91,12 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemsSurvey.get(position).getItem().equals("CONTRACTORS/VENDORS")){
-
                     //MethodUtils.errorMsg(activity, "This section is under development");
                     Intent intent = new Intent(activity, ContractorsVendorsActivity.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else if (itemsSurvey.get(position).getItem().equals("CONTACT DETAILS")){
+                    Intent intent = new Intent(activity, ContactDetailsActivity.class);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

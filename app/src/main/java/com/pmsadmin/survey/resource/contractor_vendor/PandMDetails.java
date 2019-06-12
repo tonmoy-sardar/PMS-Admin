@@ -24,8 +24,8 @@ import com.pmsadmin.netconnection.ConnectionDetector;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.resource.adpater.ContractorsDocumentListAdapter;
-import com.pmsadmin.survey.resource.adpater.EstablishmentDocumentListAdapter;
-import com.pmsadmin.survey.resource.contractor_vendor.contract_vendor_pojo.Result;
+import com.pmsadmin.survey.resource.adpater.PandMDocumentListAdapter;
+import com.pmsadmin.survey.resource.contractor_vendor.machinery_pojo.Result;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -58,12 +58,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.pmsadmin.apilist.ApiList.BASE_URL;
 
-public class ContractorsDetails extends BaseActivity {
+public class PandMDetails extends BaseActivity {
 
     public View view;
-    private TextView tv_universal_header,tv_details,tv_add_documents;
-    RecyclerView rv_contractor_document_list;
-    ContractorsDocumentListAdapter contractorsDocumentListAdapter;
+    private TextView tv_universal_header,tv_details,tv_add_documents,tv_hire,tv_khoraki;
+    RecyclerView rv_p_and_m_document_list;
+    PandMDocumentListAdapter pandMDocumentListAdapter;
     private int PICK_PDF_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 123;
     public static String a_token;
@@ -78,7 +78,7 @@ public class ContractorsDetails extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = View.inflate(this, R.layout.activity_contractor_details, null);
+        view = View.inflate(this, R.layout.activity_p_and_m_details, null);
         addContentView(view);
         System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
@@ -86,21 +86,25 @@ public class ContractorsDetails extends BaseActivity {
         System.out.println("token=======>>>"+a_token);
 
         tv_universal_header = findViewById(R.id.tv_universal_header);
+        tv_hire = findViewById(R.id.tv_hire);
+        tv_khoraki = findViewById(R.id.tv_khoraki);
         tv_details = findViewById(R.id.tv_details);
-        rv_contractor_document_list = findViewById(R.id.rv_contractor_document_list);
+        rv_p_and_m_document_list = findViewById(R.id.rv_p_and_m_document_list);
         tv_add_documents = findViewById(R.id.tv_add_documents);
-        rv_contractor_document_list.setNestedScrollingEnabled(false);
+        rv_p_and_m_document_list.setNestedScrollingEnabled(false);
 
         Intent intent = getIntent();
-        tv_universal_header.setText(intent.getStringExtra("contractors_name"));
-        tv_universal_header.setTypeface(MethodUtils.getNormalFont(ContractorsDetails.this));
-        tv_details.setText(intent.getStringExtra("contractors_details"));
-        tender_id = intent.getIntExtra("contractors_tender",0);
-        id = intent.getIntExtra("contractors_id",0);
+        tv_universal_header.setText(intent.getStringExtra("pm_name"));
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(PandMDetails.this));
+        tv_details.setText(intent.getStringExtra("pm_make"));
+        tv_hire.setText(intent.getStringExtra("pm_hire"));
+        tv_khoraki.setText(intent.getStringExtra("pm_khoraki"));
+        tender_id = intent.getIntExtra("pm_tender",0);
+        id = intent.getIntExtra("pm_id",0);
         try {
             arrayList_obj = new ArrayList<JSONObject>();
             Bundle bundle = getIntent().getExtras();
-            arrayList_documents = (ArrayList<Result>) bundle.getSerializable("contractors_document_details");
+            arrayList_documents = (ArrayList<Result>) bundle.getSerializable("pm_document_details");
             System.out.println("arrayList_documents================>>>>"+arrayList_documents);
             JSONArray jsonArray = new JSONArray(arrayList_documents);
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -122,18 +126,18 @@ public class ContractorsDetails extends BaseActivity {
         });
 
 
-        if (!ConnectionDetector.isConnectingToInternet(ContractorsDetails.this)) {
+        if (!ConnectionDetector.isConnectingToInternet(PandMDetails.this)) {
 
         }else {
 
         }
 
 
-        contractorsDocumentListAdapter = new ContractorsDocumentListAdapter(ContractorsDetails.this, arrayList_obj);
+        pandMDocumentListAdapter = new PandMDocumentListAdapter(PandMDetails.this, arrayList_obj);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,4);
-        rv_contractor_document_list.setLayoutManager(layoutManager);
-        rv_contractor_document_list.setHasFixedSize(true);
-        rv_contractor_document_list.setAdapter(contractorsDocumentListAdapter);
+        rv_p_and_m_document_list.setLayoutManager(layoutManager);
+        rv_p_and_m_document_list.setHasFixedSize(true);
+        rv_p_and_m_document_list.setAdapter(pandMDocumentListAdapter);
 
         requestStoragePermission();
     }
@@ -245,7 +249,7 @@ public class ContractorsDetails extends BaseActivity {
 //        Retrofit retrofit = AppConfig.getRetrofit("http://192.168.24.243:8000/tender_survey_site_photos_add/");
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register = apiInterface.call_add_contractor_document(pdf,tender,module_id,document_name);
+        final Call<ResponseBody> register = apiInterface.call_add_p_and_m_type_document(pdf,tender,module_id,document_name);
 
         register.enqueue(new Callback<ResponseBody>() {
 
@@ -261,9 +265,9 @@ public class ContractorsDetails extends BaseActivity {
                         String responseString = response.body().string();
                         Log.d("responseString",responseString);
                         System.out.println("respons_save_data===========>>>"+responseString);
-                        Toast.makeText(ContractorsDetails.this,"Document Added sucessfully",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PandMDetails.this,"Document Added sucessfully",Toast.LENGTH_SHORT).show();
                         arrayList_obj.add(new JSONObject(responseString));
-                        contractorsDocumentListAdapter.notifyDataSetChanged();
+                        pandMDocumentListAdapter.notifyDataSetChanged();
                         doc_no = "DOC "+ (arrayList_obj.size()+1);
                         System.out.println("doc_no================>>>>"+doc_no);
                     }
