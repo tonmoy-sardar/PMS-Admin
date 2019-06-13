@@ -102,6 +102,7 @@ public class ApiList {
     public static final String DESIGNATION_ADD="tender_survey_resource_contact_designation_add/";
     public static final String CONTACT_DETAILS_ADD="tender_survey_resource_contact_details_add/";
     public static final String GET_RESOURCE_CONTACT_DETAILS_ADD="tender_survey_resource_contact_details_add/?";
+    public static final String PUT_RESOURCE_CONTACT_DETAILS_EDIT="tender_survey_resource_contact_details_edit/{id}/";
 
 
 }

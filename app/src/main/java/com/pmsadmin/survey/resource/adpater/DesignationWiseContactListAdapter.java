@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pmsadmin.R;
-import com.pmsadmin.survey.resource.ContactDetailsActivity;
-import com.pmsadmin.survey.resource.DesignationWiseContactListActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,11 +22,13 @@ import java.util.ArrayList;
 public class DesignationWiseContactListAdapter extends RecyclerView.Adapter<DesignationWiseContactListAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
+    ArrayList<JSONObject> arrayList_info = new ArrayList<JSONObject>();
+    OnItemClickListener itemClickListener;
 
-    public DesignationWiseContactListAdapter(DesignationWiseContactListActivity context, ArrayList<JSONObject> arrayList) {
+
+    public DesignationWiseContactListAdapter(Context context, ArrayList<JSONObject> arrayList_info) {
         this.context = context;
-        this.arrayList = arrayList;
+        this.arrayList_info = arrayList_info;
     }
 
     @NonNull
@@ -40,9 +41,7 @@ public class DesignationWiseContactListAdapter extends RecyclerView.Adapter<Desi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         try {
-            holder.tv_contact_name.setText("Name : "+arrayList.get(position).getString("field_label"));
-            holder.tv_contact_number.setText("Contact Number : "+arrayList.get(position).getString("field_value"));
-            holder.tv_contact_email.setText("Email : "+arrayList.get(position).getString("field_type"));
+            holder.tv_field_info.setText(arrayList_info.get(position).getString("field_label")+" : "+arrayList_info.get(position).getString("field_value"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -51,21 +50,27 @@ public class DesignationWiseContactListAdapter extends RecyclerView.Adapter<Desi
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return arrayList_info.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_contact_name,tv_contact_number,tv_contact_email;
+        TextView tv_field_info;
         LinearLayout ll_adcl_total_cell;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv_contact_name = itemView.findViewById(R.id.tv_contact_name);
+            tv_field_info = itemView.findViewById(R.id.tv_field_info);
             ll_adcl_total_cell = itemView.findViewById(R.id.ll_adcl_total_cell);
-            tv_contact_number = itemView.findViewById(R.id.tv_contact_number);
-            tv_contact_email = itemView.findViewById(R.id.tv_contact_email);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
     }
 }

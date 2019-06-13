@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,13 +22,10 @@ import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
-import com.pmsadmin.survey.resource.AddContactActivity;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +39,7 @@ import retrofit2.Retrofit;
  * Created by USER on 28-Oct-16.
  */
 
-public class Dialog_Fragment_add_new_contact extends DialogFragment {
+public class Dialog_Fragment_add_more_info extends DialogFragment {
 
     Dialog dialog;
     View v;
@@ -54,13 +48,14 @@ public class Dialog_Fragment_add_new_contact extends DialogFragment {
     EditText et_field_label,et_field_value,et_field_type;
     TextView tv_add_contact;
     private LoadingData loader;
-    String designation_id="",tender_id="";
+    String designation_id="",tender_id="",contact_id="";
     OnItemClickDialog itemClickDialog;
 
 
-    public void setData(String id,String tender_id) {
+    public void setData(String id,String tender_id,String contact_id) {
         designation_id = id;
         this.tender_id = tender_id;
+        this.contact_id = contact_id;
     }
 
 
@@ -79,7 +74,7 @@ public class Dialog_Fragment_add_new_contact extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.dialog_add_new_contact, container, false);
+        v = inflater.inflate(R.layout.dialog_add_more_info, container, false);
         animation_zoom_in = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.zoom_in);
         slide_out_buttom = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_out_bottom);
         System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
@@ -95,7 +90,7 @@ public class Dialog_Fragment_add_new_contact extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (checkValidation()){
-                    add_contact_details();
+                    add_more_info();
                 }
             }
         });
@@ -105,7 +100,7 @@ public class Dialog_Fragment_add_new_contact extends DialogFragment {
     }
 
 
-    private void add_contact_details() {
+    private void add_more_info() {
         try {
             loader.show_with_label("Please wait");
 
@@ -114,6 +109,7 @@ public class Dialog_Fragment_add_new_contact extends DialogFragment {
             object.addProperty("designation", designation_id);
             JsonArray field_details = new JsonArray();
             JsonObject field_details_obj = new JsonObject();
+            field_details_obj.addProperty("contact", contact_id);
             field_details_obj.addProperty("field_label", et_field_label.getText().toString());
             field_details_obj.addProperty("field_value", et_field_value.getText().toString());
             field_details_obj.addProperty("field_type", et_field_type.getText().toString());
@@ -125,8 +121,9 @@ public class Dialog_Fragment_add_new_contact extends DialogFragment {
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-            final Call<ResponseBody> register = apiInterface.call_contact_details_add("Token " +
-                    LoginShared.getLoginDataModel(getActivity()).getToken(), "application/json", object);
+            final Call<ResponseBody> register = apiInterface.call_put_resource_contact_details_edit("Token " +
+                    LoginShared.getLoginDataModel(getActivity()).getToken(), Integer.valueOf(contact_id), object);
+
 
 
             register.enqueue(new Callback<ResponseBody>() {
@@ -141,14 +138,10 @@ public class Dialog_Fragment_add_new_contact extends DialogFragment {
                             String responseString = response.body().string();
                             System.out.println("response output==========>>>"+responseString);
                             JSONObject jsonObject = new JSONObject(responseString);
-                            if (jsonObject.getBoolean("status")){
-                                if (itemClickDialog != null) {
-                                    itemClickDialog.onItemClick();
-                                }
-                                Toast.makeText(getActivity(),"Contact Added successfully.",Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getActivity(),"Something went wrong, Please try again.",Toast.LENGTH_LONG).show();
+                            if (itemClickDialog != null) {
+                                itemClickDialog.onItemClick();
                             }
+                            Toast.makeText(getActivity(),"Information Added successfully.",Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

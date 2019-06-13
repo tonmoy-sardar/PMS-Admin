@@ -31,6 +31,7 @@ import static com.pmsadmin.apilist.ApiList.GET_MACHINERY_TYPE_;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
 import static com.pmsadmin.apilist.ApiList.MATERIAL_ADD;
+import static com.pmsadmin.apilist.ApiList.PUT_RESOURCE_CONTACT_DETAILS_EDIT;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.CONTRACTOR_DETAILS_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.P_AND_M_DETAILS_DOCUMENT_ADD;
@@ -410,6 +411,12 @@ public interface ApiInterface {
                                                               @Header("Content-Type") String Content_type,
                                                               @Query("tender") Integer tender,
                                                               @Query("designation") Integer designation);
+
+
+    @PUT(PUT_RESOURCE_CONTACT_DETAILS_EDIT)
+    Call<ResponseBody> call_put_resource_contact_details_edit(@Header("Authorization") String Bearer,
+                                                     @Path("id") Integer id,
+                                                     @Body JsonObject object);
 
 
 }

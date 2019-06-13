@@ -17,6 +17,8 @@ import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.resource.adpater.ContactDesignationListAdapter;
 import com.pmsadmin.survey.resource.adpater.DesignationWiseContactListAdapter;
+import com.pmsadmin.survey.resource.adpater.DesignationWiseMainContactListAdapter;
+import com.pmsadmin.survey.resource.dialog_fragment.Dialog_Fragment_add_more_info;
 import com.pmsadmin.survey.resource.dialog_fragment.Dialog_Fragment_add_new_contact;
 
 import org.json.JSONArray;
@@ -32,15 +34,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class DesignationWiseContactListActivity extends BaseActivity {
+public class DesignationWiseContactListActivity extends BaseActivity implements DesignationWiseMainContactListAdapter.OnItemClickListener{
 
     public View view;
     private TextView tv_universal_header,tv_add_contact;
     RecyclerView rv_designation_wise_contact_list;
-    DesignationWiseContactListAdapter designationWiseContactListAdapter;
+    DesignationWiseMainContactListAdapter designationWiseMainContactListAdapter;
     ArrayList<JSONObject> arrayList;
     String designation_id="",designation = "";
-    String id="",tender_id="";
+    String id="",tender_id="",contact_id="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +66,24 @@ public class DesignationWiseContactListActivity extends BaseActivity {
             public void onClick(View v) {
                 final Dialog_Fragment_add_new_contact dialog_fragment_add_new_contact= new Dialog_Fragment_add_new_contact();
                 dialog_fragment_add_new_contact.setData(id,tender_id);
+                dialog_fragment_add_new_contact.setOnDialogListener(new Dialog_Fragment_add_new_contact.OnItemClickDialog() {
+                    @Override
+                    public void onItemClick() {
+                        getDesignationWiseContactList();
+                        dialog_fragment_add_new_contact.dismiss();
+                    }
+                });
                 dialog_fragment_add_new_contact.show(getSupportFragmentManager(), "dialog");
             }
         });
 
         arrayList = new ArrayList<JSONObject>();
-        designationWiseContactListAdapter = new DesignationWiseContactListAdapter(DesignationWiseContactListActivity.this, arrayList);
+        designationWiseMainContactListAdapter = new DesignationWiseMainContactListAdapter(DesignationWiseContactListActivity.this, arrayList);
+        designationWiseMainContactListAdapter.setOnItemClickListener(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rv_designation_wise_contact_list.setLayoutManager(layoutManager);
         rv_designation_wise_contact_list.setHasFixedSize(true);
-        rv_designation_wise_contact_list.setAdapter(designationWiseContactListAdapter);
+        rv_designation_wise_contact_list.setAdapter(designationWiseMainContactListAdapter);
 
     }
 
@@ -103,16 +113,15 @@ public class DesignationWiseContactListActivity extends BaseActivity {
                             String responseString = response.body().string();
                             JSONObject jsonObject = new JSONObject(responseString);
                             System.out.println("contact designation list=================>>>"+jsonObject);
-                            JSONArray jsonArray = jsonObject.getJSONArray("result");
-                            JSONArray field_details = jsonArray.getJSONObject(0).getJSONArray("field_details");
-                            id = jsonArray.getJSONObject(0).getString("designation");
-                            tender_id = jsonArray.getJSONObject(0).getString("tender");
-                            for (int i = 0; i < field_details.length(); i++) {
-                                field_details.getJSONObject(i).put("designation_id", id);
-                                arrayList.add(field_details.getJSONObject(i));
+                            JSONArray result = jsonObject.getJSONArray("result");
+                            id = result.getJSONObject(0).getString("designation");
+                            tender_id = result.getJSONObject(0).getString("tender");
+                            for (int i = 0; i < result.length(); i++) {
+                                //field_details.getJSONObject(i).put("designation_id", id);
+                                arrayList.add(result.getJSONObject(i));
                             }
                             System.out.println("arrayList============>>>"+arrayList);
-                            designationWiseContactListAdapter.notifyDataSetChanged();
+                            designationWiseMainContactListAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -127,5 +136,21 @@ public class DesignationWiseContactListActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void OnItemClick(int position,String contact_id) {
+        System.out.println("position============>>>"+position);
+        System.out.println("contact============>>>"+contact_id);
+        final Dialog_Fragment_add_more_info dialog_Fragment_add_more_info= new Dialog_Fragment_add_more_info();
+        dialog_Fragment_add_more_info.setData(id,tender_id,contact_id);
+        dialog_Fragment_add_more_info.setOnDialogListener(new Dialog_Fragment_add_more_info.OnItemClickDialog() {
+            @Override
+            public void onItemClick() {
+                getDesignationWiseContactList();
+                dialog_Fragment_add_more_info.dismiss();
+            }
+        });
+        dialog_Fragment_add_more_info.show(getSupportFragmentManager(), "dialog");
     }
 }
