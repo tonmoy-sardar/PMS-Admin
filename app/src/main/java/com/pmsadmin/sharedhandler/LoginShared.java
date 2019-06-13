@@ -9,11 +9,13 @@ import com.pmsadmin.attendancelist.approvallistmodel.ApprovalListModel;
 import com.pmsadmin.attendancelist.leavelistmodel.LeaveListModel;
 import com.pmsadmin.attendancelist.markergetmodel.MarkerAddModel;
 import com.pmsadmin.attendancelist.reportlistmodel.ReportListModel;
+import com.pmsadmin.external_user_type.ExternalUserType;
 import com.pmsadmin.giveattandence.addattandencemodel.AttendanceAddModel;
 import com.pmsadmin.giveattandence.listattandencemodel.AttendanceListModel;
 import com.pmsadmin.giveattandence.updatedattandenceListModel.UpdatedAttendanceListModel;
 import com.pmsadmin.leavesection.leavehistorymodel.LeaveHistoryModel;
 import com.pmsadmin.login.model.LoginModel;
+import com.pmsadmin.survey.StartSurveyHome;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -356,4 +358,29 @@ public class LoginShared {
         editor.clear();
         editor.commit();
     }
+
+
+    public static void setExternalUserType(Context context, ArrayList<ExternalUserType> externalUserTypes, String key) {
+
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(externalUserTypes);
+        editor.putString(key, json);
+        editor.apply(); // This line is IMPORTANT !!!
+
+    }
+
+    public static ArrayList<ExternalUserType> getExternalUserType(Context context, String key) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        Gson gson = new Gson();
+        String json = prefs.getString(key, null);
+        Type type = new TypeToken<List<ExternalUserType>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+
 }

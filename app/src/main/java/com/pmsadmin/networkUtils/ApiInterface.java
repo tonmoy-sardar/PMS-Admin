@@ -27,6 +27,9 @@ import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL;
 import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL_DOC;
 import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
 import static com.pmsadmin.apilist.ApiList.GET_ALL_UNIT;
+import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_MAPPING_LIST;
+import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_ADD;
+import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.GET_MACHINERY_TYPE_;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
@@ -404,6 +407,14 @@ public interface ApiInterface {
     Call<ResponseBody> call_get_unit(@Header("Authorization") String Bearer,
                                               @Header("Content-Type") String Content_type);
 
+    @GET(GET_EXTERNAL_USER_TYPE_ADD)
+    Call<ResponseBody> call_get_external_user_type(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type);
+
+    @GET(GET_EXTERNAL_USER_ADD)
+    Call<ResponseBody> call_get_external_user_add(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type);
+
 
 
     @GET(GET_RESOURCE_CONTACT_DETAILS_ADD)
@@ -411,6 +422,13 @@ public interface ApiInterface {
                                                               @Header("Content-Type") String Content_type,
                                                               @Query("tender") Integer tender,
                                                               @Query("designation") Integer designation);
+
+    @GET(GET_EXTERNAL_MAPPING_LIST)
+    Call<ResponseBody> call_get_external_mapping_list(@Header("Authorization") String Bearer,
+                                                              @Header("Content-Type") String Content_type,
+                                                              @Query("tender") Integer tender,
+                                                              @Query("external_user_type") String external_user_type,
+                                                              @Query("tender_survey_material") String tender_survey_material);
 
 
     @PUT(PUT_RESOURCE_CONTACT_DETAILS_EDIT)

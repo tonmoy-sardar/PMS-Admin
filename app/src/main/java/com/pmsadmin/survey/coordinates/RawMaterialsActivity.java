@@ -55,6 +55,8 @@ public class RawMaterialsActivity extends BaseActivity {
 
     private ImageView ivAdd;
 
+    String Tag = "vendor";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,29 @@ public class RawMaterialsActivity extends BaseActivity {
         tv_universal_header.setText("Materials");
         loader = new LoadingData(RawMaterialsActivity.this);
         //setContentView(R.layout.activity_raw_materials);
+
+        /*LoginShared.getLeaveHistoryDataModel()
+        for (int i = 0; i < LoginShared.getExternalUserType().size())*/
+
+
+
+        /*System.out.println("watSize: "+
+                LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type").size());
+
+
+        for (int i = 0;
+             i < LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type").size();
+             i++){
+
+            *//*System.out.println("qqq: "+LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type")
+                    .get(i).getTypeName());*//*
+            if (LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type")
+                    .get(i).getTypeName().equalsIgnoreCase(Tag)){
+
+                System.out.println("externalID: "+LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type")
+                        .get(i).getId());
+            }
+        }*/
 
         initLayout();
 
@@ -95,18 +120,16 @@ public class RawMaterialsActivity extends BaseActivity {
 
     private void setAdapter() {
 
-        rawMaterialAdapter = new RawMaterialAdapter(RawMaterialsActivity.this,rawMaterialsResultList);
+        rawMaterialAdapter = new RawMaterialAdapter(RawMaterialsActivity.this, rawMaterialsResultList);
         rvMaterials.setAdapter(rawMaterialAdapter);
         rvMaterials.setItemAnimator(new DefaultItemAnimator());
-        //mLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
-        //mLayoutManager = new GridLayoutManager(this, 2);
+
 
         LinearLayoutManager horizontalLayoutManager =
                 new LinearLayoutManager(RawMaterialsActivity.this, RecyclerView.VERTICAL, false);
 
         rvMaterials.setLayoutManager(horizontalLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rvMaterials.addItemDecoration(decoration);
+
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(RawMaterialsActivity.this, 2);
         rvMaterials.addItemDecoration(itemOffset);
 
@@ -118,7 +141,7 @@ public class RawMaterialsActivity extends BaseActivity {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register=apiInterface.call_raw_materials_listing("Token "
+        final Call<ResponseBody> register = apiInterface.call_raw_materials_listing("Token "
                         + LoginShared.getLoginDataModel(RawMaterialsActivity.this).getToken(),
                 "application/json");
 
@@ -140,11 +163,10 @@ public class RawMaterialsActivity extends BaseActivity {
                             rawMaterialsPojo = gson.fromJson(responseString, RawMaterialsPojo.class);
                             rawMaterialsResultList.addAll(rawMaterialsPojo.getResult());
 
-                            System.out.println("rawMaterialsResultList: "+rawMaterialsResultList.size());
+                            System.out.println("rawMaterialsResultList: " + rawMaterialsResultList.size());
 
                             rawMaterialAdapter.notifyDataSetChanged();
                         }
-
 
 
                     } catch (IOException e) {

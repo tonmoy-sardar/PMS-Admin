@@ -1,6 +1,7 @@
 package com.pmsadmin.survey.coordinates.raw_material_adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.survey.coordinates.MaterialDetails;
 import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
 import com.pmsadmin.survey.coordinates.coordinate_adapter.CheckInAdapter;
 import com.pmsadmin.survey.coordinates.raw_materials_pojo.Result;
@@ -39,9 +41,19 @@ public class RawMaterialAdapter extends RecyclerView.Adapter<RawMaterialAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
         holder.tvMaterial.setText(rawMaterialsResultList.get(position).getName());
+
+        holder.rlMaterial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(activity, MaterialDetails.class);
+                intent.putExtra("mat_id",rawMaterialsResultList.get(position).getId());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -53,6 +65,7 @@ public class RawMaterialAdapter extends RecyclerView.Adapter<RawMaterialAdapter.
 
         RelativeLayout rlMaterial;
         TextView tvMaterial;
+        //RelativeLayout rlMaterial;
 
         public MyViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
