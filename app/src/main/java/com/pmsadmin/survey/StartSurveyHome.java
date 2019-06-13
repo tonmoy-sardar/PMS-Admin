@@ -5,23 +5,41 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pmsadmin.GridSpanSizeLookUp.GridSpanSizeLookupForListDetailsAdapter;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dashboard.DashBoardActivity;
 import com.pmsadmin.dashboard.adapter.ItemsAdapterTiles;
+import com.pmsadmin.external_user_type.ExternalUserType;
+import com.pmsadmin.login.LoginActivity;
+import com.pmsadmin.networkUtils.ApiInterface;
+import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.adapter.StartSurveyStaticAdapter;
+import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
 import com.pmsadmin.survey.resource.EstablishmentActivity;
 import com.pmsadmin.survey.resource.adpater.EstablishmentAdapter;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartSurveyHome extends BaseActivity {
 
@@ -54,6 +72,47 @@ public class StartSurveyHome extends BaseActivity {
         rv_items.setHasFixedSize(true);
         rv_items.setAdapter(adapter);
 
+        getExternalUserType();
+
+    }
+
+    private void getExternalUserType() {
+
+
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> register=apiInterface.call_get_external_user_type("Token "
+                        + LoginShared.getLoginDataModel(StartSurveyHome.this).getToken(),
+                "application/json");
+
+
+        register.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if (response.code() == 201 || response.code() == 200) {
+                    try {
+                        String responseString = response.body().string();
+                        System.out.println("external_user: "+responseString);
+                        ArrayList<ExternalUserType> externalUserTypes = new Gson().fromJson(responseString,
+                                new TypeToken<List<ExternalUserType>>() {
+                                }.getType());
+
+                        LoginShared.setExternalUserType(StartSurveyHome.this, externalUserTypes, "external_user_type");
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
 
     }
 

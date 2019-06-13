@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgcolor"
+    android:padding="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/tvVendorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/_15sdp"
+        android:text="Vendor1"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/tvRateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="Quoted Rate: "
+            android:textSize="@dimen/_15sdp"/>
+
+        <TextView
+            android:id="@+id/tvRateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="Quoted Rate: "
+            android:textSize="@dimen/_15sdp"
+            android:layout_toRightOf="@+id/tvRateLabel"
+            android:layout_marginLeft="@dimen/_5sdp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -102,6 +102,9 @@ public class ApiList {
     public static final String DESIGNATION_ADD="tender_survey_resource_contact_designation_add/";
     public static final String CONTACT_DETAILS_ADD="tender_survey_resource_contact_details_add/";
     public static final String GET_RESOURCE_CONTACT_DETAILS_ADD="tender_survey_resource_contact_details_add/?";
+    public static final String GET_EXTERNAL_USER_TYPE_ADD="external_users_type_add/";
+    public static final String GET_EXTERNAL_MAPPING_LIST="tender_survey_materials_external_user_mapping_list/";
+    public static final String GET_EXTERNAL_USER_ADD="external_users_add/";
 
 
 }
