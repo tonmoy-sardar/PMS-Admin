@@ -6,17 +6,17 @@
     android:layout_height="wrap_content"
     app:cardElevation="@dimen/_5sdp"
     app:cardCornerRadius="@dimen/_5sdp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="10dp"
-    >
+    android:layout_margin="@dimen/_5sdp">
     
     <LinearLayout
 
         android:id="@+id/llStartSurveyItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_20sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
         android:background="@color/bgcolor"
         android:orientation="vertical">
 
@@ -33,11 +33,11 @@
             android:layout_height="wrap_content"
             android:textColor="@color/kprogresshud_default_color"
             android:layout_below="@+id/ivTenderItem"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_10sdp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:text="fasefadffd"
-            android:padding="@dimen/_5sdp"/>
+            android:padding="@dimen/_2sdp"/>
         
     </LinearLayout>
 

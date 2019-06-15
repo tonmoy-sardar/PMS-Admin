@@ -27,7 +27,7 @@
         android:background="@color/bgcolor"
         android:orientation="vertical"
         android:padding="@dimen/_10sdp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvVendor"
@@ -45,16 +45,17 @@
             android:layout_marginRight="@dimen/_30sdp"
             android:background="@drawable/rounded_corner_button"
             android:text="ADD"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etRate"
+    <TextView
+        android:id="@+id/tvAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle_border_solid_white"
-        android:hint="Rate"
+        android:hint="Address"
         android:padding="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"/>
 

@@ -12,11 +12,13 @@ import android.widget.TextView;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.dashboard.adapter.ItemsAdapterTiles;
+import com.pmsadmin.networking.NetworkCheck;
 import com.pmsadmin.survey.SitePhotoSurvey;
 import com.pmsadmin.survey.StartSurveyHome;
 import com.pmsadmin.survey.SurveyStaticModel;
 import com.pmsadmin.survey.coordinates.CoordinatesActivity;
 import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
+import com.pmsadmin.survey.resource.AddVendroActivity;
 import com.pmsadmin.survey.resource.ContactDetailsActivity;
 import com.pmsadmin.survey.resource.EstablishmentActivity;
 import com.pmsadmin.survey.resource.ResourceActivity;
@@ -75,9 +77,13 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemsSurvey.get(position).getItem().equals("MATERIAL")){
 
-                    Intent intent = new Intent(activity, RawMaterialsActivity.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    if (NetworkCheck.getInstant(activity).isConnectingToInternet()) {
+                        Intent intent = new Intent(activity, RawMaterialsActivity.class);
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        MethodUtils.errorMsg(activity, "Please check your network connection");
+                    }
                 }else if (itemsSurvey.get(position).getItem().equals("ESTABLISHMENT")){
 
                     //MethodUtils.errorMsg(activity, "This section is under development");

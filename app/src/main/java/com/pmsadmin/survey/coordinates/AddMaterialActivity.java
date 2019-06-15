@@ -73,14 +73,20 @@ public class AddMaterialActivity extends BaseActivity {
 
         rvUnit = findViewById(R.id.rvUnit);
         btAdd = findViewById(R.id.btAdd);
+        btAdd.setTypeface(MethodUtils.getNormalFont(AddMaterialActivity.this));
 
 
         llDropDown = findViewById(R.id.llDropDown);
         etMaterialName = findViewById(R.id.etMaterialName);
+        etMaterialName.setTypeface(MethodUtils.getNormalFont(AddMaterialActivity.this));
         etItemCode = findViewById(R.id.etItemCode);
+        etItemCode.setTypeface(MethodUtils.getNormalFont(AddMaterialActivity.this));
         tvSelectUnit = findViewById(R.id.tvSelectUnit);
+        tvSelectUnit.setTypeface(MethodUtils.getNormalFont(AddMaterialActivity.this));
         etDescription = findViewById(R.id.etDescription);
+        etDescription.setTypeface(MethodUtils.getNormalFont(AddMaterialActivity.this));
         btSave = findViewById(R.id.btSave);
+        btSave.setTypeface(MethodUtils.getNormalFont(AddMaterialActivity.this));
 
         getUnit();
 
@@ -96,6 +102,9 @@ public class AddMaterialActivity extends BaseActivity {
                 llDropDown.setVisibility(View.VISIBLE);
             }
         });
+
+
+
 
 
     }
@@ -248,19 +257,20 @@ public class AddMaterialActivity extends BaseActivity {
 
                         String responseString = response.body().string();
                         MethodUtils.errorMsg(AddMaterialActivity.this, "Material added successfully.");
+                        finish();
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }else {
-                    MethodUtils.errorMsg(AddMaterialActivity.this, "Some thing went wrong!");
+                    MethodUtils.errorMsg(AddMaterialActivity.this, "Something went wrong!");
                 }
 
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                MethodUtils.errorMsg(AddMaterialActivity.this, "Something went wrong!");
             }
         });
 

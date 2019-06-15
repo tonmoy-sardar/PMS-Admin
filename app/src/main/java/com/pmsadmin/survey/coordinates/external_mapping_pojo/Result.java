@@ -17,7 +17,16 @@ public class Result implements Serializable
     private Object updatedBy;
     @SerializedName("document_details")
     @Expose
-    private List<Object> documentDetails = null;
+    private List<DocumentDetail> documentDetails = null;
+    @SerializedName("mapping_document_details")
+    @Expose
+    private List<MappingDocumentDetail> mappingDocumentDetails = null;
+    @SerializedName("external_user_name")
+    @Expose
+    private String externalUserName;
+    @SerializedName("external_user_contact")
+    @Expose
+    private String externalUserContact;
     @SerializedName("latitude")
     @Expose
     private String latitude;
@@ -27,9 +36,6 @@ public class Result implements Serializable
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("external_user_name")
-    @Expose
-    private String external_user_name;
     @SerializedName("is_deleted")
     @Expose
     private Boolean isDeleted;
@@ -57,7 +63,7 @@ public class Result implements Serializable
     @SerializedName("owned_by")
     @Expose
     private Integer ownedBy;
-    private final static long serialVersionUID = 3095649292203376076L;
+    private final static long serialVersionUID = 3130773030334716431L;
 
     public Integer getId() {
         return id;
@@ -75,12 +81,36 @@ public class Result implements Serializable
         this.updatedBy = updatedBy;
     }
 
-    public List<Object> getDocumentDetails() {
+    public List<DocumentDetail> getDocumentDetails() {
         return documentDetails;
     }
 
-    public void setDocumentDetails(List<Object> documentDetails) {
+    public void setDocumentDetails(List<DocumentDetail> documentDetails) {
         this.documentDetails = documentDetails;
+    }
+
+    public List<MappingDocumentDetail> getMappingDocumentDetails() {
+        return mappingDocumentDetails;
+    }
+
+    public void setMappingDocumentDetails(List<MappingDocumentDetail> mappingDocumentDetails) {
+        this.mappingDocumentDetails = mappingDocumentDetails;
+    }
+
+    public String getExternalUserName() {
+        return externalUserName;
+    }
+
+    public void setExternalUserName(String externalUserName) {
+        this.externalUserName = externalUserName;
+    }
+
+    public String getExternalUserContact() {
+        return externalUserContact;
+    }
+
+    public void setExternalUserContact(String externalUserContact) {
+        this.externalUserContact = externalUserContact;
     }
 
     public String getLatitude() {
@@ -179,11 +209,4 @@ public class Result implements Serializable
         this.ownedBy = ownedBy;
     }
 
-    public String getExternal_user_name() {
-        return external_user_name;
-    }
-
-    public void setExternal_user_name(String external_user_name) {
-        this.external_user_name = external_user_name;
-    }
 }
