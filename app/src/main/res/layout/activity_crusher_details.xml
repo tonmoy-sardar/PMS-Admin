@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.pmsadmin.survey.coordinates.CrusherActivity">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:id="@+id/nsv_assign_crusher"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="title name"
+                android:background="@color/inactive_button_color"
+                android:textColor="@color/color_white"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:id="@+id/tv_meterial_title_name"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Assign Crusher : "
+                android:textColor="@color/textcolor"
+                android:paddingLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                />
+
+
+
+            <TextView
+                android:id="@+id/tv_contact_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_border_solid_white"
+                android:padding="9dp"
+                android:textSize="16dp"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:hint="Contact Name"
+                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_contact_person_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_border_solid_white"
+                android:padding="9dp"
+                android:textSize="16dp"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:hint="Contact Number"
+                />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_crusher_document_list"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                />
+
+
+
+            <TextView
+                android:id="@+id/tv_add_crusher_documents"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_button"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:text="ADD DOCUMENTS"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                />
+
+
+
+            <TextView
+                android:id="@+id/tv_save_crusher"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_button"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:text="SAVE"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_view_color"
+                android:layout_marginTop="20dp"
+                />
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_assigned_crusher_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

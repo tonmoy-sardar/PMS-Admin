@@ -29,12 +29,16 @@ import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
 import static com.pmsadmin.apilist.ApiList.GET_ALL_UNIT;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_MAPPING_LIST;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_ADD;
+import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_LIST;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.GET_MACHINERY_TYPE_;
+import static com.pmsadmin.apilist.ApiList.GET_MATERIALS_EXTERNAL_USER_MAPPING_LIST;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
+import static com.pmsadmin.apilist.ApiList.MATERIALS_EXTERNAL_USER_MAPPING_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.MATERIAL_ADD;
 import static com.pmsadmin.apilist.ApiList.PUT_RESOURCE_CONTACT_DETAILS_EDIT;
+import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_MATERIALS_EXTERNAL_USER_MAPPING_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.CONTRACTOR_DETAILS_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.P_AND_M_DETAILS_DOCUMENT_ADD;
@@ -274,13 +278,13 @@ public interface ApiInterface {
 
     @POST(MATERIAL_ADD)
     Call<ResponseBody> call_add_materials(@Header("Authorization") String Bearer,
-                                                         @Header("Content-Type") String Content_type,
-                                                         @Body JsonObject object);
+                                          @Header("Content-Type") String Content_type,
+                                          @Body JsonObject object);
 
     @POST(MATERIAL_ADD)
     Call<ResponseBody> call_add_material(@Header("Authorization") String Bearer,
-                                                         @Header("Content-Type") String Content_type,
-                                                         @Body JSONObject object);
+                                         @Header("Content-Type") String Content_type,
+                                         @Body JSONObject object);
 
     @POST(ADD_CONTRACT_VENDOR)
     Call<ResponseBody> call_add_contract_vendor(@Header("Authorization") String Bearer,
@@ -403,18 +407,18 @@ public interface ApiInterface {
     Call<ResponseBody> call_get_contact_designations(@Header("Authorization") String Bearer,
                                                      @Header("Content-Type") String Content_type,
                                                      @Query("tender") Integer tender);
+
     @GET(GET_ALL_UNIT)
     Call<ResponseBody> call_get_unit(@Header("Authorization") String Bearer,
-                                              @Header("Content-Type") String Content_type);
+                                     @Header("Content-Type") String Content_type);
 
     @GET(GET_EXTERNAL_USER_TYPE_ADD)
     Call<ResponseBody> call_get_external_user_type(@Header("Authorization") String Bearer,
-                                              @Header("Content-Type") String Content_type);
+                                                   @Header("Content-Type") String Content_type);
 
     @GET(GET_EXTERNAL_USER_ADD)
     Call<ResponseBody> call_get_external_user_add(@Header("Authorization") String Bearer,
-                                              @Header("Content-Type") String Content_type);
-
+                                                  @Header("Content-Type") String Content_type);
 
 
     @GET(GET_RESOURCE_CONTACT_DETAILS_ADD)
@@ -425,17 +429,44 @@ public interface ApiInterface {
 
     @GET(GET_EXTERNAL_MAPPING_LIST)
     Call<ResponseBody> call_get_external_mapping_list(@Header("Authorization") String Bearer,
-                                                              @Header("Content-Type") String Content_type,
-                                                              @Query("tender") Integer tender,
-                                                              @Query("external_user_type") String external_user_type,
-                                                              @Query("tender_survey_material") String tender_survey_material);
+                                                      @Header("Content-Type") String Content_type,
+                                                      @Query("tender") Integer tender,
+                                                      @Query("external_user_type") String external_user_type,
+                                                      @Query("tender_survey_material") String tender_survey_material);
 
 
     @PUT(PUT_RESOURCE_CONTACT_DETAILS_EDIT)
     Call<ResponseBody> call_put_resource_contact_details_edit(@Header("Authorization") String Bearer,
-                                                     @Path("id") Integer id,
-                                                     @Body JsonObject object);
+                                                              @Path("id") Integer id,
+                                                              @Body JsonObject object);
 
+
+    @GET(GET_EXTERNAL_USER_LIST)
+    Call<ResponseBody> call_external_user_list(@Header("Authorization") String Bearer,
+                                               @Header("Content-Type") String Content_type,
+                                               @Query("user_type") Integer user_type);
+
+
+    @POST(TENDER_SURVEY_MATERIALS_EXTERNAL_USER_MAPPING_ADD)
+    Call<ResponseBody> call_materials_external_user_mapping_add(@Header("Authorization") String Bearer,
+                                                                @Header("Content-Type") String Content_type,
+                                                                @Body JsonObject object);
+
+
+    @GET(GET_MATERIALS_EXTERNAL_USER_MAPPING_LIST)
+    Call<ResponseBody> call_get_materials_external_user_mapping_list(@Header("Authorization") String Bearer,
+                                                                     @Header("Content-Type") String Content_type,
+                                                                     @Query("tender") Integer tender,
+                                                                     @Query("external_user_type") Integer external_user_type,
+                                                                     @Query("tender_survey_material") Integer tender_survey_material);
+
+
+    @Multipart
+    @POST(MATERIALS_EXTERNAL_USER_MAPPING_DOCUMENT_ADD)
+    Call<ResponseBody> call_add_external_user_mapping_document(@Part MultipartBody.Part file,
+                                                      @Part("external_user") RequestBody external_user,
+                                                      @Part("external_user_mapping") RequestBody external_user_mapping,
+                                                      @Part("document_name") RequestBody document_name);
 
 }
 

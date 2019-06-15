@@ -58,6 +58,7 @@
         <activity android:name=".survey.resource.AddEstablishmentActivity" />
         <activity android:name=".survey.resource.EstablishmentActivity" />
         <activity android:name=".survey.coordinates.CrusherActivity" />
+        <activity android:name=".survey.coordinates.CrusherDetailsActivity" />
         <activity android:name=".survey.resource.ResourceActivity" />
         <activity android:name=".survey.coordinates.RawMaterialsActivity" />
         <activity

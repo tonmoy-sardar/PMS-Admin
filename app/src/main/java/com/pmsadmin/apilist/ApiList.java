@@ -68,7 +68,7 @@ public class ApiList {
 
 
     public static final String RAW_MATERIALS_LIST="materials_list/";
-    public static final String CRUSHER_LIST="external_users_list/?user_type=7";
+    public static final String CRUSHER_LIST="materials_add/";
     public static final String ESTABLISHMENT_ADD="tender_survey_resource_establishment_add/";
     public static final String ADD_SITE_PHOTOSF="tender_survey_site_photos_add/";
     public static final String TENDER_SURVEY_SITE_PHOTOS_EDIT="tender_survey_site_photos_edit/{id}/";
@@ -106,6 +106,10 @@ public class ApiList {
     public static final String GET_EXTERNAL_USER_TYPE_ADD="external_users_type_add/";
     public static final String GET_EXTERNAL_MAPPING_LIST="tender_survey_materials_external_user_mapping_list/";
     public static final String GET_EXTERNAL_USER_ADD="external_users_add/";
+    public static final String GET_EXTERNAL_USER_LIST="external_users_list/?";
+    public static final String GET_MATERIALS_EXTERNAL_USER_MAPPING_LIST="tender_survey_materials_external_user_mapping_list/?";
+    public static final String TENDER_SURVEY_MATERIALS_EXTERNAL_USER_MAPPING_ADD="tender_survey_materials_external_user_mapping_add_f_android/";
+    public static final String MATERIALS_EXTERNAL_USER_MAPPING_DOCUMENT_ADD="tender_survey_materials_external_user_mapping_document_add/";
 
 
 }
