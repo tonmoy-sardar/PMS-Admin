@@ -37,6 +37,7 @@ import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
 import static com.pmsadmin.apilist.ApiList.MATERIALS_EXTERNAL_USER_MAPPING_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.MATERIAL_ADD;
+import static com.pmsadmin.apilist.ApiList.POST_VENDOR_ADD;
 import static com.pmsadmin.apilist.ApiList.PUT_RESOURCE_CONTACT_DETAILS_EDIT;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_MATERIALS_EXTERNAL_USER_MAPPING_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_RESOURCE_ESTABLISHMENT_DOCUMENT_ADD;
@@ -81,6 +82,7 @@ import static com.pmsadmin.apilist.ApiList.REPORTLISTING;
 import static com.pmsadmin.apilist.ApiList.TENDERS_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_LOCATION_ADD;
 import static com.pmsadmin.apilist.ApiList.TENDER_SURVEY_LOCATION_LIST;
+import static com.pmsadmin.apilist.ApiList.USER_MAPPING_DOC_ADD;
 import static com.pmsadmin.apilist.ApiList.machineries_wp_list;
 import static com.pmsadmin.apilist.ApiList.pms_execution_daily_progress_add;
 import static com.pmsadmin.apilist.ApiList.pms_execution_daily_progress_pandm_add;
@@ -281,6 +283,11 @@ public interface ApiInterface {
                                           @Header("Content-Type") String Content_type,
                                           @Body JsonObject object);
 
+    @POST(POST_VENDOR_ADD)
+    Call<ResponseBody> call_add_vendor(@Header("Authorization") String Bearer,
+                                                         @Header("Content-Type") String Content_type,
+                                                         @Body JsonObject object);
+
     @POST(MATERIAL_ADD)
     Call<ResponseBody> call_add_material(@Header("Authorization") String Bearer,
                                          @Header("Content-Type") String Content_type,
@@ -327,6 +334,13 @@ public interface ApiInterface {
                                           @Part("tender") RequestBody tender,
                                           @Part("module_id") RequestBody module_id,
                                           @Part("document_name") RequestBody document_name);
+
+    @Multipart
+    @POST(USER_MAPPING_DOC_ADD)
+    Call<ResponseBody> call_add_Materials_doc(@Part("external_user") RequestBody external_user,
+                                          @Part("external_user_mapping") RequestBody external_user_mapping,
+                                          @Part("document_name") RequestBody document_name,
+                                          @Part MultipartBody.Part file);
 
 
     @Multipart

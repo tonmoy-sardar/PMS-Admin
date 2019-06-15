@@ -36,6 +36,52 @@
             android:layout_toRightOf="@+id/tvRateLabel"
             android:layout_marginLeft="@dimen/_5sdp"/>
 
+
+        <LinearLayout
+            android:id="@+id/llImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/tvRateValue"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/ivSelect"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/attachment_icon"/>
+
+            <ImageView
+                android:id="@+id/ivPdf"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_picture_as_pdf_blue_24dp"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/etDocumentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/llImage"
+                android:background="@drawable/rectangle_border_solid_white"
+                android:hint="Document name"
+                android:padding="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+
+
     </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDocuments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

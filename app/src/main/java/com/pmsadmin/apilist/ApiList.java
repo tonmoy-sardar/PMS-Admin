@@ -111,5 +111,10 @@ public class ApiList {
     public static final String TENDER_SURVEY_MATERIALS_EXTERNAL_USER_MAPPING_ADD="tender_survey_materials_external_user_mapping_add_f_android/";
     public static final String MATERIALS_EXTERNAL_USER_MAPPING_DOCUMENT_ADD="tender_survey_materials_external_user_mapping_document_add/";
 
+    //public static final String POST_VENDOR_ADD="tender_survey_materials_external_user_mapping_add/";
+    public static final String POST_VENDOR_ADD="tender_survey_materials_external_user_mapping_add_f_android/";
+    public static final String USER_MAPPING_DOC_ADD="tender_survey_materials_external_user_mapping_document_add/";
+
+
 
 }

@@ -65,10 +65,7 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
                     Intent intent = new Intent(activity, AddDailyData.class);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    /*Intent intent = new Intent(activity, AddDailyData.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-                    //MethodUtils.errorMsg(activity, "This section is under development");
+
                 }
             }
         });

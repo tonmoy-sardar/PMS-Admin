@@ -93,10 +93,16 @@ public class RawMaterialsActivity extends BaseActivity {
 
         initLayout();
 
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getRawMaterialsList();
 
         setAdapter();
-
     }
 
     private void initLayout() {
@@ -154,6 +160,11 @@ public class RawMaterialsActivity extends BaseActivity {
 
                 if (response.code() == 201 || response.code() == 200) {
                     try {
+
+                        if (rawMaterialsResultList!= null){
+                            rawMaterialsResultList.clear();
+                        }
+
                         String responseString = response.body().string();
                         JSONObject jsonObject = new JSONObject(responseString);
                         if (jsonObject.optInt("request_status") == 1) {
