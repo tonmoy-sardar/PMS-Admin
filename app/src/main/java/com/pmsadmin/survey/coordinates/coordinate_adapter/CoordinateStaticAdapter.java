@@ -58,12 +58,15 @@ public class CoordinateStaticAdapter extends RecyclerView.Adapter<CoordinateStat
 
                     Intent intent = new Intent(activity, CheckInActivity.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemCoordinates.get(position).getItem().equals("RAW MATERIALS")){
                     Intent intent = new Intent(activity, RawMaterialsActivity.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemCoordinates.get(position).getItem().equals("CRUSHER")){
                     Intent intent = new Intent(activity, CrusherActivity.class);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

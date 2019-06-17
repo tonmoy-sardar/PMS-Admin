@@ -215,7 +215,8 @@ public interface ApiInterface {
 
     @GET(TENDERS_ADD)
     Call<ResponseBody> call_tenders_add(@Header("Authorization") String Bearer,
-                                        @Header("Content-Type") String Content_type);
+                                        @Header("Content-Type") String Content_type,
+                                        @Query("page") String page);
 
 
     @POST(TENDER_SURVEY_LOCATION_ADD)

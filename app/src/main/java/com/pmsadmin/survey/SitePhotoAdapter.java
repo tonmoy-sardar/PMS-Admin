@@ -37,7 +37,7 @@ public class SitePhotoAdapter extends RecyclerView.Adapter<SitePhotoAdapter.MyVi
     @Override
     public SitePhotoAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.items_start_survey_home, parent, false);
+                .inflate(R.layout.items_site_photo, parent, false);
 
         return new SitePhotoAdapter.MyViewHolder(itemView,activity);
     }

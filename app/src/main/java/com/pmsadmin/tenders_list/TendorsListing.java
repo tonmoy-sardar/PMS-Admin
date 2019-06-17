@@ -1,5 +1,6 @@
 package com.pmsadmin.tenders_list;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,8 +23,10 @@ import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
+import com.pmsadmin.leavesection.LeaveActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.networking.NetworkCheck;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.tenderdashboard.TenderDashboardActivity;
 import com.pmsadmin.tenders_list.tendors_pojo.Result;
@@ -53,6 +56,8 @@ public class TendorsListing extends BaseActivity {
 
     private TextView tv_universal_header;
 
+    private int page1 = 1;
+
     //StaggeredGridLayoutManager mLayoutManager;
 
 
@@ -73,6 +78,10 @@ public class TendorsListing extends BaseActivity {
         setRecyclerView();
     }
 
+
+    private int totalItemCount, lastVisibleCount, totalItemCount1, lastVisibleCount1;
+    private boolean loading1 = false;
+
     private void setRecyclerView() {
 
 
@@ -86,6 +95,39 @@ public class TendorsListing extends BaseActivity {
         rvTendors.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(TendorsListing.this, 2);
         rvTendors.addItemDecoration(itemOffset);
+
+
+        rvTendors.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalItemCount1 = mLayoutManager.getItemCount();
+                lastVisibleCount1 = mLayoutManager.findLastCompletelyVisibleItemPosition();
+
+
+                if (lastVisibleCount1 == totalItemCount1 - 1) {
+                    if (tendorsResultList.size() % 10 == 0) {
+                        //   leaveList.add(null);
+                        //        leaveListAdapter.notifyItemInserted(leaveList.size() - 1);
+                        loading1 = true;
+                        page1++;
+                        if (NetworkCheck.getInstant(TendorsListing.this).isConnectingToInternet()) {
+                            callTendersAddApi();
+                        } else {
+                            MethodUtils.errorMsg(TendorsListing.this, "Please check your phone's network connection");
+                        }
+
+                    }
+                }
+
+
+
+            }
+        });
+
+
+
+
     }
 
     private void fontSet() {
@@ -105,14 +147,17 @@ public class TendorsListing extends BaseActivity {
 
     private void callTendersAddApi() {
 
+        if (!loading1) {
+            loader.show_with_label("Loading");
+        }
 
-        loader.show_with_label("Loading");
+        //loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.call_tenders_add("Token "
                         + LoginShared.getLoginDataModel(TendorsListing.this).getToken(),
-                "application/json");
+                "application/json",String.valueOf(page1));
 
 
         register.enqueue(new Callback<ResponseBody>() {
