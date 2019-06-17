@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
             android:cursorVisible="true"
-            android:hint="Project"
+            android:hint="Check In"
             android:inputType="text"
             android:padding="@dimen/_10sdp"
             android:paddingLeft="@dimen/_10sdp"

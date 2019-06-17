@@ -68,28 +68,7 @@ public class RawMaterialsActivity extends BaseActivity {
         loader = new LoadingData(RawMaterialsActivity.this);
         //setContentView(R.layout.activity_raw_materials);
 
-        /*LoginShared.getLeaveHistoryDataModel()
-        for (int i = 0; i < LoginShared.getExternalUserType().size())*/
 
-
-
-        /*System.out.println("watSize: "+
-                LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type").size());
-
-
-        for (int i = 0;
-             i < LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type").size();
-             i++){
-
-            *//*System.out.println("qqq: "+LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type")
-                    .get(i).getTypeName());*//*
-            if (LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type")
-                    .get(i).getTypeName().equalsIgnoreCase(Tag)){
-
-                System.out.println("externalID: "+LoginShared.getExternalUserType(RawMaterialsActivity.this,"external_user_type")
-                        .get(i).getId());
-            }
-        }*/
 
         initLayout();
 

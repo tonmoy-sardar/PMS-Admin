@@ -18,6 +18,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -78,6 +79,8 @@ public class AddChkInDialogue extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.dialogue_add_chkin);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         loader = new LoadingData(AddChkInDialogue.this);
@@ -143,9 +146,11 @@ public class AddChkInDialogue extends Activity {
         tvSearchLocation.setEnabled(false);
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_submit.setTypeface(MethodUtils.getNormalFont(AddChkInDialogue.this));
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
 
         etProject = (EditText) findViewById(R.id.etProject);
+        etProject.setTypeface(MethodUtils.getNormalFont(AddChkInDialogue.this));
 
         /*tvSearchLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +166,14 @@ public class AddChkInDialogue extends Activity {
                 if (currentLat == 0.0 && currentLng == 0.0) {
                     MethodUtils.errorMsg(AddChkInDialogue.this, "Unable to find Location");
                 }else {
-                    callAddSurveyApi();
+
+                    if (etProject.getText().toString().equals("")){
+
+                        MethodUtils.errorMsg(AddChkInDialogue.this, "Please enter Check in address");
+
+                    }else {
+                        callAddSurveyApi();
+                    }
                 }
             }
         });
@@ -224,12 +236,17 @@ public class AddChkInDialogue extends Activity {
                     }
                 } catch (Exception e) {
                     MethodUtils.errorMsg(AddChkInDialogue.this, AddChkInDialogue.this.getString(R.string.error_occurred));
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(AddChkInDialogue.this, AddChkInDialogue.this.getString(R.string.error_occurred));
             }
         });
 

@@ -208,7 +208,12 @@ public class SitePhotoSurvey extends BaseActivity {
             public void onClick(View v) {
                 //Log.d("jkajk",filePath);
                 Log.d("jkajk",String.valueOf(mFile));
-               UploadImageData(String.valueOf(mFile));
+
+                if (mFile!= null) {
+                    UploadImageData(String.valueOf(mFile));
+                }else {
+                    MethodUtils.errorMsg(SitePhotoSurvey.this, "Please select an Image!");
+                }
                //UploadImageData(filePath);
             }
         });

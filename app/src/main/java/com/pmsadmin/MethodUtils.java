@@ -332,6 +332,13 @@ public class MethodUtils {
             list.add(dashBoardModelImage);
         }
 
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("APPLY LOCAL CONVEYANCE");
+            dashBoardModelImage.setImageId(R.drawable.add_daily_data);
+            list.add(dashBoardModelImage);
+        }
+
 
         /*{
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();

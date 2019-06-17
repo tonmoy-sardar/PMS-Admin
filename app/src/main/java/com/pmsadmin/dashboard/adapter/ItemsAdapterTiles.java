@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.add_daily_report.AddDailyData;
+import com.pmsadmin.apply_local_conveyance.LocalConveyance;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dashboard.model.DashBoardModelImage;
 import com.pmsadmin.giveattandence.GiveAttendanceActivity;
@@ -63,6 +64,12 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
                 }else if (items.get(i).getItem().equals("UPDATE DAILY PROGRESS")){
 
                     Intent intent = new Intent(activity, AddDailyData.class);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                }else if (items.get(i).getItem().equals("APPLY LOCAL CONVEYANCE")){
+
+                    Intent intent = new Intent(activity, LocalConveyance.class);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

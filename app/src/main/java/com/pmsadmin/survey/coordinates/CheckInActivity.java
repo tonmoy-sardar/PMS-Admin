@@ -17,6 +17,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -51,7 +52,7 @@ import java.util.Locale;
 public class CheckInActivity extends BaseActivity {
 
     public View view;
-    private TextView tv_universal_header,tvAdd;
+    private TextView tv_universal_header, tvAdd;
     private RecyclerView rvProjects;
 
     List<Result> surveyResultResponse = new ArrayList<>();
@@ -67,6 +68,8 @@ public class CheckInActivity extends BaseActivity {
 
     private SimpleLocation location;
 
+    private ImageView ivAdd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +82,7 @@ public class CheckInActivity extends BaseActivity {
         tv_universal_header.setText("Check In");
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(CheckInActivity.this));
 
-        System.out.println("tenderID: "+String.valueOf(MethodUtils.tender_id));
+        System.out.println("tenderID: " + String.valueOf(MethodUtils.tender_id));
 
         rvProjects = (RecyclerView) findViewById(R.id.rvProjects);
 
@@ -130,7 +133,7 @@ public class CheckInActivity extends BaseActivity {
         }
 
 
-        System.out.println("adress: "+ addresses.get(0).getAddressLine(0));
+        System.out.println("adress: " + addresses.get(0).getAddressLine(0));
 
         initLayout();
 
@@ -152,18 +155,15 @@ public class CheckInActivity extends BaseActivity {
 
     private void setAdapter() {
 
-        checkInAdapter = new CheckInAdapter(CheckInActivity.this,surveyResultResponse);
+        checkInAdapter = new CheckInAdapter(CheckInActivity.this, surveyResultResponse);
         rvProjects.setAdapter(checkInAdapter);
         rvProjects.setItemAnimator(new DefaultItemAnimator());
-        //mLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
-        //mLayoutManager = new GridLayoutManager(this, 2);
+
 
         LinearLayoutManager horizontalLayoutManager =
                 new LinearLayoutManager(CheckInActivity.this, RecyclerView.VERTICAL, false);
 
         rvProjects.setLayoutManager(horizontalLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rvProjects.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(CheckInActivity.this, 2);
         rvProjects.addItemDecoration(itemOffset);
     }
@@ -173,7 +173,7 @@ public class CheckInActivity extends BaseActivity {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register=apiInterface.call_tender_survey_location_list("Token "
+        final Call<ResponseBody> register = apiInterface.call_tender_survey_location_list("Token "
                         + LoginShared.getLoginDataModel(CheckInActivity.this).getToken(),
                 String.valueOf(MethodUtils.tender_id));
 
@@ -181,7 +181,7 @@ public class CheckInActivity extends BaseActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                if (surveyResultResponse!= null){
+                if (surveyResultResponse != null) {
                     surveyResultResponse.clear();
                 }
 
@@ -222,18 +222,18 @@ public class CheckInActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        tvAdd = (TextView) findViewById(R.id.tvAdd);
-        tvAdd.setTypeface(MethodUtils.getNormalFont(CheckInActivity.this));
+        //tvAdd = (TextView) findViewById(R.id.tvAdd);
+        ivAdd = findViewById(R.id.ivAdd);
+        //tvAdd.setTypeface(MethodUtils.getNormalFont(CheckInActivity.this));
 
 
-        tvAdd.setOnClickListener(new View.OnClickListener() {
+        ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), AddChkInDialogue.class);
-                /*intent.putExtra("latitude", String.valueOf(currentLat));
-                intent.putExtra("longitude",String.valueOf(currentLng));*/
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             }
         });

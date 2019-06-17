@@ -99,7 +99,13 @@ public class AddMaterialActivity extends BaseActivity {
         tvSelectUnit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 llDropDown.setVisibility(View.VISIBLE);
+                /*if (tvSelectUnit.getVisibility() == View.VISIBLE){
+                    llDropDown.setVisibility(View.GONE);
+                }else if (tvSelectUnit.getVisibility() == View.GONE){
+                    llDropDown.setVisibility(View.VISIBLE);
+                }*/
             }
         });
 
@@ -180,7 +186,22 @@ public class AddMaterialActivity extends BaseActivity {
 
 
                 //showUnit(unitPojoList);
-                post(unitPojoList);
+
+                if (etItemCode.getText().toString().equals("")){
+
+                    MethodUtils.errorMsg(AddMaterialActivity.this, "Please enter Item Code");
+
+                }else if (etDescription.getText().toString().equals("")){
+
+                    MethodUtils.errorMsg(AddMaterialActivity.this, "Please enter Description");
+                }else if (etMaterialName.getText().toString().equals("")){
+                    MethodUtils.errorMsg(AddMaterialActivity.this, "Please enter Material name");
+
+                }else if (tvSelectUnit.getText().toString().equals("Select")){
+                    MethodUtils.errorMsg(AddMaterialActivity.this, "Please select unit");
+                }else {
+                    post(unitPojoList);
+                }
 
             }
         });
@@ -206,7 +227,11 @@ public class AddMaterialActivity extends BaseActivity {
         String niceString = "";
 
         niceString = data.replaceFirst("^,", "");
-        tvSelectUnit.setText(niceString);
+        if (niceString.equals("")){
+            tvSelectUnit.setText("Select");
+        }else {
+            tvSelectUnit.setText(niceString);
+        }
 
     }
 
@@ -263,6 +288,10 @@ public class AddMaterialActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 }else {
+
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
+
                     MethodUtils.errorMsg(AddMaterialActivity.this, "Something went wrong!");
                 }
 
@@ -270,6 +299,9 @@ public class AddMaterialActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
                 MethodUtils.errorMsg(AddMaterialActivity.this, "Something went wrong!");
             }
         });
