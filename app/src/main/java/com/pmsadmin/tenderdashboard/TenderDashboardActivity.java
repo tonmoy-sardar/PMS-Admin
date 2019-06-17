@@ -23,13 +23,17 @@ public class TenderDashboardActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_tender_dashboard, null);
         addContentView(view);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
+
         bindView();
         setRecyclerView();
     }
 
+
     private void bindView() {
         rv_items=view.findViewById(R.id.rv_items);
     }
+
 
     private void setRecyclerView() {
         TenderItemAdapter adapter = new TenderItemAdapter(TenderDashboardActivity.this, MethodUtils.getTenderItems());

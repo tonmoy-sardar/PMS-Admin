@@ -201,6 +201,8 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.dashboard_second_option, null);
         addContentView(view);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
+
         bindView();
         fontSet();
         gpsTracker = new GPSTracker(DashBoardActivity.this);
@@ -950,8 +952,6 @@ public class DashBoardActivity extends BaseActivity implements OnCompleteListene
         rv_items.setItemAnimator(new DefaultItemAnimator());
         mLayoutManager = new GridLayoutManager(this, 2);
         rv_items.setLayoutManager(mLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rv_items.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(DashBoardActivity.this, 2);
         rv_items.addItemDecoration(itemOffset);
         GridSpanSizeLookupForListDetailsAdapter headerSpanSizeLookup = new GridSpanSizeLookupForListDetailsAdapter(adapter, mLayoutManager);

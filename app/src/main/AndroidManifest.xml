@@ -35,35 +35,58 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
+
+
         <activity android:name=".survey.resource.AddVendroActivity"></activity>
+
         <activity android:name=".survey.coordinates.MaterialDetails" />
-        <activity android:name=".survey.resource.AddContactActivity"
-            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".survey.resource.AddContactActivity"
+            android:windowSoftInputMode="stateHidden" />
+
         <activity android:name=".survey.resource.ContactDetailsActivity" />
+
         <activity android:name=".survey.resource.DesignationWiseContactListActivity" />
-        <activity android:name=".survey.coordinates.AddMaterialActivity"
-            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".survey.coordinates.AddMaterialActivity"
+            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".dialog.add_material_dialogue.AddMaterialDialogue"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+
         <activity android:name=".survey.resource.contractor_vendor.ContractVendorReplica" />
-        <activity android:name=".dialog.AddContractorVendorDialogue"
-            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".dialog.AddContractorVendorDialogue"
+            android:windowSoftInputMode="stateHidden" />
+
         <activity android:name=".survey.resource.contractor_vendor.ContractorsVendorsActivity" />
+
         <activity android:name=".survey.resource.EstablishmentDetails" />
+
         <activity android:name=".survey.resource.contractor_vendor.ContractorsDetails" />
+
         <activity android:name=".survey.resource.contractor_vendor.PandMDetails" />
-        <activity android:name=".survey.resource.contractor_vendor.MachineryAddActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".survey.resource.hydrological_data.AddHydrologicalData"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".survey.resource.hydrological_data.HydrologicalActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".survey.resource.hydrological_data.HydrologicalDetails"
-            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".survey.resource.contractor_vendor.MachineryAddActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".survey.resource.hydrological_data.AddHydrologicalData"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".survey.resource.hydrological_data.HydrologicalActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".survey.resource.hydrological_data.HydrologicalDetails"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".survey.SitePhotoDetailsActivity" />
-        <activity android:name=".survey.resource.AddEstablishmentActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".survey.resource.AddEstablishmentActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".survey.resource.EstablishmentActivity" />
         <activity android:name=".survey.coordinates.CrusherActivity" />
         <activity android:name=".survey.coordinates.CrusherDetailsActivity" />
@@ -136,7 +159,9 @@
             android:name=".dashboard.DashBoardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme"
+            />
         <activity
             android:name=".forgot.ForgotPasswordActivity"
             android:screenOrientation="portrait"
@@ -146,7 +171,9 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme"
+            >
 
             <!--
             <intent-filter>

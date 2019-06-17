@@ -35,10 +35,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_items"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginRight="15dp"
         android:layout_centerInParent="true">
 
     </androidx.recyclerview.widget.RecyclerView>

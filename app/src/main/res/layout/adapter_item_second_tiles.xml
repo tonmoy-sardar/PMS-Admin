@@ -3,11 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/rl_main"
-    android:background="@drawable/adapter_background">
+    android:background="@drawable/adapter_background"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="10dp"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
+
         <ImageView
             android:id="@+id/iv_item"
             android:layout_width="@dimen/_50sdp"
@@ -17,13 +22,16 @@
 
         <TextView
             android:id="@+id/tv_item"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Santanu"
             android:layout_below="@+id/iv_item"
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_15sdp"
             android:textSize="@dimen/_10sdp"
-            android:layout_centerHorizontal="true"/>
+            android:gravity="center_horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </RelativeLayout>

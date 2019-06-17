@@ -55,7 +55,9 @@
             android:layout_height="match_parent"
             android:background="@color/bgcolor"
             android:hint="Additional Information"
-            android:padding="@dimen/_5sdp" />
+            android:padding="10dp"
+            android:gravity="start"
+            />
 
 
     </androidx.cardview.widget.CardView>
