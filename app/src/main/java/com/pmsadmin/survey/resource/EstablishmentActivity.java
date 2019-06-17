@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -41,6 +42,7 @@ public class EstablishmentActivity extends BaseActivity {
 
     public View view;
     private TextView tv_universal_header,tvAdd;
+    private ImageView ivAdd;
 
     List<Result> resultEstablishment = new ArrayList<>();
 
@@ -58,18 +60,20 @@ public class EstablishmentActivity extends BaseActivity {
         //setContentView(R.layout.activity_establishment);
 
         tv_universal_header = findViewById(R.id.tv_universal_header);
-        tvAdd = findViewById(R.id.tvAdd);
+        //tvAdd = findViewById(R.id.tvAdd);
+        ivAdd = findViewById(R.id.ivAdd);
         tv_universal_header.setText("Establishment");
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(EstablishmentActivity.this));
 
         rvEstablishment = findViewById(R.id.rvEstablishment);
 
-        tvAdd.setOnClickListener(new View.OnClickListener() {
+        ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(EstablishmentActivity.this, AddEstablishmentActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             }
         });
@@ -85,19 +89,7 @@ public class EstablishmentActivity extends BaseActivity {
 
     private void setAdapter() {
 
-       /* establishmentAdapter = new EstablishmentAdapter(EstablishmentActivity.this,resultEstablishment);
-        rvEstablishment.setAdapter(establishmentAdapter);
-        rvEstablishment.setItemAnimator(new DefaultItemAnimator());
-        //mLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
-        //mLayoutManager = new GridLayoutManager(this, 2);
 
-        LinearLayoutManager horizontalLayoutManager =
-                new LinearLayoutManager(EstablishmentActivity.this, RecyclerView.VERTICAL, false);
-        rvEstablishment.setLayoutManager(horizontalLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rvEstablishment.addItemDecoration(decoration);
-        ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(EstablishmentActivity.this, 2);
-        rvEstablishment.addItemDecoration(itemOffset);*/
 
         establishmentAdapter = new EstablishmentAdapter(EstablishmentActivity.this,resultEstablishment);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
