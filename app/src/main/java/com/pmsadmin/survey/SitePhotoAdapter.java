@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.survey.adapter.StartSurveyStaticAdapter;
 import com.pmsadmin.survey.site_photo_pojo.Result;
@@ -81,11 +83,14 @@ public class SitePhotoAdapter extends RecyclerView.Adapter<SitePhotoAdapter.MyVi
 
         ImageView ivTenderItem;
         LinearLayout llStartSurveyItem;
+        TextView tvViewDetail;
 
         public MyViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
             ivTenderItem = itemView.findViewById(R.id.ivTenderItem);
             llStartSurveyItem = itemView.findViewById(R.id.llStartSurveyItem);
+            tvViewDetail = itemView.findViewById(R.id.tvViewDetail);
+            tvViewDetail.setTypeface(MethodUtils.getNormalFont(activity));
         }
     }
 }

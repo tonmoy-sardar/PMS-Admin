@@ -15,12 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.login.model.SiteList;
@@ -67,6 +69,8 @@ public class LabourFragment extends Fragment {
     String weather="",contractors_name="",activity="",remarks="",skilledlabour="",unskilledlabour="",milestone_completed="";
     public static  String dt="",dt_completion="",planned_start_time="",planned_end_time="";
 
+    private TextView tvLabel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,6 +113,24 @@ public class LabourFragment extends Fragment {
         edt_no_unskilled_labour=(EditText)view.findViewById(R.id.edt_no_unskilled_labour);
         edt_start_time=(EditText)view.findViewById(R.id.edt_start_time);
         edt_end_time=(EditText)view.findViewById(R.id.edt_end_time);
+
+        tvLabel = view.findViewById(R.id.tvLabel);
+
+        edt_date.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_completion_date.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_start_time.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_end_time.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_weather.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_contractor_name.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_activity.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_remarks.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_no_skilled_labour.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_no_unskilled_labour.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_milestone_completed.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        tvLabel.setTypeface(MethodUtils.getNormalFont(getActivity()));
+
+
+
         if (!ConnectionDetector.isConnectingToInternet(getActivity())) {
             errorMsg(getActivity(), getActivity().getString(R.string.no_internet));
         }else {

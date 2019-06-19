@@ -13,11 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.login.model.GetSetMachinary;
@@ -54,18 +56,20 @@ import static com.pmsadmin.MethodUtils.errorMsg;
 
 public class PandMfragment extends Fragment {
     SpotsDialog loader;
-    SearchableSpinner spnsitelocation,spmachineused,spunit;
-    ArrayList<String> siteListname,machinarylist,unitlist;
-    int site_location=0;
-    int sitetype=0;
-    int project_id=0;
-    int machinaryid=0;
-    int unit=0;
+    SearchableSpinner spnsitelocation, spmachineused, spunit;
+    ArrayList<String> siteListname, machinarylist, unitlist;
+    int site_location = 0;
+    int sitetype = 0;
+    int project_id = 0;
+    int machinaryid = 0;
+    int unit = 0;
     ImageView save;
-    public static EditText edt_date,edt_completion_date;
-    EditText edt_activity,edt_remarks,edt_weather,edt_milestone_completed,edt_usedby,edt_from,edt_to;
-    public static  String dt="",dt_completion="";
-    String weather="",activity="",remarks="",milestone_completed="",usedby="",from="",to="";
+    public static EditText edt_date, edt_completion_date;
+    EditText edt_activity, edt_remarks, edt_weather, edt_milestone_completed, edt_usedby, edt_from, edt_to;
+    public static String dt = "", dt_completion = "";
+    String weather = "", activity = "", remarks = "", milestone_completed = "", usedby = "", from = "", to = "";
+    private TextView tvLabel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,14 +77,11 @@ public class PandMfragment extends Fragment {
         View view = inflater.inflate(R.layout.pandm_frag_layout, container, false);
         view.setFocusableInTouchMode(true);
         view.requestFocus();
-        view.setOnKeyListener( new View.OnKeyListener()
-        {
+        view.setOnKeyListener(new View.OnKeyListener() {
 
             @Override
-            public boolean onKey( View v, int keyCode, KeyEvent event )
-            {
-                if( keyCode == KeyEvent.KEYCODE_BACK )
-                {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
 
                     getActivity().finish();
 
@@ -88,32 +89,46 @@ public class PandMfragment extends Fragment {
                 }
                 return false;
             }
-        } );
+        });
         return view;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
         loader = new SpotsDialog(getActivity());
-        spnsitelocation=(SearchableSpinner)view.findViewById(R.id.spnsitelocation);
-        spmachineused=(SearchableSpinner)view.findViewById(R.id.spmachineused);
-        spunit=(SearchableSpinner)view.findViewById(R.id.spunit);
-        save=(ImageView)view.findViewById(R.id.save);
-        edt_date=(EditText)view.findViewById(R.id.edt_date);
-        edt_completion_date=(EditText)view.findViewById(R.id.edt_completion_date);
-        edt_activity=(EditText)view.findViewById(R.id.edt_activity);
-        edt_remarks=(EditText)view.findViewById(R.id.edt_remarks);
-        edt_weather=(EditText)view.findViewById(R.id.edt_weather);
-        edt_milestone_completed=(EditText)view.findViewById(R.id.edt_milestone_completed);
-        edt_usedby=(EditText)view.findViewById(R.id.edt_usedby);
-        edt_from=(EditText)view.findViewById(R.id.edt_from);
-        edt_to=(EditText)view.findViewById(R.id.edt_to);
+        spnsitelocation = (SearchableSpinner) view.findViewById(R.id.spnsitelocation);
+        spmachineused = (SearchableSpinner) view.findViewById(R.id.spmachineused);
+        spunit = (SearchableSpinner) view.findViewById(R.id.spunit);
+        save = (ImageView) view.findViewById(R.id.save);
+        edt_date = (EditText) view.findViewById(R.id.edt_date);
+        edt_completion_date = (EditText) view.findViewById(R.id.edt_completion_date);
+        edt_activity = (EditText) view.findViewById(R.id.edt_activity);
+        edt_remarks = (EditText) view.findViewById(R.id.edt_remarks);
+        edt_weather = (EditText) view.findViewById(R.id.edt_weather);
+        edt_milestone_completed = (EditText) view.findViewById(R.id.edt_milestone_completed);
+        edt_usedby = (EditText) view.findViewById(R.id.edt_usedby);
+        edt_from = (EditText) view.findViewById(R.id.edt_from);
+        edt_to = (EditText) view.findViewById(R.id.edt_to);
+        tvLabel = (TextView) view.findViewById(R.id.tvLabel);
+
+        edt_date.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_completion_date.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_activity.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_remarks.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_weather.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_milestone_completed.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_usedby.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_from.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_to.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        tvLabel.setTypeface(MethodUtils.getNormalFont(getActivity()));
+
 
 
         if (!ConnectionDetector.isConnectingToInternet(getActivity())) {
             errorMsg(getActivity(), getActivity().getString(R.string.no_internet));
-        }else {
+        } else {
             callSiteListApi();
         }
 
@@ -133,105 +148,76 @@ public class PandMfragment extends Fragment {
         });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                weather=edt_weather.getText().toString().trim();
-                activity=edt_activity.getText().toString().trim();
-                remarks=edt_remarks.getText().toString().trim();
-                milestone_completed=edt_milestone_completed.getText().toString().trim();
-                usedby=edt_usedby.getText().toString().trim();
-                from=edt_from.getText().toString().trim();
-                to=edt_to.getText().toString().trim();
+            public void onClick(View v) {
+                weather = edt_weather.getText().toString().trim();
+                activity = edt_activity.getText().toString().trim();
+                remarks = edt_remarks.getText().toString().trim();
+                milestone_completed = edt_milestone_completed.getText().toString().trim();
+                usedby = edt_usedby.getText().toString().trim();
+                from = edt_from.getText().toString().trim();
+                to = edt_to.getText().toString().trim();
 
-                if(site_location!=0)
-                {
-                    if(!dt.equals(""))
+                if (site_location != 0) {
+                    if (!dt.equals("")) {
+                        if (!weather.equals("")) {
+                            if (!dt_completion.equals("")) {
+                                if (!milestone_completed.equals("")) {
 
-                    {
-                        if(!weather.equals(""))
-                        {
-                            if(!dt_completion.equals(""))
-                            {
-                                if(!milestone_completed.equals(""))
-                                {
+                                    if (!activity.equals("")) {
+                                        if (machinaryid != 0) {
+                                            if (!usedby.equals("")) {
+                                                if (unit != 0) {
+                                                    if (!from.equals("")) {
+                                                        if (!to.equals("")) {
+                                                            if (!ConnectionDetector.isConnectingToInternet(getActivity())) {
+                                                                errorMsg(getActivity(), getActivity().getString(R.string.no_internet));
+                                                            } else {
+                                                                SendData();
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(getActivity(), "Enter To Value", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(getActivity(), "Enter From Value", Toast.LENGTH_SHORT).show();
+                                                    }
 
-                                    if(!activity.equals(""))
-                                    {
-if(machinaryid!=0)
-{
-if(!usedby.equals(""))
-{
-if(unit!=0)
-{
-   if(!from.equals(""))
-   {
-if(!to.equals(""))
-{
-    if (!ConnectionDetector.isConnectingToInternet(getActivity()))
-    {
-        errorMsg(getActivity(), getActivity().getString(R.string.no_internet));
-    }
-    else {
-        SendData();
-    }
-}
-else {
-    Toast.makeText(getActivity(),"Enter To Value",Toast.LENGTH_SHORT).show();
-}
-   }
-   else {
-       Toast.makeText(getActivity(),"Enter From Value",Toast.LENGTH_SHORT).show();
-   }
-
-}
-else {
-    Toast.makeText(getActivity(),"Enter Unit",Toast.LENGTH_SHORT).show();
-}
-}
-else {
-    Toast.makeText(getActivity(),"Enter usedby",Toast.LENGTH_SHORT).show();
-}
-}
-
-else {
-    Toast.makeText(getActivity(),"Select Machinery",Toast.LENGTH_SHORT).show();
-}
+                                                } else {
+                                                    Toast.makeText(getActivity(), "Enter Unit", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } else {
+                                                Toast.makeText(getActivity(), "Enter usedby", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(getActivity(), "Select Machinery", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(getActivity(), "Enter Activity Details", Toast.LENGTH_SHORT).show();
                                     }
-                                    else {
-                                        Toast.makeText(getActivity(),"Enter Activity Details",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                                else{
-                                    Toast.makeText(getActivity(),"Enter Milestone",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), "Enter Milestone", Toast.LENGTH_SHORT).show();
                                 }
 
-                            }
-                            else {
-                                Toast.makeText(getActivity(),"Select Date of Completion",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Select Date of Completion", Toast.LENGTH_SHORT).show();
                             }
 
-                        }
-
-                        else{
-                            Toast.makeText(getActivity(),"Enter Weather",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Enter Weather", Toast.LENGTH_SHORT).show();
                         }
 
 
-
+                    } else {
+                        Toast.makeText(getActivity(), "Select Date", Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        Toast.makeText(getActivity(),"Select Date",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
-                    Toast.makeText(getActivity(),"Select Site",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Select Site", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
     }
-    public void SendData()
-    {
+
+    public void SendData() {
 
         //     loader.show_with_label("Loading");
 
@@ -241,24 +227,24 @@ else {
         object.addProperty("type_of_report", "3");
         object.addProperty("project_id", project_id);
         object.addProperty("site_location", site_location);
-        object.addProperty("date_entry", dt+"T"+formattedDate);
+        object.addProperty("date_entry", dt + "T" + formattedDate);
         object.addProperty("weather", weather);
-        object.addProperty("date_of_completion", dt_completion+"T"+formattedDate2);
+        object.addProperty("date_of_completion", dt_completion + "T" + formattedDate2);
         object.addProperty("milestone_to_be_completed", milestone_completed);
 
-        JsonArray jsonArray=new JsonArray();
+        JsonArray jsonArray = new JsonArray();
 
         JsonObject object2 = new JsonObject();
-        object2.addProperty("details_of_activity",activity);
-        object2.addProperty("machinery_used_id",machinaryid);
-        object2.addProperty("used_by",usedby);
-        object2.addProperty("unit_details_id",unit);
-        object2.addProperty("unit_from",from);
-        object2.addProperty("remarks",remarks);
-        object2.addProperty("unit_to",to);
+        object2.addProperty("details_of_activity", activity);
+        object2.addProperty("machinery_used_id", machinaryid);
+        object2.addProperty("used_by", usedby);
+        object2.addProperty("unit_details_id", unit);
+        object2.addProperty("unit_from", from);
+        object2.addProperty("remarks", remarks);
+        object2.addProperty("unit_to", to);
 
         jsonArray.add(object2);
-        object.add("p_and_m_data",jsonArray);
+        object.add("p_and_m_data", jsonArray);
 
         Gson gson = new Gson();
         // convert your list to json
@@ -269,28 +255,23 @@ else {
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.pms_execution_daily_progress_pandm_add("Token "
-                + LoginShared.getLoginDataModel(getActivity()).getToken(),"application/json", object);
+                + LoginShared.getLoginDataModel(getActivity()).getToken(), "application/json", object);
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-                try{
-                    if (response.code() == 200 || response.code()==201)
-                    {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
 
                         String responseString = response.body().string();
-                        Log.d("responssavepandmdata",responseString);
+                        Log.d("responssavepandmdata", responseString);
                         clearvalue();
 
 
-
-
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                     //errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
                 }
@@ -307,28 +288,25 @@ else {
         });
 
 
-
-
-
-
     }
-    public void clearvalue()
-    {
 
-        activity="";
+    public void clearvalue() {
+
+        activity = "";
         edt_activity.setText("");
-        usedby="";
+        usedby = "";
         edt_usedby.setText("");
-        from="";
+        from = "";
         edt_from.setText("");
-        to="";
+        to = "";
         edt_to.setText("");
-        remarks="";
+        remarks = "";
         edt_remarks.setText("");
         machineUsedApi();
 
 
     }
+
     public static class SelectDateCompletion extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -358,21 +336,19 @@ else {
 
                 if (day < 10) {
                     //edt_date.setText("0" + day + "/" + "0" + month + "/" + year);
-                    dt_completion=year + "-" + "0" + month + "-" + "0" + day;
+                    dt_completion = year + "-" + "0" + month + "-" + "0" + day;
                     edt_completion_date.setText(dt_completion);
-                }
-                else {
-                    dt_completion=year+"-"+"0"+month+"-"+day;
+                } else {
+                    dt_completion = year + "-" + "0" + month + "-" + day;
                     edt_completion_date.setText(dt_completion);
                 }
 
             } else {
                 if (day < 10) {
-                    dt_completion=year+"-"+month+"-"+"0"+day;
+                    dt_completion = year + "-" + month + "-" + "0" + day;
                     edt_completion_date.setText(dt_completion);
-                }
-                else {
-                    dt_completion=year+"-"+month+"-"+day;
+                } else {
+                    dt_completion = year + "-" + month + "-" + day;
                     edt_completion_date.setText(dt_completion);
                 }
 
@@ -381,21 +357,23 @@ else {
         }
 
     }
-    static  String formattedDate2="";
-    public static  void getCurrentTimeUsingCalendarCompletion()
-    {
+
+    static String formattedDate2 = "";
+
+    public static void getCurrentTimeUsingCalendarCompletion() {
 
         Calendar cal = Calendar.getInstance();
 
-        Date date=cal.getTime();
+        Date date = cal.getTime();
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-        formattedDate2=dateFormat.format(date);
+        formattedDate2 = dateFormat.format(date);
 
-        Log.d("formateddate",formattedDate2);
+        Log.d("formateddate", formattedDate2);
 
     }
+
     public static class SelectDate extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -425,21 +403,19 @@ else {
 
                 if (day < 10) {
                     //edt_date.setText("0" + day + "/" + "0" + month + "/" + year);
-                    dt=year + "-" + "0" + month + "-" + "0" + day;
+                    dt = year + "-" + "0" + month + "-" + "0" + day;
                     edt_date.setText(dt);
-                }
-                else {
-                    dt=year+"-"+"0"+month+"-"+day;
+                } else {
+                    dt = year + "-" + "0" + month + "-" + day;
                     edt_date.setText(dt);
                 }
 
             } else {
                 if (day < 10) {
-                    dt=year+"-"+month+"-"+"0"+day;
+                    dt = year + "-" + month + "-" + "0" + day;
                     edt_date.setText(dt);
-                }
-                else {
-                    dt=year+"-"+month+"-"+day;
+                } else {
+                    dt = year + "-" + month + "-" + day;
                     edt_date.setText(dt);
                 }
 
@@ -448,27 +424,29 @@ else {
         }
 
     }
-    static  String formattedDate="";
+
+    static String formattedDate = "";
 
     public static void getCurrentTimeUsingCalendar() {
 
         Calendar cal = Calendar.getInstance();
 
-        Date date=cal.getTime();
+        Date date = cal.getTime();
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-        formattedDate=dateFormat.format(date);
+        formattedDate = dateFormat.format(date);
 
-        Log.d("formateddate",formattedDate);
+        Log.d("formateddate", formattedDate);
 //        System.out.println("Current time of the day using Calendar - 24 hour format: "+ formattedDate);
 
     }
-    ArrayList<SiteList> siteLists;
-    public void callSiteListApi()
-    {
 
-       // loader.show_with_label("Loading");
+    ArrayList<SiteList> siteLists;
+
+    public void callSiteListApi() {
+
+        // loader.show_with_label("Loading");
         //  }
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -481,30 +459,25 @@ else {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-                try{
-                    if (response.code() == 200)
-                    {
+                try {
+                    if (response.code() == 200) {
 
                         String responseString = response.body().string();
-                        Log.d("responsestring",responseString);
+                        Log.d("responsestring", responseString);
 
-                        JSONObject jsonObject=new JSONObject(responseString);
-                        int request_status= jsonObject.getInt("request_status");
-                        if(request_status==1)
-                        {
-                            siteListname=new ArrayList<String>();
-                            siteLists=new ArrayList<SiteList>();
-                            JSONArray result= jsonObject.getJSONArray("result");
-                            if(result.length()>0)
-                            {
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        int request_status = jsonObject.getInt("request_status");
+                        if (request_status == 1) {
+                            siteListname = new ArrayList<String>();
+                            siteLists = new ArrayList<SiteList>();
+                            JSONArray result = jsonObject.getJSONArray("result");
+                            if (result.length() > 0) {
 
-                                for(int i=0;i<result.length();i++)
-                                {
-                                    JSONObject jsonObject1=result.getJSONObject(i);
-                                    int id=jsonObject1.getInt("id");
-                                    String name=jsonObject1.getString("name");
-                                    int type=jsonObject1.getInt("type");
-
+                                for (int i = 0; i < result.length(); i++) {
+                                    JSONObject jsonObject1 = result.getJSONObject(i);
+                                    int id = jsonObject1.getInt("id");
+                                    String name = jsonObject1.getString("name");
+                                    int type = jsonObject1.getInt("type");
 
 
                                     SiteList siteList = new SiteList();
@@ -526,19 +499,17 @@ else {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                         String referredBy = siteListname.get(position);
-                                        if (position == 0)
-                                        {
-                                            site_location =0;
-                                            sitetype=0;
-                                            project_id=0;
-                                            Log.d("siteID", "::::::::::::::::" + site_location+"::::"+sitetype);
+                                        if (position == 0) {
+                                            site_location = 0;
+                                            sitetype = 0;
+                                            project_id = 0;
+                                            Log.d("siteID", "::::::::::::::::" + site_location + "::::" + sitetype);
                                             return;
                                         } else {
-                                            if (referredBy.equals(siteLists.get(position - 1).getSitename()))
-                                            {
+                                            if (referredBy.equals(siteLists.get(position - 1).getSitename())) {
                                                 site_location = siteLists.get(position - 1).getId();
-                                                sitetype=siteLists.get(position-1).getType();
-                                                Log.d("siteID", "::::::::::::::::" + site_location+"::::"+sitetype);
+                                                sitetype = siteLists.get(position - 1).getType();
+                                                Log.d("siteID", "::::::::::::::::" + site_location + "::::" + sitetype);
                                                 projectidfetch();
                                             }
                                         }
@@ -556,13 +527,10 @@ else {
 
                     }
 
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
-                   // errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
+                    // errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
                 }
-
 
 
             }
@@ -578,8 +546,8 @@ else {
     }
 
     ArrayList<GetSetMachinary> machinarylistitem;
-    public void machineUsedApi()
-    {
+
+    public void machineUsedApi() {
 
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -592,77 +560,70 @@ else {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-                try{
-                    if (response.code() == 200)
-                    {
+                try {
+                    if (response.code() == 200) {
 
                         String responseString = response.body().string();
-                        Log.d("responemachinary",responseString);
+                        Log.d("responemachinary", responseString);
 
-                        JSONArray jsonArray=new JSONArray(responseString);
+                        JSONArray jsonArray = new JSONArray(responseString);
 
 
-                            machinarylist=new ArrayList<String>();
-                        machinarylistitem=new ArrayList<GetSetMachinary>();
+                        machinarylist = new ArrayList<String>();
+                        machinarylistitem = new ArrayList<GetSetMachinary>();
 
-                                for(int i=0;i<jsonArray.length();i++)
-                                {
-                                    JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                                    int id=jsonObject1.getInt("id");
-                                    String name=jsonObject1.getString("equipment_name");
-                                    GetSetMachinary getSetMachinary = new GetSetMachinary();
-                                    getSetMachinary.setId(id);
-                                    getSetMachinary.setName(name);
-                                    machinarylist.add(name);
-                                    machinarylistitem.add(getSetMachinary);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            int id = jsonObject1.getInt("id");
+                            String name = jsonObject1.getString("equipment_name");
+                            GetSetMachinary getSetMachinary = new GetSetMachinary();
+                            getSetMachinary.setId(id);
+                            getSetMachinary.setName(name);
+                            machinarylist.add(name);
+                            machinarylistitem.add(getSetMachinary);
 
+                        }
+
+
+                        machinarylist.add(0, "-Machinery Used-");
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, R.id.item, machinarylist);
+                        spmachineused.setAdapter(dataAdapter);
+                        //setApdater();
+                        spmachineused.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String referredBy = machinarylist.get(position);
+                                if (position == 0) {
+
+                                    machinaryid = 0;
+                                    Log.d("machinaryid", "::::::::::::::::" + machinaryid);
+                                    return;
+                                } else {
+                                    if (referredBy.equals(machinarylistitem.get(position - 1).getName())) {
+                                        machinaryid = machinarylistitem.get(position - 1).getId();
+                                        // sitetype=siteLists.get(position-1).getType();
+                                        Log.d("machinaryid", "::::::::::::::::" + machinaryid);
+                                        //projectidfetch();
+                                    }
                                 }
+                            }
 
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
 
-                                machinarylist.add(0, "-Machinery Used-");
-                                ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, R.id.item, machinarylist);
-                                spmachineused.setAdapter(dataAdapter);
-                                //setApdater();
-                                spmachineused.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                        String referredBy = machinarylist.get(position);
-                                        if (position == 0)
-                                        {
+                            }
+                        });
 
-                                            machinaryid=0;
-                                           Log.d("machinaryid", "::::::::::::::::" + machinaryid);
-                                            return;
-                                        } else {
-                                            if (referredBy.equals(machinarylistitem.get(position - 1).getName()))
-                                            {
-                                                machinaryid = machinarylistitem.get(position - 1).getId();
-                                               // sitetype=siteLists.get(position-1).getType();
-                                                Log.d("machinaryid", "::::::::::::::::" + machinaryid);
-                                                //projectidfetch();
-                                            }
-                                        }
-                                    }
+                        // }
 
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> parent) {
-
-                                    }
-                                });
-
-                           // }
-
-                      //  }
+                        //  }
 
                     }
-                  //  unitid();
-                }
-                catch (Exception e)
-                {
+                    //  unitid();
+                } catch (Exception e) {
                     e.printStackTrace();
                     // errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
                 }
-
 
 
             }
@@ -678,12 +639,11 @@ else {
         unitid();
 
 
-
     }
 
-ArrayList<UnitSetGet> unitlistitem;
-    public void unitid()
-    {
+    ArrayList<UnitSetGet> unitlistitem;
+
+    public void unitid() {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -695,24 +655,22 @@ ArrayList<UnitSetGet> unitlistitem;
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-                try{
-                    if (response.code() == 200)
-                    {
+                try {
+                    if (response.code() == 200) {
 
                         String responseString = response.body().string();
-                        Log.d("unitresponse",responseString);
+                        Log.d("unitresponse", responseString);
 
-                        JSONArray jsonArray=new JSONArray(responseString);
+                        JSONArray jsonArray = new JSONArray(responseString);
 
 
-                        unitlist=new ArrayList<String>();
-                        unitlistitem=new ArrayList<UnitSetGet>();
+                        unitlist = new ArrayList<String>();
+                        unitlistitem = new ArrayList<UnitSetGet>();
 
-                        for(int i=0;i<jsonArray.length();i++)
-                        {
-                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                            int id=jsonObject1.getInt("id");
-                            String name=jsonObject1.getString("c_name");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            int id = jsonObject1.getInt("id");
+                            String name = jsonObject1.getString("c_name");
 
                             UnitSetGet unitSetGet = new UnitSetGet();
                             unitSetGet.setId(id);
@@ -731,15 +689,13 @@ ArrayList<UnitSetGet> unitlistitem;
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 String referredBy = unitlist.get(position);
-                                if (position == 0)
-                                {
+                                if (position == 0) {
 
-                                    unit=0;
+                                    unit = 0;
                                     Log.d("unit", "::::::::::::::::" + unit);
                                     return;
                                 } else {
-                                    if (referredBy.equals(unitlistitem.get(position - 1).getName()))
-                                    {
+                                    if (referredBy.equals(unitlistitem.get(position - 1).getName())) {
                                         unit = unitlistitem.get(position - 1).getId();
                                         // sitetype=siteLists.get(position-1).getType();
                                         Log.d("unit", "::::::::::::::::" + unit);
@@ -760,13 +716,10 @@ ArrayList<UnitSetGet> unitlistitem;
 
                     }
                     // unitid();
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                     // errorMsg(getActivity(),getActivity().getString(R.string.error_occurred));
                 }
-
 
 
             }
@@ -780,8 +733,8 @@ ArrayList<UnitSetGet> unitlistitem;
 
 
     }
-    public void projectidfetch()
-    {
+
+    public void projectidfetch() {
 
         //loader.show_with_label("Loading");
         //  }
@@ -789,29 +742,26 @@ ArrayList<UnitSetGet> unitlistitem;
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.call_projectid("Token "
-                + LoginShared.getLoginDataModel(getActivity()).getToken(),"application/json", String.valueOf(site_location));
+                + LoginShared.getLoginDataModel(getActivity()).getToken(), "application/json", String.valueOf(site_location));
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-                try{
-                    if (response.code() == 200)
-                    {
+                try {
+                    if (response.code() == 200) {
 
                         String responseString = response.body().string();
-                        Log.d("responsestring",responseString);
+                        Log.d("responsestring", responseString);
 
-                        JSONObject jsonObject=new JSONObject(responseString);
-                        JSONArray result= jsonObject.getJSONArray("result");
-                        if(result.length()>0)
-                        {
-                            for(int i=0;i<result.length();i++)
-                            {
-                                JSONObject jsonObject1=result.getJSONObject(i);
-                                project_id=jsonObject1.getInt("id");
-                                Log.d("project_id", ":::::::::::::::::"+String.valueOf(project_id));
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        JSONArray result = jsonObject.getJSONArray("result");
+                        if (result.length() > 0) {
+                            for (int i = 0; i < result.length(); i++) {
+                                JSONObject jsonObject1 = result.getJSONObject(i);
+                                project_id = jsonObject1.getInt("id");
+                                Log.d("project_id", ":::::::::::::::::" + String.valueOf(project_id));
 
 
                             }
@@ -819,13 +769,10 @@ ArrayList<UnitSetGet> unitlistitem;
 
 
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
-                   // errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
+                    // errorMsg(getActivity(), getActivity().getString(R.string.error_occurred));
                 }
-
 
 
             }
@@ -836,7 +783,6 @@ ArrayList<UnitSetGet> unitlistitem;
                     loader.dismiss();
             }
         });
-
 
 
     }

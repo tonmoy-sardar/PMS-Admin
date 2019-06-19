@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.survey.resource.EstablishmentDetails;
 import com.pmsadmin.survey.resource.contractor_vendor.ContractorsDetails;
@@ -74,6 +75,7 @@ public class ContractVendorAdapter extends RecyclerView.Adapter<ContractVendorAd
         public MyViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
             tvMaterial= itemView.findViewById(R.id.tvMaterial);
+            tvMaterial.setTypeface(MethodUtils.getNormalFont(activity));
             rlMaterial =  itemView.findViewById(R.id.rlMaterial);
         }
     }

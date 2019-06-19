@@ -114,10 +114,14 @@ public class AddEstablishmentActivity extends BaseActivity {
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(AddEstablishmentActivity.this));
 
         etEstablishmentName = findViewById(R.id.etEstablishmentName);
+        etEstablishmentName.setTypeface(MethodUtils.getNormalFont(AddEstablishmentActivity.this));
         etDescription = findViewById(R.id.etDescription);
+        etDescription.setTypeface(MethodUtils.getNormalFont(AddEstablishmentActivity.this));
         tvSubmit = findViewById(R.id.tvSubmit);
+        tvSubmit.setTypeface(MethodUtils.getNormalFont(AddEstablishmentActivity.this));
         ivSelect = findViewById(R.id.ivSelect);
         etDocumentName = findViewById(R.id.etDocumentName);
+        etDocumentName.setTypeface(MethodUtils.getNormalFont(AddEstablishmentActivity.this));
         iv_upload_file = findViewById(R.id.iv_upload_file);
         ivPdf = findViewById(R.id.ivPdf);
         ll_add_document_fields = findViewById(R.id.ll_add_document_fields);
@@ -337,6 +341,8 @@ public class AddEstablishmentActivity extends BaseActivity {
                                 ll_add_document_fields.setVisibility(View.VISIBLE);
                                 Toast.makeText(AddEstablishmentActivity.this,"Establishment Added successfully.",Toast.LENGTH_LONG).show();
                             } else {
+                                if (loader != null && loader.isShowing())
+                                    loader.dismiss();
                                 Toast.makeText(AddEstablishmentActivity.this,"Something went wrong, Please try again.",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
@@ -351,6 +357,9 @@ public class AddEstablishmentActivity extends BaseActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(AddEstablishmentActivity.this, "Something went wrong!");
             }
         });
 

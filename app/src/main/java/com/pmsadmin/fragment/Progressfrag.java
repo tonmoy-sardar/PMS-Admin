@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.login.model.SiteList;
@@ -69,6 +71,8 @@ public class Progressfrag extends Fragment {
     ImageView save;
     ArrayList<String> itemValues =new ArrayList<String>();
     String weather="",milestone_completed="",activity="",description="",uom="",planned_quantity="",archieved_quantity="",assigned_to="",contractors_name="",remarks="",major_achivements="";
+    private TextView tvLabelCompletionPeriod;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +88,7 @@ public class Progressfrag extends Fragment {
         spnsitelocation=(SearchableSpinner)view.findViewById(R.id.spnsitelocation);
         edt_date=(EditText)view.findViewById(R.id.edt_date);
         edt_weather=(EditText)view.findViewById(R.id.edt_weather);
+        tvLabelCompletionPeriod = view.findViewById(R.id.tvLabelCompletionPeriod);
 
         /////////////////////////////////////////////////////////////
 
@@ -104,6 +109,32 @@ public class Progressfrag extends Fragment {
         edt_remarks=(EditText)view.findViewById(R.id.edt_remarks);
         edt_major_achievements=(EditText)view.findViewById(R.id.edt_major_achievements);
         save=(ImageView)view.findViewById(R.id.save);
+
+        edt_date.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_weather.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        tvLabelCompletionPeriod.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_completion_date.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_milestone_completed.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_activity.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_description.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_planed_start_time.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_planed_end_time.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_uom.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_actual_start_time.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_actual_end_time.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_planned_quantity.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_achieved_quantity.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_asigned_to.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_contractor_name.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_remarks.setTypeface(MethodUtils.getNormalFont(getActivity()));
+        edt_major_achievements.setTypeface(MethodUtils.getNormalFont(getActivity()));
+
+
+
+
+
+
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -123,11 +123,7 @@ public class ContractorsDetails extends BaseActivity {
         });
 
 
-        if (!ConnectionDetector.isConnectingToInternet(ContractorsDetails.this)) {
 
-        }else {
-
-        }
 
 
         contractorsDocumentListAdapter = new ContractorsDocumentListAdapter(ContractorsDetails.this, arrayList_obj);

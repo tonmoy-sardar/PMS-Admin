@@ -36,7 +36,7 @@ public class TendorsAdapter extends RecyclerView.Adapter<TendorsAdapter.MyViewHo
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tendors_item, parent, false);
 
-        return new TendorsAdapter.MyViewHolder(itemView,activity);
+        return new TendorsAdapter.MyViewHolder(itemView, activity);
     }
 
     @Override
@@ -48,12 +48,11 @@ public class TendorsAdapter extends RecyclerView.Adapter<TendorsAdapter.MyViewHo
             public void onClick(View v) {
 
 
+                Intent intent = new Intent(activity, StartSurveyHome.class);
+                intent.putExtra("tenderGID", tendorsResultList.get(position).getTenderGId());
 
-                    Intent intent = new Intent(activity, StartSurveyHome.class);
-                    intent.putExtra("tenderGID", tendorsResultList.get(position).getTenderGId());
-
-                    intent.putExtra("tender_id", tendorsResultList.get(position).getId());
-                    activity.startActivity(intent);
+                intent.putExtra("tender_id", tendorsResultList.get(position).getId());
+                activity.startActivity(intent);
 
             }
         });

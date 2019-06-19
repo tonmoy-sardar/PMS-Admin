@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -38,7 +39,7 @@ import java.util.List;
 
 public class ContractorsVendorsActivity extends BaseActivity {
     public View view;
-    private TextView tv_universal_header,tvAdd,tvPM,tvContractors;
+    private TextView tv_universal_header, tvAdd, tvPM, tvContractors;
     private RecyclerView rvItems;
 
     public static int contractor = 1;
@@ -47,7 +48,7 @@ public class ContractorsVendorsActivity extends BaseActivity {
     List<Result> resultContract = new ArrayList<>();
 
     ContractVendorAdapter contractVendorAdapter;
-
+    private ImageView ivAdd;
 
 
     @Override
@@ -67,21 +68,23 @@ public class ContractorsVendorsActivity extends BaseActivity {
 
     private void initLayout() {
 
-        tvAdd = findViewById(R.id.tvAdd);
+        ivAdd = findViewById(R.id.ivAdd);
         rvItems = findViewById(R.id.rvItems);
         tvPM = findViewById(R.id.tvPM);
+        tvPM.setTypeface(MethodUtils.getNormalFont(ContractorsVendorsActivity.this));
         tvContractors = findViewById(R.id.tvContractors);
+        tvContractors.setTypeface(MethodUtils.getNormalFont(ContractorsVendorsActivity.this));
 
         clickListners();
     }
 
     private void clickListners() {
 
-        tvAdd.setOnClickListener(new View.OnClickListener() {
+        ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-               addContractors();
+                addContractors();
 
             }
         });
@@ -92,7 +95,7 @@ public class ContractorsVendorsActivity extends BaseActivity {
 
                 /*tvPM.setBackgroundColor(getResources().getColor(R.color.link_color));
                 tvContractors.setBackgroundColor(getResources().getColor(R.color.inactive_button_color));*/
-                Intent intent = new Intent(getApplicationContext(),ContractVendorReplica.class);
+                Intent intent = new Intent(getApplicationContext(), ContractVendorReplica.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
@@ -105,13 +108,10 @@ public class ContractorsVendorsActivity extends BaseActivity {
     private void addContractors() {
 
 
-
-            Intent intent = new Intent(getApplicationContext(), AddContractorVendorDialogue.class);
-            intent.putExtra("flag","contractor");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-
+        Intent intent = new Intent(getApplicationContext(), AddContractorVendorDialogue.class);
+        intent.putExtra("flag", "contractor");
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
 
     }
@@ -131,7 +131,7 @@ public class ContractorsVendorsActivity extends BaseActivity {
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
 
-        final Call<ResponseBody> register=apiInterface.call_get_contract_vendor("Token "
+        final Call<ResponseBody> register = apiInterface.call_get_contract_vendor("Token "
                         + LoginShared.getLoginDataModel(ContractorsVendorsActivity.this).getToken(),
                 "application/json", MethodUtils.tender_id);
 
@@ -143,7 +143,7 @@ public class ContractorsVendorsActivity extends BaseActivity {
 
                     try {
                         String responseString = response.body().string();
-                        System.out.println("getContract: "+responseString);
+                        System.out.println("getContract: " + responseString);
                         Gson gson = new Gson();
                         ContractVendorPojo contractVendorPojo;
                         contractVendorPojo = gson.fromJson(responseString, ContractVendorPojo.class);
@@ -165,12 +165,11 @@ public class ContractorsVendorsActivity extends BaseActivity {
 
     private void setAdapter(List<Result> resultContract) {
 
-        contractVendorAdapter = new ContractVendorAdapter(ContractorsVendorsActivity.this,resultContract);
+        contractVendorAdapter = new ContractVendorAdapter(ContractorsVendorsActivity.this, resultContract);
 
         rvItems.setAdapter(contractVendorAdapter);
         rvItems.setItemAnimator(new DefaultItemAnimator());
-        //mLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
-        //mLayoutManager = new GridLayoutManager(this, 2);
+
 
         LinearLayoutManager horizontalLayoutManager =
                 new LinearLayoutManager(ContractorsVendorsActivity.this, RecyclerView.VERTICAL, false);

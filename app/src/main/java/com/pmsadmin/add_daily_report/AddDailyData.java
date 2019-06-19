@@ -1,17 +1,21 @@
 package com.pmsadmin.add_daily_report;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.fragment.LabourFragment;
 import com.pmsadmin.fragment.PandMfragment;
 import com.pmsadmin.fragment.Progressfrag;
 import com.pmsadmin.netconnection.ConnectionDetector;
+import com.pmsadmin.survey.resource.hydrological_data.AddHydrologicalData;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
 import androidx.fragment.app.FragmentManager;
@@ -27,11 +31,18 @@ public class AddDailyData extends BaseActivity {
     FragmentTransaction fragmentTransaction;
     TabLayout tabLayout1;
 
+    private TextView tv_universal_header;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(AddDailyData.this, R.layout.adddailydata, null);
         addContentView(view);
+
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+        tv_universal_header.setText("Add Daily Data");
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(AddDailyData.this));
+
         bindView();
         //setClickEvent();
         loader = new LoadingData(AddDailyData.this);
@@ -82,6 +93,10 @@ public class AddDailyData extends BaseActivity {
         item2 = (TabItem) findViewById(R.id.tabItem2);
         item3 = (TabItem) findViewById(R.id.tabItem3);
         tabLayout1 = (TabLayout) findViewById(R.id.tabLayout1);
+
+
+
+
         tabLayout1.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

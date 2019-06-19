@@ -7,28 +7,51 @@
     tools:context="com.pmsadmin.survey.coordinates.MaterialDetails"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvAdd"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/llMaterial"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ADD"
-        android:textSize="@dimen/_15sdp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/rounded_corner_button"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/_15sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:paddingLeft="@dimen/_10sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"/>
+        android:background="@color/textcolor"
+        android:orientation="horizontal"
+        android:padding="@dimen/_7sdp">
+
+        <TextView
+            android:id="@+id/tvMaterialName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tvAdd"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Vendor"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_corner_button"
+            android:padding="@dimen/_5sdp"
+            android:layout_gravity="right"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAdd"
+        android:layout_below="@+id/llMaterial"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp">
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp">
 
     </androidx.recyclerview.widget.RecyclerView>
 

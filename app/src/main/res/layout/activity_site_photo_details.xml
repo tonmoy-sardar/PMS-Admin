@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pmsadmin.survey.SitePhotoDetailsActivity"
-    android:orientation="vertical"
     android:background="@color/bgcolor"
-    >
+    android:orientation="vertical"
+    tools:context="com.pmsadmin.survey.SitePhotoDetailsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,57 +16,51 @@
             android:id="@+id/ivDocument"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/logo_icon"
             android:layout_margin="15dp"
-            />
+            android:src="@drawable/logo_icon" />
 
 
         <ImageView
+            android:id="@+id/iv_icon_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/edit_icon"
             android:layout_alignParentRight="true"
             android:layout_margin="15dp"
-            android:id="@+id/iv_icon_edit"
-            android:visibility="gone"
-            />
+            android:src="@drawable/edit_icon"
+            android:visibility="gone" />
 
     </RelativeLayout>
-
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Additional Notes : "
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
+        android:text="Additional Notes : "
         android:textColor="@color/textcolor"
-        android:textSize="18dp"
-        />
+        android:textSize="18dp" />
 
 
     <EditText
         android:id="@+id/tvAdditionalInfo"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:textColor="@color/textcolor"
         android:layout_margin="15dp"
-        android:text="Additional Notes Details"
-        android:textSize="16dp"
         android:background="@drawable/rectangle_border_solid_white"
-        android:padding="@dimen/_10sdp"
         android:gravity="start"
-        />
+        android:padding="@dimen/_10sdp"
+        android:text="Additional Notes Details"
+        android:textColor="@color/textcolor"
+        android:textSize="16dp" />
 
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
-        >
+        android:layout_marginTop="10dp">
 
 
         <TextView
@@ -75,12 +68,11 @@
             android:layout_width="250dp"
             android:layout_height="@dimen/_40sdp"
             android:background="@drawable/button_icon"
-            android:text="Edit"
-            android:textSize="@dimen/_15sdp"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:text="Edit"
             android:textAllCaps="true"
-            />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_15sdp" />
 
 
         <TextView
@@ -88,17 +80,15 @@
             android:layout_width="250dp"
             android:layout_height="@dimen/_40sdp"
             android:background="@drawable/button_icon"
-            android:text="submit"
-            android:textSize="@dimen/_15sdp"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:text="submit"
             android:textAllCaps="true"
-            android:visibility="gone"
-            />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone" />
 
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

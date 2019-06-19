@@ -69,7 +69,7 @@ public class TendorsListing extends BaseActivity {
         addContentView(view);
         loader = new LoadingData(TendorsListing.this);
         tv_universal_header = findViewById(R.id.tv_universal_header);
-        tv_universal_header.setText("Start Survey");
+        tv_universal_header.setText("Survey Tender");
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(TendorsListing.this));
         bindView();
         fontSet();
@@ -106,6 +106,8 @@ public class TendorsListing extends BaseActivity {
 
 
                 if (lastVisibleCount1 == totalItemCount1 - 1) {
+
+                    loader.show_with_label("Loading");
                     if (tendorsResultList.size() % 10 == 0) {
                         //   leaveList.add(null);
                         //        leaveListAdapter.notifyItemInserted(leaveList.size() - 1);
@@ -117,6 +119,9 @@ public class TendorsListing extends BaseActivity {
                             MethodUtils.errorMsg(TendorsListing.this, "Please check your phone's network connection");
                         }
 
+                    }else {
+                        if (loader != null && loader.isShowing())
+                            loader.dismiss();
                     }
                 }
 
@@ -172,7 +177,7 @@ public class TendorsListing extends BaseActivity {
                         String responseString = response.body().string();
                         System.out.println("tenderRes: "+responseString);
 
-                        JSONObject jsonObject = new JSONObject(responseString);
+                        //JSONObject jsonObject = new JSONObject(responseString);
 
                         //if (jsonObject.optInt("request_status") == 1) {
 
@@ -190,9 +195,9 @@ public class TendorsListing extends BaseActivity {
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } catch (JSONException e) {
+                    } /*catch (JSONException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 }
             }
 

@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,11 +73,13 @@ public class MaterialDetails extends BaseActivity implements MaterialDetailsAdap
     String Tag = "vendor";
     int mat_id = 0;
     String external_user_type = "";
+    String material_name = "";
+    String page = "";
     List<Result> resultList = new ArrayList<>();
     MaterialDetailsAdapter materialDetailsAdapter;
 
     private RecyclerView rvItems;
-    private TextView tvAdd;
+    private TextView tvAdd,tvMaterialName;
 
     private Integer external_user_type_id = 0;
 
@@ -86,6 +89,8 @@ public class MaterialDetails extends BaseActivity implements MaterialDetailsAdap
     private int PICK_PDF_REQUEST = 1;
     int external_user_mappingg;
     int external_userr=0;
+
+    private EditText etDocumentName;
 
 
 
@@ -104,6 +109,9 @@ public class MaterialDetails extends BaseActivity implements MaterialDetailsAdap
         rvItems = findViewById(R.id.rvItems);
 
         tvAdd = findViewById(R.id.tvAdd);
+        tvAdd.setTypeface(MethodUtils.getNormalFont(MaterialDetails.this));
+        tvMaterialName = findViewById(R.id.tvMaterialName);
+        tvMaterialName.setTypeface(MethodUtils.getNormalFont(MaterialDetails.this));
 
 
         System.out.println("watSize: "+
@@ -135,8 +143,15 @@ public class MaterialDetails extends BaseActivity implements MaterialDetailsAdap
 
         Intent mIntent = getIntent();
         mat_id = mIntent.getIntExtra("mat_id", 0);
+        //material_name = mIntent.getStringExtra("mat_name");
+        material_name = mIntent.getStringExtra("mat_name");
+        page = mIntent.getStringExtra("page");
 
-        System.out.println("mat_id: "+mat_id+" tenderId: "+ MethodUtils.tender_id);
+        System.out.println("mat_id: "+mat_id+" tenderId: "+ MethodUtils.tender_id+" "+material_name+" "+page);
+        tv_universal_header.setText(page+" Details");
+
+        tvMaterialName.setText(material_name);
+
 
 
         tvAdd.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +246,8 @@ public class MaterialDetails extends BaseActivity implements MaterialDetailsAdap
         final Call<ResponseBody> register=apiInterface.call_get_external_mapping_list("Token " +
                         LoginShared.getLoginDataModel(MaterialDetails.this).getToken(), "application/json",
                 MethodUtils.tender_id, external_user_type, String.valueOf(mat_id));
+
+
 
         register.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -347,11 +364,7 @@ public class MaterialDetails extends BaseActivity implements MaterialDetailsAdap
 
 
         System.out.println("=================================");
-//        File file = new File(pdf_path);
-        /*RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part pdf = MultipartBody.Part.createFormData("document", file.getName(), requestFile);
-        RequestBody tender = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(MethodUtils.tender_id));
-        RequestBody document_name = RequestBody.create(MediaType.parse("multipart/form-data"), "Arghya Doc");*/
+
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 

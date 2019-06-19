@@ -17,12 +17,12 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_topbar_menu_profile"
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="@dimen/_130sdp"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:src="@drawable/profile_img" />
+                android:src="@drawable/logo_icon" />
 
             <TextView
                 android:id="@+id/tv_user_name"
@@ -38,8 +38,8 @@
 
             <ImageView
                 android:id="@+id/iv_cross"
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginRight="@dimen/_20sdp"
@@ -55,7 +55,7 @@
 
             <TextView
                 android:id="@+id/tv_dashboard"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view1"
                 android:paddingLeft="@dimen/_20sdp"
@@ -72,7 +72,8 @@
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_dashboard"
                 android:layout_margin="@dimen/_8sdp"
-                android:background="#536880" />
+                android:background="#536880"
+                android:visibility="gone"/>
 
 
             <TextView
@@ -86,7 +87,8 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="Tender List"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_15sdp" />
+                android:textSize="@dimen/_15sdp"
+                android:visibility="gone"/>
 
             <View
                 android:id="@+id/view2"
@@ -121,7 +123,7 @@
 
             <TextView
                 android:id="@+id/tv_help"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view4"
                 android:paddingLeft="@dimen/_20sdp"
@@ -143,7 +145,7 @@
 
             <TextView
                 android:id="@+id/tv_logout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view3"
                 android:paddingLeft="@dimen/_20sdp"

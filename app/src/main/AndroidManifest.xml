@@ -20,8 +20,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
-    
 
     <application
         android:name=".application.MyApplication"
@@ -35,146 +35,116 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-
-
+        <activity
+            android:name=".Main3Activity"
+            android:label="@string/title_activity_main3"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".survey.resource.AddVendroActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.coordinates.MaterialDetails"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.AddContactActivity"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".apply_local_conveyance.LocalConveyance"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.ContactDetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.DesignationWiseContactListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.coordinates.AddMaterialActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".dialog.add_material_dialogue.AddMaterialDialogue"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
-
         <activity
             android:name=".survey.resource.contractor_vendor.ContractVendorReplica"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".dialog.AddContractorVendorDialogue"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".survey.resource.contractor_vendor.ContractorsVendorsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.EstablishmentDetails"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.contractor_vendor.ContractorsDetails"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.contractor_vendor.PandMDetails"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".survey.resource.contractor_vendor.MachineryAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".survey.resource.hydrological_data.AddHydrologicalData"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".survey.resource.hydrological_data.HydrologicalActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".survey.resource.hydrological_data.HydrologicalDetails"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".survey.SitePhotoDetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.AddEstablishmentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".survey.resource.EstablishmentActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.coordinates.CrusherActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.coordinates.CrusherDetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.resource.ResourceActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.coordinates.RawMaterialsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".dialog.AddChkInDialogue"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
-
         <activity
             android:name=".survey.coordinates.CheckInActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.coordinates.CoordinatesActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".survey.SitePhotoSurvey"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".survey.StartSurveyHome"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".tenders_list.TendorsListing"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity android:name=".splash_screen.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -182,28 +152,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".dashboard.LogoutDialogue"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
-
         <activity
             android:name=".giveattandence.AttendanceJustification"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".tenderdashboard.TendorListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".giveattandence.JustificationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".tenderdashboard.TenderDashboardActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".addsite.AddSiteActivity"
             android:screenOrientation="portrait" />
@@ -216,49 +180,40 @@
             android:name=".leavesection.LeaveActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".showgeofence.GeoFenceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".attendancelist.ApprovalListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".filter.FilterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".giveattandence.GiveAttendanceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".attendancelist.AttendanceListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".seconddashboard.Dashboard2Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".dashboard.DashBoardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme" />
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".forgot.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".login.LoginActivity"
             android:launchMode="singleTask"
@@ -266,12 +221,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".planreport.PlanningReports"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".add_daily_report.AddDailyData"
             android:screenOrientation="portrait"
@@ -280,11 +233,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- The API key for Google Maps-based APIs. -->
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" /> <!-- Google Map. -->
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -308,7 +259,6 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".giveattandence.services.BackgroundLocationService" />
-
     </application>
 
 </manifest>

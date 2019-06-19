@@ -240,7 +240,8 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
                             adapter.notifyDataSetChanged();
                             //setLeaveHistoryRecyclerView();
                         } else if (jsonObject.optInt("request_status") == 0) {
-                            MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
+                            //
+                            // MethodUtils.errorMsg(LeaveActivity.this, jsonObject.optString("msg"));
                         } else {
                             MethodUtils.errorMsg(LeaveActivity.this, LeaveActivity.this.getString(R.string.error_occurred));
                         }

@@ -47,7 +47,7 @@
                 android:background="@drawable/rectangle_border_solid_white"
                 android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
                 android:padding="@dimen/_10sdp"
-                android:text="Select" />
+                android:text="Select Unit" />
 
             <LinearLayout
                 android:id="@+id/llDropDown"

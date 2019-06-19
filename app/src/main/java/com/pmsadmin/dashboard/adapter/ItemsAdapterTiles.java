@@ -55,7 +55,7 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
                     Intent intent = new Intent(activity, GiveAttendanceActivity.class);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else if (items.get(i).getItem().equals("SURVEY")){
+                }else if (items.get(i).getItem().equals("SURVEY TENDERS")){
 
                     Intent intent = new Intent(activity, TendorsListing.class);
                     activity.startActivity(intent);

@@ -235,7 +235,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setFont() {
-        tv_user_name.setTypeface(MethodUtils.getBoldFont(BaseActivity.this));
+        tv_user_name.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
         tv_tender_list.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
         tv_help.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
         tv_logout.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
@@ -337,9 +337,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.tv_user_name:
-                Intent profileIntent = new Intent(BaseActivity.this, ForgotPasswordActivity.class);
+                /*Intent profileIntent = new Intent(BaseActivity.this, ForgotPasswordActivity.class);
                 startActivity(profileIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                 break;
             case R.id.tv_logout:
                 //logoutApi();

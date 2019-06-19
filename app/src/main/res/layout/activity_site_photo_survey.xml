@@ -12,21 +12,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         app:cardCornerRadius="@dimen/_5sdp"
         app:cardElevation="@dimen/_5sdp">
 
         <RelativeLayout
             android:id="@+id/rlSelectImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
             android:background="@color/bgcolor"
-            android:padding="@dimen/_30sdp">
+            android:padding="@dimen/_10sdp">
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/iv_profile"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/attachment_icon"
                 app:civ_border_color="#FF000000"
@@ -45,7 +45,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_margin="@dimen/_10sdp">
 
 
@@ -54,10 +54,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bgcolor"
-            android:hint="Additional Information"
+            android:hint="Additional NotesF"
             android:padding="10dp"
-            android:gravity="start"
-            />
+            android:gravity="start" />
 
 
     </androidx.cardview.widget.CardView>
@@ -82,7 +81,6 @@
         android:id="@+id/rvSiteImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/_10sdp"
         android:padding="@dimen/_10sdp">
 
     </androidx.recyclerview.widget.RecyclerView>

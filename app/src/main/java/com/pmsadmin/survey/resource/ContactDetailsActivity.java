@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
@@ -43,6 +44,8 @@ public class ContactDetailsActivity extends BaseActivity {
     ContactDesignationListAdapter contactDesignationListAdapter;
     ArrayList<JSONObject> arrayList;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,8 @@ public class ContactDetailsActivity extends BaseActivity {
 
         rvDesignationList = findViewById(R.id.rvDesignationList);
         tvAddContact = findViewById(R.id.tvAddContact);
+
+
 
         tv_universal_header = findViewById(R.id.tv_universal_header);
         tv_universal_header.setText("Contact Details");
@@ -65,6 +70,9 @@ public class ContactDetailsActivity extends BaseActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+
+
 
         arrayList = new ArrayList<JSONObject>();
         contactDesignationListAdapter = new ContactDesignationListAdapter(ContactDetailsActivity.this, arrayList);

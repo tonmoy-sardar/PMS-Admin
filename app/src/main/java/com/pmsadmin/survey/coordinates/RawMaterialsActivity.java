@@ -57,6 +57,8 @@ public class RawMaterialsActivity extends BaseActivity {
 
     String Tag = "vendor";
 
+    String page = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +66,20 @@ public class RawMaterialsActivity extends BaseActivity {
         addContentView(view);
 
         tv_universal_header = findViewById(R.id.tv_universal_header);
-        tv_universal_header.setText("Materials");
+        Intent intent = getIntent();
+        page = intent.getStringExtra("page");
+
+        if (page.equals("Raw Materials")){
+            tv_universal_header.setText(page);
+        }else if (page.equals("Materials")){
+            tv_universal_header.setText(page);
+        }
+
+
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(RawMaterialsActivity.this));
         loader = new LoadingData(RawMaterialsActivity.this);
         //setContentView(R.layout.activity_raw_materials);
+
 
 
 
@@ -105,7 +118,8 @@ public class RawMaterialsActivity extends BaseActivity {
 
     private void setAdapter() {
 
-        rawMaterialAdapter = new RawMaterialAdapter(RawMaterialsActivity.this, rawMaterialsResultList);
+        rawMaterialAdapter = new RawMaterialAdapter(RawMaterialsActivity.this,
+                rawMaterialsResultList, page);
         rvMaterials.setAdapter(rawMaterialAdapter);
         rvMaterials.setItemAnimator(new DefaultItemAnimator());
 

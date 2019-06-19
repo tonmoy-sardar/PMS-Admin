@@ -57,7 +57,7 @@ public class LeaveHistoryAdapter extends RecyclerView.Adapter<LeaveHistoryAdapte
             holder.btn_status.setBackgroundResource(R.drawable.survey_btn);
             holder.btn_status.setText("Approved");
         }else if (list.get(i).getApprovedStatus()==3){
-            holder.btn_status.setBackgroundResource(R.drawable.survey_pending);
+            holder.btn_status.setBackgroundResource(R.drawable.rejected);
             holder.btn_status.setText("Rejected");
         }
         else{
