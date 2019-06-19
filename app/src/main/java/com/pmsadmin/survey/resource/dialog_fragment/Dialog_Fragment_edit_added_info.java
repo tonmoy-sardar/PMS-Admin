@@ -14,20 +14,29 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.pmsadmin.R;
 import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
+import com.pmsadmin.survey.resource.DesignationWiseContactListActivity;
+import com.pmsadmin.survey.resource.adpater.DesignationWiseContactLisEdittAdapter;
+import com.pmsadmin.survey.resource.adpater.DesignationWiseMainContactListAdapter;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -39,23 +48,27 @@ import retrofit2.Retrofit;
  * Created by USER on 28-Oct-16.
  */
 
-public class Dialog_Fragment_add_more_info extends DialogFragment {
+public class Dialog_Fragment_edit_added_info extends DialogFragment implements DesignationWiseContactLisEdittAdapter.OnItemClickListener {
 
     Dialog dialog;
     View v;
     Animation animation_zoom_in;
     Animation slide_out_buttom;
-    EditText et_info_type, et_info_details;
-    TextView tv_add_contact;
+    TextView tv_save;
     private LoadingData loader;
     String designation_id = "", tender_id = "", contact_id = "";
     OnItemClickDialog itemClickDialog;
+    JSONArray field_details;
+    RecyclerView rv_edit_info_list;
+    DesignationWiseContactLisEdittAdapter designationWiseContactLisEdittAdapter;
+    ArrayList<JSONObject> arrayList;
 
 
-    public void setData(String id, String tender_id, String contact_id) {
+    public void setData(String id, String tender_id, String contact_id, JSONArray field_details) {
         designation_id = id;
         this.tender_id = tender_id;
         this.contact_id = contact_id;
+        this.field_details = field_details;
     }
 
 
@@ -74,23 +87,39 @@ public class Dialog_Fragment_add_more_info extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.dialog_add_more_info, container, false);
+        v = inflater.inflate(R.layout.dialog_edit_added_info, container, false);
         animation_zoom_in = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.zoom_in);
         slide_out_buttom = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_out_bottom);
         System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
+        System.out.println("field_details=====>>>" + field_details);
+        System.out.println("token=====>>>" + LoginShared.getLoginDataModel(getActivity()).getToken());
 
         loader = new LoadingData(getActivity());
 
-        et_info_type = v.findViewById(R.id.et_info_type);
-        et_info_details = v.findViewById(R.id.et_info_details);
-        tv_add_contact = v.findViewById(R.id.tv_add_contact);
+        rv_edit_info_list = v.findViewById(R.id.rv_edit_info_list);
+        tv_save = v.findViewById(R.id.tv_save);
 
-        tv_add_contact.setOnClickListener(new View.OnClickListener() {
+
+        try {
+            arrayList = new ArrayList<JSONObject>();
+            for (int i = 0; i < field_details.length(); i++) {
+                arrayList.add(field_details.getJSONObject(i));
+            }
+            designationWiseContactLisEdittAdapter = new DesignationWiseContactLisEdittAdapter(getActivity(), arrayList);
+            designationWiseContactLisEdittAdapter.setOnItemClickListener(this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            rv_edit_info_list.setLayoutManager(layoutManager);
+            rv_edit_info_list.setHasFixedSize(true);
+            rv_edit_info_list.setAdapter(designationWiseContactLisEdittAdapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        tv_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkValidation()) {
-                    add_more_info();
-                }
+                edit_info();
             }
         });
 
@@ -99,29 +128,26 @@ public class Dialog_Fragment_add_more_info extends DialogFragment {
     }
 
 
-    private void add_more_info() {
+    private void edit_info() {
         try {
             loader.show_with_label("Please wait");
 
-            JsonObject object = new JsonObject();
-            object.addProperty("tender", tender_id);
-            object.addProperty("designation", designation_id);
-            JsonArray field_details = new JsonArray();
-            JsonObject field_details_obj = new JsonObject();
-            //field_details_obj.addProperty("contact", contact_id);
-            field_details_obj.addProperty("field_label", et_info_type.getText().toString());
-            field_details_obj.addProperty("field_value", et_info_details.getText().toString());
-            field_details_obj.addProperty("field_type", "text");
-            field_details.add(field_details_obj);
-            object.add("field_details", field_details);
+            JSONObject object = new JSONObject();
+            object.put("tender", tender_id);
+            object.put("designation", designation_id);
+            object.put("prev_field_details_exist", "yes");
+            JSONArray field_detail = new JSONArray(arrayList);
+            object.put("field_details", field_detail);
             System.out.println("object======>>>>" + object.toString());
+            JsonObject gson = new JsonParser().parse(object.toString()).getAsJsonObject();
+            System.out.println("gson object======>>>>" + object.toString());
 
 
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
             final Call<ResponseBody> register = apiInterface.call_put_resource_contact_details_edit("Token " +
-                    LoginShared.getLoginDataModel(getActivity()).getToken(), Integer.valueOf(contact_id), object);
+                    LoginShared.getLoginDataModel(getActivity()).getToken(), "application/json",Integer.valueOf(contact_id), gson);
 
 
             register.enqueue(new Callback<ResponseBody>() {
@@ -158,27 +184,18 @@ public class Dialog_Fragment_add_more_info extends DialogFragment {
     }
 
 
-    public boolean checkValidation() {
-        if (et_info_type.getText().toString().length() < 1) {
-            et_info_type.setError("Enter your Info type.");
-            et_info_type.requestFocus();
-            return false;
-        } else if (et_info_details.getText().toString().length() < 1) {
-            et_info_details.setError("Enter your Info details.");
-            et_info_details.requestFocus();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
     public void setOnDialogListener(OnItemClickDialog itemClickDialog) {
         this.itemClickDialog = itemClickDialog;
     }
 
     public interface OnItemClickDialog {
         void onItemClick();
+    }
+
+
+    @Override
+    public void OnItemClick(int position) {
+
     }
 
 }

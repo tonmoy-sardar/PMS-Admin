@@ -40,7 +40,7 @@ public class AddContactActivity extends BaseActivity {
     private TextView tv_universal_header,tv_add_designation,tv_add_contact;
     LinearLayout ll_add_new_contact;
     private LoadingData loader;
-    EditText et_designation,et_field_label,et_field_value,et_field_type;
+    EditText et_designation,et_name,et_contact_number,et_email;
     int tender_id =0,designation_id = 0;
 
     @Override
@@ -55,9 +55,9 @@ public class AddContactActivity extends BaseActivity {
         System.out.println("token=======>>>"+LoginShared.getLoginDataModel(this).getToken());
 
         ll_add_new_contact = findViewById(R.id.ll_add_new_contact);
-        et_field_label = findViewById(R.id.et_field_label);
-        et_field_value = findViewById(R.id.et_field_value);
-        et_field_type = findViewById(R.id.et_field_type);
+        et_name = findViewById(R.id.et_name);
+        et_contact_number = findViewById(R.id.et_contact_number);
+        et_email = findViewById(R.id.et_email);
         tv_add_contact = findViewById(R.id.tv_add_contact);
         tv_add_designation = findViewById(R.id.tv_add_designation);
         et_designation = findViewById(R.id.et_designation);
@@ -152,11 +152,25 @@ public class AddContactActivity extends BaseActivity {
             object.addProperty("tender", tender_id);
             object.addProperty("designation", designation_id);
             JsonArray field_details = new JsonArray();
-            JsonObject field_details_obj = new JsonObject();
-            field_details_obj.addProperty("field_label", et_field_label.getText().toString());
-            field_details_obj.addProperty("field_value", et_field_value.getText().toString());
-            field_details_obj.addProperty("field_type", et_field_type.getText().toString());
-            field_details.add(field_details_obj);
+
+            JsonObject field_details_name_obj = new JsonObject();
+            field_details_name_obj.addProperty("field_label", "Name");
+            field_details_name_obj.addProperty("field_value", et_name.getText().toString());
+            field_details_name_obj.addProperty("field_type", "text");
+            field_details.add(field_details_name_obj);
+
+            JsonObject field_details_contact_no_obj = new JsonObject();
+            field_details_contact_no_obj.addProperty("field_label", "Contact Number");
+            field_details_contact_no_obj.addProperty("field_value", et_contact_number.getText().toString());
+            field_details_contact_no_obj.addProperty("field_type", "number");
+            field_details.add(field_details_contact_no_obj);
+
+            JsonObject field_details_email_obj = new JsonObject();
+            field_details_email_obj.addProperty("field_label", "Email");
+            field_details_email_obj.addProperty("field_value", et_email.getText().toString());
+            field_details_email_obj.addProperty("field_type", "text");
+            field_details.add(field_details_email_obj);
+
             object.add("field_details", field_details);
             System.out.println("object======>>>>"+object.toString());
 
@@ -208,19 +222,23 @@ public class AddContactActivity extends BaseActivity {
 
 
     public boolean checkValidation() {
-        if (et_field_label.getText().toString().length() < 1) {
-            et_field_label.setError("Enter your Field lebel.");
-            et_field_label.requestFocus();
+        if (et_name.getText().toString().length() < 1) {
+            et_name.setError("Enter your Name.");
+            et_name.requestFocus();
             return false;
-        } else if (et_field_value.getText().toString().length() < 1) {
-            et_field_value.setError("Enter your Field value.");
-            et_field_value.requestFocus();
+        } else if (et_contact_number.getText().toString().length() < 1) {
+            et_contact_number.setError("Enter your Contact Number.");
+            et_contact_number.requestFocus();
             return false;
-        } else if (et_field_type.getText().toString().length() < 1) {
-            et_field_type.setError("Enter your Field type.");
-            et_field_type.requestFocus();
+        } else if (et_email.getText().toString().length() < 1) {
+            et_email.setError("Enter your Email.");
+            et_email.requestFocus();
             return false;
-        }  else {
+        }  else if (!emailValidator(et_email.getText().toString())) {
+            et_email.setError("This email is not valid.");
+            et_email.requestFocus();
+            return false;
+        }else {
             return true;
         }
     }

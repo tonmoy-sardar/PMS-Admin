@@ -71,6 +71,21 @@ public class DesignationWiseMainContactListAdapter extends RecyclerView.Adapter<
                     }
                 }
             });
+
+
+            holder.iv_edit_info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        try {
+                            if (itemClickListener != null) {
+                            itemClickListener.OnItemClickDetails(position,arrayList.get(position).getString("id"),
+                                    arrayList.get(position).getJSONArray("field_details"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -94,13 +109,14 @@ public class DesignationWiseMainContactListAdapter extends RecyclerView.Adapter<
 
         RecyclerView rv_main_contact_list;
         LinearLayout ll_admcl_total_cell;
-        ImageView iv_add_more_info;
+        ImageView iv_add_more_info,iv_edit_info;
 
         public ViewHolder(View itemView) {
             super(itemView);
             rv_main_contact_list = itemView.findViewById(R.id.rv_main_contact_list);
             ll_admcl_total_cell = itemView.findViewById(R.id.ll_admcl_total_cell);
             iv_add_more_info = itemView.findViewById(R.id.iv_add_more_info);
+            iv_edit_info = itemView.findViewById(R.id.iv_edit_info);
         }
     }
 
@@ -111,5 +127,6 @@ public class DesignationWiseMainContactListAdapter extends RecyclerView.Adapter<
 
     public interface OnItemClickListener {
         void OnItemClick(int position,String contact);
+        void OnItemClickDetails(int position,String contact,JSONArray field_details);
     }
 }

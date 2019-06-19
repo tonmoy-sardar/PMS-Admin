@@ -59,7 +59,7 @@
                 android:singleLine="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:hint="Contact Name"
+                android:hint="Crusher Name"
                 android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
                 />
 

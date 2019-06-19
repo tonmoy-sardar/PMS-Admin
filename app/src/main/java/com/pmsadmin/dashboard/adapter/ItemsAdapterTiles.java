@@ -68,11 +68,8 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                 }else if (items.get(i).getItem().equals("APPLY LOCAL CONVEYANCE")){
-
                     Intent intent = new Intent(activity, LocalConveyance.class);
                     activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
                 }
             }
         });

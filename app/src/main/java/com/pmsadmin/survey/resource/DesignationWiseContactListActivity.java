@@ -20,6 +20,7 @@ import com.pmsadmin.survey.resource.adpater.DesignationWiseContactListAdapter;
 import com.pmsadmin.survey.resource.adpater.DesignationWiseMainContactListAdapter;
 import com.pmsadmin.survey.resource.dialog_fragment.Dialog_Fragment_add_more_info;
 import com.pmsadmin.survey.resource.dialog_fragment.Dialog_Fragment_add_new_contact;
+import com.pmsadmin.survey.resource.dialog_fragment.Dialog_Fragment_edit_added_info;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,8 +42,7 @@ public class DesignationWiseContactListActivity extends BaseActivity implements 
     RecyclerView rv_designation_wise_contact_list;
     DesignationWiseMainContactListAdapter designationWiseMainContactListAdapter;
     ArrayList<JSONObject> arrayList;
-    String designation_id="",designation = "";
-    String id="",tender_id="",contact_id="";
+    String designation_id="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class DesignationWiseContactListActivity extends BaseActivity implements 
             @Override
             public void onClick(View v) {
                 final Dialog_Fragment_add_new_contact dialog_fragment_add_new_contact= new Dialog_Fragment_add_new_contact();
-                dialog_fragment_add_new_contact.setData(id,tender_id);
+                dialog_fragment_add_new_contact.setData(designation_id, String.valueOf(MethodUtils.tender_id));
                 dialog_fragment_add_new_contact.setOnDialogListener(new Dialog_Fragment_add_new_contact.OnItemClickDialog() {
                     @Override
                     public void onItemClick() {
@@ -114,10 +114,9 @@ public class DesignationWiseContactListActivity extends BaseActivity implements 
                             JSONObject jsonObject = new JSONObject(responseString);
                             System.out.println("contact designation list=================>>>"+jsonObject);
                             JSONArray result = jsonObject.getJSONArray("result");
-                            id = result.getJSONObject(0).getString("designation");
-                            tender_id = result.getJSONObject(0).getString("tender");
+                            //id = result.getJSONObject(0).getString("designation");
+                            //tender_id = result.getJSONObject(0).getString("tender");
                             for (int i = 0; i < result.length(); i++) {
-                                //field_details.getJSONObject(i).put("designation_id", id);
                                 arrayList.add(result.getJSONObject(i));
                             }
                             System.out.println("arrayList============>>>"+arrayList);
@@ -143,7 +142,7 @@ public class DesignationWiseContactListActivity extends BaseActivity implements 
         System.out.println("position============>>>"+position);
         System.out.println("contact============>>>"+contact_id);
         final Dialog_Fragment_add_more_info dialog_Fragment_add_more_info= new Dialog_Fragment_add_more_info();
-        dialog_Fragment_add_more_info.setData(id,tender_id,contact_id);
+        dialog_Fragment_add_more_info.setData(designation_id, String.valueOf(MethodUtils.tender_id),contact_id);
         dialog_Fragment_add_more_info.setOnDialogListener(new Dialog_Fragment_add_more_info.OnItemClickDialog() {
             @Override
             public void onItemClick() {
@@ -152,5 +151,22 @@ public class DesignationWiseContactListActivity extends BaseActivity implements 
             }
         });
         dialog_Fragment_add_more_info.show(getSupportFragmentManager(), "dialog");
+    }
+
+
+    @Override
+    public void OnItemClickDetails(int position, String contact_id, JSONArray field_details) {
+        System.out.println("position============>>>"+position);
+        System.out.println("contact============>>>"+contact_id);
+        final Dialog_Fragment_edit_added_info dialog_fragment_edit_added_info= new Dialog_Fragment_edit_added_info();
+        dialog_fragment_edit_added_info.setData(designation_id, String.valueOf(MethodUtils.tender_id),contact_id,field_details);
+        dialog_fragment_edit_added_info.setOnDialogListener(new Dialog_Fragment_edit_added_info.OnItemClickDialog() {
+            @Override
+            public void onItemClick() {
+                getDesignationWiseContactList();
+                dialog_fragment_edit_added_info.dismiss();
+            }
+        });
+        dialog_fragment_edit_added_info.show(getSupportFragmentManager(), "dialog");
     }
 }

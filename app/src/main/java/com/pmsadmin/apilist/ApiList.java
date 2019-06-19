@@ -114,6 +114,9 @@ public class ApiList {
     //public static final String POST_VENDOR_ADD="tender_survey_materials_external_user_mapping_add/";
     public static final String POST_VENDOR_ADD="tender_survey_materials_external_user_mapping_add_f_android/";
     public static final String USER_MAPPING_DOC_ADD="tender_survey_materials_external_user_mapping_document_add/";
+    public static final String EMPLOYEE_CONVEYANCE_ADD="employee_conveyance_add/";
+    public static final String GET_PROJECTS_LIST="projects_list_wp/";
+    public static final String MANPOWER_LIST_WO_PAGINATION="manpower_list_wo_pagination/1/";
 
 
 

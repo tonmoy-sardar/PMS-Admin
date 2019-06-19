@@ -50,12 +50,12 @@
 
 
             <EditText
-                android:id="@+id/et_field_label"
+                android:id="@+id/et_info_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_border_solid_white"
                 android:padding="@dimen/_10sdp"
-                android:hint="Field lebel"
+                android:hint="Info Type"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
                 android:inputType="text"
@@ -65,27 +65,12 @@
 
 
             <EditText
-                android:id="@+id/et_field_value"
+                android:id="@+id/et_info_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_border_solid_white"
                 android:padding="@dimen/_10sdp"
-                android:hint="Field value"
-                android:imeOptions="actionNext"
-                android:singleLine="true"
-                android:inputType="text"
-                android:layout_marginTop="15dp"
-                />
-
-
-
-            <EditText
-                android:id="@+id/et_field_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:padding="@dimen/_10sdp"
-                android:hint="Field type"
+                android:hint="Details"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
                 android:inputType="text"

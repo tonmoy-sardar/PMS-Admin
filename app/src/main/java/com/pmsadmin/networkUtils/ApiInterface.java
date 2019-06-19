@@ -26,6 +26,7 @@ import static com.pmsadmin.apilist.ApiList.ADD_CONTRACT_VENDOR;
 import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL;
 import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL_DOC;
 import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
+import static com.pmsadmin.apilist.ApiList.EMPLOYEE_CONVEYANCE_ADD;
 import static com.pmsadmin.apilist.ApiList.GET_ALL_UNIT;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_MAPPING_LIST;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_ADD;
@@ -33,8 +34,10 @@ import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_LIST;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.GET_MACHINERY_TYPE_;
 import static com.pmsadmin.apilist.ApiList.GET_MATERIALS_EXTERNAL_USER_MAPPING_LIST;
+import static com.pmsadmin.apilist.ApiList.GET_PROJECTS_LIST;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD;
 import static com.pmsadmin.apilist.ApiList.MACHINERY_TYPE_ADD_DOC;
+import static com.pmsadmin.apilist.ApiList.MANPOWER_LIST_WO_PAGINATION;
 import static com.pmsadmin.apilist.ApiList.MATERIALS_EXTERNAL_USER_MAPPING_DOCUMENT_ADD;
 import static com.pmsadmin.apilist.ApiList.MATERIAL_ADD;
 import static com.pmsadmin.apilist.ApiList.POST_VENDOR_ADD;
@@ -286,8 +289,8 @@ public interface ApiInterface {
 
     @POST(POST_VENDOR_ADD)
     Call<ResponseBody> call_add_vendor(@Header("Authorization") String Bearer,
-                                                         @Header("Content-Type") String Content_type,
-                                                         @Body JsonObject object);
+                                       @Header("Content-Type") String Content_type,
+                                       @Body JsonObject object);
 
     @POST(MATERIAL_ADD)
     Call<ResponseBody> call_add_material(@Header("Authorization") String Bearer,
@@ -339,9 +342,9 @@ public interface ApiInterface {
     @Multipart
     @POST(USER_MAPPING_DOC_ADD)
     Call<ResponseBody> call_add_Materials_doc(@Part("external_user") RequestBody external_user,
-                                          @Part("external_user_mapping") RequestBody external_user_mapping,
-                                          @Part("document_name") RequestBody document_name,
-                                          @Part MultipartBody.Part file);
+                                              @Part("external_user_mapping") RequestBody external_user_mapping,
+                                              @Part("document_name") RequestBody document_name,
+                                              @Part MultipartBody.Part file);
 
 
     @Multipart
@@ -353,6 +356,11 @@ public interface ApiInterface {
                                              @Part("address") RequestBody address,
                                              @Part("additional_notes") RequestBody additional_notes,
                                              @Part("document_name") RequestBody document_name);
+
+    @PUT(TENDER_SURVEY_SITE_PHOTOS_EDIT)
+    Call<ResponseBody> call_put_site_photos_edit(@Header("Authorization") String Bearer,
+                                                              @Path("id") Integer id,
+                                                              @Body JsonObject object);
 
 
     @Multipart
@@ -455,6 +463,12 @@ public interface ApiInterface {
                                                               @Path("id") Integer id,
                                                               @Body JsonObject object);
 
+    @PUT(PUT_RESOURCE_CONTACT_DETAILS_EDIT)
+    Call<ResponseBody> call_put_resource_contact_details_edit(@Header("Authorization") String Bearer,
+                                                              @Header("Content-Type") String Content_type,
+                                                              @Path("id") Integer id,
+                                                              @Body JsonObject object);
+
 
     @GET(GET_EXTERNAL_USER_LIST)
     Call<ResponseBody> call_external_user_list(@Header("Authorization") String Bearer,
@@ -479,9 +493,25 @@ public interface ApiInterface {
     @Multipart
     @POST(MATERIALS_EXTERNAL_USER_MAPPING_DOCUMENT_ADD)
     Call<ResponseBody> call_add_external_user_mapping_document(@Part MultipartBody.Part file,
-                                                      @Part("external_user") RequestBody external_user,
-                                                      @Part("external_user_mapping") RequestBody external_user_mapping,
-                                                      @Part("document_name") RequestBody document_name);
+                                                               @Part("external_user") RequestBody external_user,
+                                                               @Part("external_user_mapping") RequestBody external_user_mapping,
+                                                               @Part("document_name") RequestBody document_name);
+
+
+    @POST(EMPLOYEE_CONVEYANCE_ADD)
+    Call<ResponseBody> call_employee_conveyance_add(@Header("Authorization") String Bearer,
+                                                    @Header("Content-Type") String Content_type,
+                                                    @Body JsonObject object);
+
+
+    @GET(GET_PROJECTS_LIST)
+    Call<ResponseBody> call_get_projects_list(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type);
+
+
+    @GET(MANPOWER_LIST_WO_PAGINATION)
+    Call<ResponseBody> call_get_manpower_list_wo_pagination(@Header("Authorization") String Bearer,
+                                              @Header("Content-Type") String Content_type);
 
 }
 

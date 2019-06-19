@@ -50,45 +50,45 @@
 
 
             <EditText
-                android:id="@+id/et_field_label"
+                android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_border_solid_white"
                 android:padding="@dimen/_10sdp"
-                android:hint="Field lebel"
+                android:hint="Name"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:layout_marginTop="20dp"
                 />
 
 
 
             <EditText
-                android:id="@+id/et_field_value"
+                android:id="@+id/et_contact_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_border_solid_white"
                 android:padding="@dimen/_10sdp"
-                android:hint="Field value"
+                android:hint="Contact Number"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:layout_marginTop="15dp"
                 />
 
 
 
             <EditText
-                android:id="@+id/et_field_type"
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_border_solid_white"
                 android:padding="@dimen/_10sdp"
-                android:hint="Field type"
+                android:hint="Email"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:layout_marginTop="15dp"
                 />
 

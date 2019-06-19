@@ -25,6 +25,7 @@ import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.resource.adpater.EstablishmentDocumentListAdapter;
 import com.pmsadmin.survey.resource.adpater.HydrologicalDocumentListAdapter;
+import com.pmsadmin.survey.resource.dialog_fragment.Dialog_Fragment_add_document_name;
 import com.pmsadmin.survey.resource.hydrological_data.hydro_pojo.Result;
 
 import org.json.JSONArray;
@@ -147,7 +148,15 @@ public class HydrologicalDetails extends BaseActivity {
             try {
                 file = FileUtil.from(this, data.getData());
                 System.out.println("filePath: "+file.getName());
-                UploadDocuments(file);
+                final Dialog_Fragment_add_document_name dialog_Fragment_add_document_name= new Dialog_Fragment_add_document_name();
+                dialog_Fragment_add_document_name.setOnDialogListener(new Dialog_Fragment_add_document_name.OnItemClickDialog() {
+                    @Override
+                    public void onItemClick(String document_name) {
+                        UploadDocuments(file,document_name);
+                        dialog_Fragment_add_document_name.dismiss();
+                    }
+                });
+                dialog_Fragment_add_document_name.show(getSupportFragmentManager(), "dialog");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -220,7 +229,7 @@ public class HydrologicalDetails extends BaseActivity {
     }
 
 
-    public void UploadDocuments(final File file) {
+    public void UploadDocuments(final File file,String doc_name) {
         // loader.show_with_label("Loading");
 //        loader.show();
         System.out.println("=================================");
@@ -229,7 +238,7 @@ public class HydrologicalDetails extends BaseActivity {
         MultipartBody.Part pdf = MultipartBody.Part.createFormData("document", file.getName(),requestFile);
         RequestBody tender = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(tender_id));
         RequestBody module_id = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(id));
-        RequestBody document_name = RequestBody.create(MediaType.parse("multipart/form-data"), doc_no);
+        RequestBody document_name = RequestBody.create(MediaType.parse("multipart/form-data"), doc_name);
 
         Gson gson = new GsonBuilder()
                 .setLenient()

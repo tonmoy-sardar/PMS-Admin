@@ -24,20 +24,26 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.pmsadmin.MethodUtils;
 import com.pmsadmin.R;
+import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
 
 import com.pmsadmin.dialog.CameraGalleryDialogueSitePhotosDetails;
 import com.pmsadmin.interfaces.OnImageSet;
 import com.pmsadmin.location.GPSTracker;
 import com.pmsadmin.networkUtils.ApiInterface;
+import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.tenders_list.TendorsListing;
 import com.pmsadmin.utils.MediaUtils;
 import com.pmsadmin.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,6 +105,7 @@ public class SitePhotoDetailsActivity extends BaseActivity {
     private double currentLng;
     public GPSTracker gpsTracker;
     private SimpleLocation location;
+    ImageView iv_icon_edit;
 
 
     @Override
@@ -114,6 +121,7 @@ public class SitePhotoDetailsActivity extends BaseActivity {
         tvAdditionalInfo = findViewById(R.id.tvAdditionalInfo);
         tv_submit = findViewById(R.id.tv_submit);
         ivDocument = findViewById(R.id.ivDocument);
+        iv_icon_edit = findViewById(R.id.iv_icon_edit);
 
         tv_universal_header.setText("Photo Details");
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(SitePhotoDetailsActivity.this));
@@ -166,7 +174,11 @@ public class SitePhotoDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("String.valueOf(mFile)==========>>>>"+String.valueOf(mFile));
-                UploadImageData(String.valueOf(mFile));
+                if (mFile == null){
+                    UploadData();
+                } else {
+                    UploadImageData(String.valueOf(mFile));
+                }
                 //UploadImageData(filePath);
             }
         });
@@ -180,6 +192,7 @@ public class SitePhotoDetailsActivity extends BaseActivity {
                 ivDocument.setEnabled(true);
                 tvEdit.setVisibility(View.GONE);
                 tv_submit.setVisibility(View.VISIBLE);
+                iv_icon_edit.setVisibility(View.VISIBLE);
             }
         });
 
@@ -444,6 +457,7 @@ public class SitePhotoDetailsActivity extends BaseActivity {
 
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
                     if (response.code() == 200 || response.code()==201) {
+                        System.out.println("Service URL==>" + response.raw().request().url());
                         String responseString = response.body().string();
                         System.out.println("respons_save_data===========>>>"+responseString);
                         Toast.makeText(SitePhotoDetailsActivity.this,"Data uploaded sucessfully",Toast.LENGTH_SHORT).show();
@@ -452,6 +466,7 @@ public class SitePhotoDetailsActivity extends BaseActivity {
                         ivDocument.setEnabled(false);
                         tvEdit.setVisibility(View.VISIBLE);
                         tv_submit.setVisibility(View.GONE);
+                        iv_icon_edit.setVisibility(View.GONE);
                     }
                 }
                 catch (Exception e) {
@@ -474,6 +489,59 @@ public class SitePhotoDetailsActivity extends BaseActivity {
 
 
 
+
+    }
+
+
+    private void UploadData() {
+        try {
+            loader.show_with_label("Please wait");
+
+            JsonObject object = new JsonObject();
+            object.addProperty("additional_notes", tvAdditionalInfo.getText().toString());
+            System.out.println("object======>>>>"+object.toString());
+
+
+            Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+            ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+            final Call<ResponseBody> register = apiInterface.call_put_site_photos_edit("Token " +a_token,
+                    site_photo_id, object);
+
+
+            register.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
+
+                    if (response.code() == 201 || response.code()==200) {
+                        System.out.println("Service URL==>" + response.raw().request().url());
+                        try {
+                            String responseString = response.body().string();
+                            System.out.println("response output==========>>>"+responseString);
+                            JSONObject jsonObject = new JSONObject(responseString);
+                            Toast.makeText(SitePhotoDetailsActivity.this,"Data uploaded sucessfully",Toast.LENGTH_SHORT).show();
+
+                            tvAdditionalInfo.setEnabled(false);
+                            ivDocument.setEnabled(false);
+                            tvEdit.setVisibility(View.VISIBLE);
+                            tv_submit.setVisibility(View.GONE);
+                            iv_icon_edit.setVisibility(View.GONE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

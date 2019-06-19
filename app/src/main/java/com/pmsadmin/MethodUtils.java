@@ -327,7 +327,7 @@ public class MethodUtils {
 
         {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
-            dashBoardModelImage.setItem("UPDATE DAILY PROGRESS");
+            dashBoardModelImage.setItem("UPDATE DAILY\nPROGRESS");
             dashBoardModelImage.setImageId(R.drawable.add_daily_data);
             list.add(dashBoardModelImage);
         }
@@ -335,7 +335,7 @@ public class MethodUtils {
         {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
             dashBoardModelImage.setItem("APPLY LOCAL CONVEYANCE");
-            dashBoardModelImage.setImageId(R.drawable.add_daily_data);
+            dashBoardModelImage.setImageId(R.mipmap.conveyance);
             list.add(dashBoardModelImage);
         }
 
