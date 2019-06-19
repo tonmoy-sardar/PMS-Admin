@@ -44,8 +44,10 @@ import com.pmsadmin.apilist.ApiList;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.networking.NetworkCheck;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.resource.AddEstablishmentActivity;
+import com.pmsadmin.survey.resource.contractor_vendor.ContractorsVendorsActivity;
 import com.pmsadmin.survey.resource.contractor_vendor.contract_vendor_pojo.AddContractVendorResponse;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
@@ -99,6 +101,8 @@ public class AddContractorVendorDialogue extends BaseActivity {
     private TextView tvUpload;
     public View view;
 
+    private TextView tv_universal_header;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,11 @@ public class AddContractorVendorDialogue extends BaseActivity {
         //setContentView(R.layout.add_contract_layout);
         view = View.inflate(this, R.layout.add_contract_layout, null);
         addContentView(view);
+
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+        tv_universal_header.setText("Add Contractor");
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
+
         //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
        /* etName = findViewById(R.id.etName);
@@ -114,12 +123,17 @@ public class AddContractorVendorDialogue extends BaseActivity {
         tvSubmit = findViewById(R.id.tvSubmit);*/
 
         etContractType = findViewById(R.id.etContractType);
+        etContractType.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
         etDescription = findViewById(R.id.etDescription);
+        etDescription.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
         etDocumentName = findViewById(R.id.etDocumentName);
+        etDocumentName.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
         tvSubmit = findViewById(R.id.tvSubmit);
+        tvSubmit.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
         ivSelect = findViewById(R.id.ivSelect);
         ivPdf = findViewById(R.id.ivPdf);
         tvUpload = findViewById(R.id.tvUpload);
+        tvUpload.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
 
 
         loader = new LoadingData(AddContractorVendorDialogue.this);
@@ -183,7 +197,22 @@ public class AddContractorVendorDialogue extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                postData();
+                if (etContractType.getText().toString().trim().equals("")){
+
+                    MethodUtils.errorMsg(AddContractorVendorDialogue.this, "Please enter Contract type");
+
+                }else if (etDescription.getText().toString().equals("")){
+
+                    MethodUtils.errorMsg(AddContractorVendorDialogue.this, "Please enter Description");
+
+                }else {
+
+                    if (NetworkCheck.getInstant(AddContractorVendorDialogue.this).isConnectingToInternet()) {
+                        postData();
+                    }else {
+                        MethodUtils.errorMsg(AddContractorVendorDialogue.this, "Please check network connection");
+                    }
+                }
             }
         });
 
@@ -350,7 +379,8 @@ public class AddContractorVendorDialogue extends BaseActivity {
 
                         moduleID = addContractVendorResponse.getId();
                         tvUpload.setVisibility(View.VISIBLE);
-                        tvSubmit.setVisibility(View.GONE);
+                        tvSubmit.setClickable(false);
+                        tvSubmit.setVisibility(View.INVISIBLE);
                         //finish();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -361,6 +391,10 @@ public class AddContractorVendorDialogue extends BaseActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                MethodUtils.errorMsg(AddContractorVendorDialogue.this, "Something went wrong!");
             }
         });
 

@@ -85,22 +85,14 @@ public class ContractVendorReplica extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                /*tvPM.setBackgroundColor(getResources().getColor(R.color.link_color));
-                tvContractors.setBackgroundColor(getResources().getColor(R.color.inactive_button_color));*/
+
                 finish();
 
             }
         });
 
 
-        /*tvAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                addMachinery();
-
-            }
-        });*/
 
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override

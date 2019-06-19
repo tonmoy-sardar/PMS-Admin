@@ -43,6 +43,7 @@ import com.pmsadmin.dialog.AddContractorVendorDialogue;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
+import com.pmsadmin.survey.resource.adpater.MachineryAdapter;
 import com.pmsadmin.survey.resource.contractor_vendor.contract_vendor_pojo.AddMachineryResponsePojo;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
@@ -92,6 +93,7 @@ public class MachineryAddActivity extends BaseActivity {
     ImageView ivSelect, ivPdf;
 
     private int PICK_PDF_REQUEST = 1;
+    private TextView tv_universal_header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +102,32 @@ public class MachineryAddActivity extends BaseActivity {
         addContentView(view);
         System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+
+        tv_universal_header.setText("Add P & M");
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         tvSubmit = findViewById(R.id.tvSubmit);
+        tvSubmit.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         tvUpload = findViewById(R.id.tvUpload);
+        tvUpload.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         etPMType = findViewById(R.id.etPMType);
+        etPMType.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         etHire = findViewById(R.id.etHire);
+        etHire.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         etKhoraki = findViewById(R.id.etKhoraki);
+        etKhoraki.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         etDocumentName = findViewById(R.id.etDocumentName);
+        etDocumentName.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         etPMmake = findViewById(R.id.etPMmake);
+        etPMmake.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+
         ivSelect = findViewById(R.id.ivSelect);
         ivPdf = findViewById(R.id.ivPdf);
 
@@ -218,7 +239,26 @@ public class MachineryAddActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                postData();
+                if (etPMType.getText().toString().equals("")){
+
+                    MethodUtils.errorMsg(MachineryAddActivity.this, "Please enter P & M Type!");
+
+                }else if (etPMmake.getText().toString().equals("")){
+
+                    MethodUtils.errorMsg(MachineryAddActivity.this, "Please enter Make!");
+
+                }else if (etHire.getText().toString().equals("")){
+
+                    MethodUtils.errorMsg(MachineryAddActivity.this, "Please enter Hire!");
+
+                }else if (etKhoraki.getText().toString().equals("")){
+
+                    MethodUtils.errorMsg(MachineryAddActivity.this, "Please enter Khoraki!");
+
+                }else {
+
+                    postData();
+                }
             }
         });
 
@@ -312,7 +352,10 @@ public class MachineryAddActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
 
+                MethodUtils.errorMsg(MachineryAddActivity.this, "Something went wrong!");
             }
         });
     }

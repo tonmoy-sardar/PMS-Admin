@@ -61,6 +61,7 @@ public class CoordinateStaticAdapter extends RecyclerView.Adapter<CoordinateStat
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemCoordinates.get(position).getItem().equals("RAW MATERIALS")){
                     Intent intent = new Intent(activity, RawMaterialsActivity.class);
+                    intent.putExtra("page", "Raw Materials");
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if (itemCoordinates.get(position).getItem().equals("CRUSHER")){

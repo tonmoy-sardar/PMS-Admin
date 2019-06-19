@@ -68,7 +68,7 @@ public class AddMaterialActivity extends BaseActivity {
         addContentView(view);
         //setContentView(R.layout.activity_add_material);
         tv_universal_header = findViewById(R.id.tv_universal_header);
-        tv_universal_header.setText("Add Materials");
+        tv_universal_header.setText("Add Material");
         loader = new LoadingData(AddMaterialActivity.this);
 
         rvUnit = findViewById(R.id.rvUnit);
@@ -197,7 +197,7 @@ public class AddMaterialActivity extends BaseActivity {
                 }else if (etMaterialName.getText().toString().equals("")){
                     MethodUtils.errorMsg(AddMaterialActivity.this, "Please enter Material name");
 
-                }else if (tvSelectUnit.getText().toString().equals("Select")){
+                }else if (tvSelectUnit.getText().toString().equalsIgnoreCase("Select Unit")){
                     MethodUtils.errorMsg(AddMaterialActivity.this, "Please select unit");
                 }else {
                     post(unitPojoList);

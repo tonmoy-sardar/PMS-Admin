@@ -14,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/logo_icon"
-        android:layout_margin="15dp"
-        />
+        android:layout_margin="15dp" />
 
 
     <TextView
@@ -26,8 +25,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:textColor="@color/textcolor"
-        android:textSize="18dp"
-        />
+        android:textSize="18dp" />
 
 
     <EditText

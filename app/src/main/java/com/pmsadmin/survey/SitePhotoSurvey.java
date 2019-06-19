@@ -483,41 +483,7 @@ public class SitePhotoSurvey extends BaseActivity {
         }
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            iv_profile.setVisibility(View.VISIBLE); //imageview name
-            iv_profile.setImageBitmap(photo);
 
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-            File folder = new File(Environment.getExternalStorageDirectory() + File.separator + ".pdcimage");
-            if (!folder.exists()) {
-                folder.mkdir();
-            }
-            File file = new File(folder.getAbsolutePath(),System.currentTimeMillis()+".png");
-
-            FileOutputStream fileOutputStream;
-            try {
-                file.createNewFile();
-                fileOutputStream = new FileOutputStream(file);
-                fileOutputStream.write(byteArrayOutputStream.toByteArray());
-                fileOutputStream.close();
-            }
-            catch (FileNotFoundException e){
-                e.printStackTrace();
-            }
-
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            filePath = file.getAbsolutePath();
-            Log.d("imagepath","::::::::::"+filePath);
-
-        }
-    }*/
 
 
 
@@ -571,18 +537,11 @@ public class SitePhotoSurvey extends BaseActivity {
     public void UploadImageData(final String imagePath)
     {
 
-        // loader.show_with_label("Loading");
-//        loader.show();
+
 
         File file = new File(imagePath);
 
-//        JsonObject object = new JsonObject();
-//        object.addProperty("tender", "1");
-//        object.addProperty("latitude", "23.34");
-//        object.addProperty("longitude", "45.56");
-//        object.addProperty("address", "kolkata");
-//        object.addProperty("additional_notes", "test");
-//        object.addProperty("document_name", "Test Data");
+
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image = MultipartBody.Part.createFormData("document", file.getName(),requestFile);
@@ -594,12 +553,7 @@ public class SitePhotoSurvey extends BaseActivity {
         RequestBody additional_notes = RequestBody.create(MediaType.parse("multipart/form-data"), etAdditionalInformation.getText().toString());
         RequestBody document_name = RequestBody.create(MediaType.parse("multipart/form-data"), "Site Photo");
 
-       /* RequestBody tender = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
-        RequestBody latitude = RequestBody.create(MediaType.parse("multipart/form-data"), "23.34");
-        RequestBody longitude = RequestBody.create(MediaType.parse("multipart/form-data"), "45.56");
-        RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"), "kolkata");
-        RequestBody additional_notes = RequestBody.create(MediaType.parse("multipart/form-data"), "test");
-        RequestBody document_name = RequestBody.create(MediaType.parse("multipart/form-data"), "Test Data");*/
+
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -611,8 +565,7 @@ public class SitePhotoSurvey extends BaseActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(getUnsafeOkHttpClient())
                 .build();
-//        Retrofit retrofit = AppConfig.getRetrofit(BASE_URL);
-//        Retrofit retrofit = AppConfig.getRetrofit("http://192.168.24.243:8000/tender_survey_site_photos_add/");
+
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> register = apiInterface.call_add_site_photos(image,tender,latitude,longitude,address,additional_notes,document_name);
@@ -632,7 +585,12 @@ public class SitePhotoSurvey extends BaseActivity {
                         String responseString = response.body().string();
                         Log.d("responssavedata",responseString);
                         Toast.makeText(getApplicationContext(),"Data uploaded sucessfully",Toast.LENGTH_SHORT).show();
+                        /*mFile = null;
+                        getSitePhotoList();*/
                         finish();
+                        startActivity(getIntent());
+
+                        //finish();
 //                        clearvalue();
 
 

@@ -34,6 +34,7 @@ import com.pmsadmin.survey.adapter.StartSurveyStaticAdapter;
 import com.pmsadmin.survey.coordinates.RawMaterialsActivity;
 import com.pmsadmin.survey.resource.EstablishmentActivity;
 import com.pmsadmin.survey.resource.adpater.EstablishmentAdapter;
+import com.pmsadmin.tenders_list.TendorsListing;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
 
@@ -49,6 +50,8 @@ public class StartSurveyHome extends BaseActivity {
     StartSurveyStaticAdapter adapter;
     public View view;
 
+    private TextView tv_universal_header;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,9 @@ public class StartSurveyHome extends BaseActivity {
         addContentView(view);
         //setContentView(R.layout.activity_start_survey_home2);
 
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+        tv_universal_header.setText("Start Survey");
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(StartSurveyHome.this));
         tvTenderGID = findViewById(R.id.tvTenderGID);
         rv_items = (RecyclerView) findViewById(R.id.rvItems);
 

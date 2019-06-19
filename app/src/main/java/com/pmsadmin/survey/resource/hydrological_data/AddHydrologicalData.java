@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,13 +90,17 @@ public class AddHydrologicalData extends BaseActivity {
     private String pdfFilePath = "";
     File file;
 
-    ImageView ivSelect, ivPdf;
+    ImageView ivSelect, ivPdf,iv_upload_file;
 
     private int PICK_PDF_REQUEST = 1;
 
     TextView tvUpload;
     public static String a_token;
     private static final int STORAGE_PERMISSION_CODE = 123;
+
+    private TextView tv_universal_header;
+
+    private LinearLayout ll_add_document_fields,llImage,llUploadFile;
 
 
     @Override
@@ -106,14 +111,33 @@ public class AddHydrologicalData extends BaseActivity {
         //setContentView(R.layout.activity_add_hydrological_data);
         //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        etName = findViewById(R.id.etName);
-        etDescription = findViewById(R.id.etDescription);
-        btSubmit = findViewById(R.id.btSubmit);
-        etDocumentName = findViewById(R.id.etDocumentName);
+        tv_universal_header = findViewById(R.id.tv_universal_header);
+        tv_universal_header.setText("Add Data Factor");
+        tv_universal_header.setTypeface(MethodUtils.getNormalFont(AddHydrologicalData.this));
 
-        tvUpload = findViewById(R.id.tvUpload);
+        etName = findViewById(R.id.etName);
+        etName.setTypeface(MethodUtils.getNormalFont(AddHydrologicalData.this));
+
+        etDescription = findViewById(R.id.etDescription);
+        etDescription.setTypeface(MethodUtils.getNormalFont(AddHydrologicalData.this));
+
+        btSubmit = findViewById(R.id.btSubmit);
+        btSubmit.setTypeface(MethodUtils.getNormalFont(AddHydrologicalData.this));
+
+        etDocumentName = findViewById(R.id.etDocumentName);
+        etDocumentName.setTypeface(MethodUtils.getNormalFont(AddHydrologicalData.this));
+
+        //tvUpload = findViewById(R.id.tvUpload);
+        //tvUpload.setTypeface(MethodUtils.getNormalFont(AddHydrologicalData.this));
         ivSelect = findViewById(R.id.ivSelect);
         ivPdf = findViewById(R.id.ivPdf);
+
+
+        llUploadFile = findViewById(R.id.llUploadFile);
+        llImage = findViewById(R.id.llImage);
+        ll_add_document_fields = findViewById(R.id.ll_add_document_fields);
+
+
 
         //etDocumentName = findViewById(R.id.etDocumentName);
 
@@ -191,7 +215,15 @@ public class AddHydrologicalData extends BaseActivity {
 
     private void clickListners() {
 
-        ivSelect.setOnClickListener(new View.OnClickListener() {
+        /*ivSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showFileChooser();
+            }
+        });*/
+
+        llImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -200,7 +232,28 @@ public class AddHydrologicalData extends BaseActivity {
         });
 
 
-        tvUpload.setOnClickListener(new View.OnClickListener() {
+        /*tvUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("Uploadfile: " + String.valueOf(file) + " id: " + String.valueOf(moduleID));
+
+                if (moduleID != 0) {
+
+                    if (pdfFilePath.equals("")) {
+                        MethodUtils.errorMsg(AddHydrologicalData.this, "Please select any Document");
+                    } else if (etDocumentName.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(AddHydrologicalData.this, "Please enter Document name");
+                    } else {
+
+                        UploadDocuments(file);
+                    }
+
+                }
+            }
+        });*/
+
+        llUploadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -277,7 +330,7 @@ public class AddHydrologicalData extends BaseActivity {
     }
 
 
-
+    String is_file_added="";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -293,6 +346,25 @@ public class AddHydrologicalData extends BaseActivity {
                 if (file != null) {
                     ivSelect.setVisibility(View.GONE);
                     ivPdf.setVisibility(View.VISIBLE);
+
+                    String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")+ 1);
+                    System.out.println("extension: "+extension);
+
+
+                    if (extension.equals("pdf")) {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                    }else {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                        ivPdf.setImageResource(R.drawable.ic_image_blue_24dp);
+                    }
+                    is_file_added = "1";
+
+
+
+
+
                 }
 
                 String str = String.valueOf(file);
@@ -362,8 +434,12 @@ public class AddHydrologicalData extends BaseActivity {
 
                         moduleID = getAddHydroDataResponse.getId();
                         btSubmit.setClickable(false);
-                        btSubmit.setVisibility(View.INVISIBLE);
-                        tvUpload.setVisibility(View.VISIBLE);
+                        btSubmit.setText("Saved");
+                        etName.setEnabled(false);
+                        etDescription.setEnabled(false);
+                        ll_add_document_fields.setVisibility(View.VISIBLE);
+                        //btSubmit.setVisibility(View.INVISIBLE);
+                        //tvUpload.setVisibility(View.VISIBLE);
 
                         //finish();
                     } catch (IOException e) {
@@ -375,6 +451,10 @@ public class AddHydrologicalData extends BaseActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                MethodUtils.errorMsg(AddHydrologicalData.this, "Something went wrong!");
             }
         });
 

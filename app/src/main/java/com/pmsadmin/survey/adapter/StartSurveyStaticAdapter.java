@@ -62,9 +62,14 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
             public void onClick(View v) {
 
                 if(itemsSurvey.get(position).getItem().equals("SITE PHOTOS")) {
-                    Intent intent = new Intent(activity, SitePhotoSurvey.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                    if (NetworkCheck.getInstant(activity).isConnectingToInternet()) {
+                        Intent intent = new Intent(activity, SitePhotoSurvey.class);
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        MethodUtils.errorMsg(activity, "Please check your network connection");
+                    }
                     //intent.putExtra()
                 }else if (itemsSurvey.get(position).getItem().equals("COORDINATES")){
                     Intent intent = new Intent(activity, CoordinatesActivity.class);
@@ -79,6 +84,7 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
 
                     if (NetworkCheck.getInstant(activity).isConnectingToInternet()) {
                         Intent intent = new Intent(activity, RawMaterialsActivity.class);
+                        intent.putExtra("page", "Materials");
                         activity.startActivity(intent);
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }else {
@@ -87,24 +93,41 @@ public class StartSurveyStaticAdapter extends RecyclerView.Adapter<StartSurveySt
                 }else if (itemsSurvey.get(position).getItem().equals("ESTABLISHMENT")){
 
                     //MethodUtils.errorMsg(activity, "This section is under development");
-                    Intent intent = new Intent(activity, EstablishmentActivity.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    if (NetworkCheck.getInstant(activity).isConnectingToInternet()) {
+                        Intent intent = new Intent(activity, EstablishmentActivity.class);
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        MethodUtils.errorMsg(activity, "Please check your network connection");
+                    }
                 }else if (itemsSurvey.get(position).getItem().equals("HYDROLOGIAL DATA")){
 
                     //MethodUtils.errorMsg(activity, "This section is under development");
-                    Intent intent = new Intent(activity, HydrologicalActivity.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    if (NetworkCheck.getInstant(activity).isConnectingToInternet()) {
+                        Intent intent = new Intent(activity, HydrologicalActivity.class);
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        MethodUtils.errorMsg(activity, "Please check your network connection");
+                    }
                 }else if (itemsSurvey.get(position).getItem().equals("CONTRACTORS/VENDORS")){
                     //MethodUtils.errorMsg(activity, "This section is under development");
-                    Intent intent = new Intent(activity, ContractorsVendorsActivity.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    if (NetworkCheck.getInstant(activity).isConnectingToInternet()) {
+                        Intent intent = new Intent(activity, ContractorsVendorsActivity.class);
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        MethodUtils.errorMsg(activity, "Please check your network connection");
+                    }
                 }else if (itemsSurvey.get(position).getItem().equals("CONTACT DETAILS")){
-                    Intent intent = new Intent(activity, ContactDetailsActivity.class);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                    if (NetworkCheck.getInstant(activity).isConnectingToInternet()) {
+                        Intent intent = new Intent(activity, ContactDetailsActivity.class);
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        MethodUtils.errorMsg(activity, "Please check your network connection");
+                    }
                 }
             }
         });

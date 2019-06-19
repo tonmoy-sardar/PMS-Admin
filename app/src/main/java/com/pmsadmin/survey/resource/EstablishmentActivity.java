@@ -25,12 +25,14 @@ import com.pmsadmin.giveattandence.JustificationActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
+import com.pmsadmin.survey.coordinates.AddMaterialActivity;
 import com.pmsadmin.survey.coordinates.CheckInActivity;
 import com.pmsadmin.survey.resource.adpater.EstablishmentAdapter;
 import com.pmsadmin.survey.resource.establishment_pojo.EstablishmentPojo;
 import com.pmsadmin.survey.resource.establishment_pojo.Result;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.SpacesItemDecoration;
+import com.pmsadmin.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
 
@@ -50,6 +52,8 @@ public class EstablishmentActivity extends BaseActivity {
 
     private EstablishmentAdapter establishmentAdapter;
 
+    private LoadingData loader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,8 @@ public class EstablishmentActivity extends BaseActivity {
         ivAdd = findViewById(R.id.ivAdd);
         tv_universal_header.setText("Establishment");
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(EstablishmentActivity.this));
+
+        loader = new LoadingData(EstablishmentActivity.this);
 
         rvEstablishment = findViewById(R.id.rvEstablishment);
 
@@ -101,6 +107,8 @@ public class EstablishmentActivity extends BaseActivity {
 
     private void getEstablishmentList() {
 
+        loader.show_with_label("Please wait");
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -113,6 +121,8 @@ public class EstablishmentActivity extends BaseActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
                 if (response.code() == 201 || response.code() == 200) {
                     resultEstablishment.clear();
                     try {
@@ -133,6 +143,11 @@ public class EstablishmentActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                MethodUtils.errorMsg(EstablishmentActivity.this, "Something went wrong!");
 
             }
         });

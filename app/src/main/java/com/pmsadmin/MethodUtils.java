@@ -320,7 +320,7 @@ public class MethodUtils {
 
         {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
-            dashBoardModelImage.setItem("SURVEY");
+            dashBoardModelImage.setItem("SURVEY TENDERS");
             dashBoardModelImage.setImageId(R.drawable.pre_execution_icon);
             list.add(dashBoardModelImage);
         }

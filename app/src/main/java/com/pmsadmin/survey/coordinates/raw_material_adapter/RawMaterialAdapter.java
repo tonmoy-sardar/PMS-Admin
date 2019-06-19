@@ -24,11 +24,13 @@ public class RawMaterialAdapter extends RecyclerView.Adapter<RawMaterialAdapter.
 
     Activity activity;
     List<Result> rawMaterialsResultList;
+    String page = "";
 
-    public RawMaterialAdapter(Activity activity, List<Result> rawMaterialsResultList) {
+    public RawMaterialAdapter(Activity activity, List<Result> rawMaterialsResultList, String page) {
 
         this.activity = activity;
         this.rawMaterialsResultList = rawMaterialsResultList;
+        this.page = page;
     }
 
     @NonNull
@@ -51,6 +53,8 @@ public class RawMaterialAdapter extends RecyclerView.Adapter<RawMaterialAdapter.
 
                 Intent intent = new Intent(activity, MaterialDetails.class);
                 intent.putExtra("mat_id",rawMaterialsResultList.get(position).getId());
+                intent.putExtra("mat_name",rawMaterialsResultList.get(position).getName());
+                intent.putExtra("page",page);
                 activity.startActivity(intent);
             }
         });

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,9 @@ public class MaterialsDocumentsAdapter extends RecyclerView.Adapter<MaterialsDoc
     Activity activity;
     List<MappingDocumentDetail> documentDetails;
 
+    String uri = "";
+    String extension = "";
+
     public MaterialsDocumentsAdapter(Activity activity, List<MappingDocumentDetail> documentDetails) {
 
         this.activity = activity;
@@ -47,6 +51,31 @@ public class MaterialsDocumentsAdapter extends RecyclerView.Adapter<MaterialsDoc
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
         holder.tvDoc.setText(documentDetails.get(position).getDocumentName());
+
+        if (documentDetails.get(position).getDocument()!= null){
+
+             uri = documentDetails.get(position).getDocument();
+             extension = uri.substring(uri.lastIndexOf(".") + 1);
+
+            System.out.println("extension: "+extension);
+
+            if (extension.equals("pdf")){
+
+                //holder.ivDoc.setVisibility(View.VISIBLE);
+                holder.ivDoc.setImageResource(R.drawable.ic_picture_as_pdf_blue_24dp);
+                //holder.ivImage.setVisibility(View.GONE);
+
+            }else {
+                holder.ivDoc.setImageResource(R.drawable.ic_image_blue_24dp);
+                //holder.ivDoc.setVisibility(View.GONE);
+                //holder.ivImage.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+
+
+
 
         holder.rlDoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +100,14 @@ public class MaterialsDocumentsAdapter extends RecyclerView.Adapter<MaterialsDoc
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvDoc;
         RelativeLayout rlDoc;
+        ImageView ivDoc,ivImage;
         public MyViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
             tvDoc = itemView.findViewById(R.id.tvDoc);
             tvDoc.setTypeface(MethodUtils.getNormalFont(activity));
             rlDoc = itemView.findViewById(R.id.rlDoc);
+            ivDoc = itemView.findViewById(R.id.ivDoc);
+            //ivImage = itemView.findViewById(R.id.ivImage);
         }
     }
 }

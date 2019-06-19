@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="@dimen/_60sdp"
+    android:layout_width="@dimen/_60sdp"
     android:layout_height="wrap_content"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="horizontal">
 
     <RelativeLayout
         android:id="@+id/rlDoc"
         android:layout_width="@dimen/_60sdp"
         android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/ivDoc"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:src="@drawable/ic_picture_as_pdf_blue_24dp"
-        android:padding="@dimen/_10sdp"
-        android:layout_centerInParent="true"/>
+        <ImageView
+            android:id="@+id/ivDoc"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_picture_as_pdf_blue_24dp"
+            android:visibility="visible"/>
+
+        <!--<ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_image_blue_24dp"
+            android:visibility="gone"/>-->
 
         <TextView
             android:id="@+id/tvDoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivDoc"
-            android:padding="@dimen/_5sdp"
             android:layout_centerHorizontal="true"
-            android:text="text"
-            android:textSize="@dimen/_12sdp"
-            android:maxLines="1"
             android:ellipsize="end"
-            android:scrollHorizontally="true"/>
+            android:maxLines="1"
+            android:padding="@dimen/_5sdp"
+            android:scrollHorizontally="true"
+            android:text="text"
+            android:textSize="@dimen/_12sdp" />
 
     </RelativeLayout>
 

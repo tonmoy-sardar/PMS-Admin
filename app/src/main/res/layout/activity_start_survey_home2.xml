@@ -85,7 +85,8 @@
         android:layout_height="wrap_content"
         android:background="@color/bgcolor"
         android:layout_below="@+id/rl_header"
-        android:layout_margin="@dimen/_10sdp">
+        android:layout_margin="@dimen/_10sdp"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tvTenderGID"
