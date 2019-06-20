@@ -53,8 +53,6 @@ public class ResourceActivity extends BaseActivity {
         rv_items.setItemAnimator(new DefaultItemAnimator());
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         rv_items.setLayoutManager(mLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rv_items.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(ResourceActivity.this, 2);
         rv_items.addItemDecoration(itemOffset);
     }

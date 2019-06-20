@@ -26,22 +26,25 @@
 
             <TextView
                 android:id="@+id/tv_user_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_topbar_menu_profile"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp"
                 android:paddingLeft="@dimen/_20sdp"
                 android:text="Santanu"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_15sdp" />
+                android:textSize="@dimen/_15sdp"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                />
 
             <ImageView
                 android:id="@+id/iv_cross"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:src="@drawable/close_icon" />
 
@@ -50,7 +53,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_user_name"
-                android:layout_margin="@dimen/_8sdp"
                 android:background="#536880" />
 
             <TextView
@@ -59,9 +61,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view1"
                 android:paddingLeft="@dimen/_20sdp"
-                android:paddingTop="@dimen/_8sdp"
+                android:paddingTop="@dimen/_12sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_12sdp"
                 android:text="Dashboard"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/_15sdp" />
@@ -71,9 +73,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_dashboard"
-                android:layout_margin="@dimen/_8sdp"
                 android:background="#536880"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                />
 
 
             <TextView
@@ -95,7 +97,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_tender_list"
-                android:layout_margin="@dimen/_8sdp"
                 android:background="#536880"
                 android:visibility="gone"/>
 
@@ -118,7 +119,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_attendance"
-                android:layout_margin="@dimen/_8sdp"
                 android:background="#536880" />
 
             <TextView
@@ -127,19 +127,18 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view4"
                 android:paddingLeft="@dimen/_20sdp"
-                android:paddingTop="@dimen/_8sdp"
+                android:paddingTop="@dimen/_12sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_12sdp"
                 android:text="Help"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_17sdp" />
+                android:textSize="@dimen/_15sdp" />
 
             <View
                 android:id="@+id/view3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_below="@+id/tv_help"
-                android:layout_margin="@dimen/_15sdp"
                 android:background="#536880" />
 
 
@@ -149,9 +148,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view3"
                 android:paddingLeft="@dimen/_20sdp"
-                android:paddingTop="@dimen/_8sdp"
+                android:paddingTop="@dimen/_12sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_12sdp"
                 android:text="Logout"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/_15sdp" />

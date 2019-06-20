@@ -241,6 +241,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         tv_logout.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
         tv_attendance.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
+        tv_dashboard.setTypeface(MethodUtils.getNormalFont(BaseActivity.this));
     }
 
     private void viewBind() {

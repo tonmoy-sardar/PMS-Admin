@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="@dimen/_130sdp"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/_130sdp"
     app:cardElevation="@dimen/_5sdp"
     app:cardCornerRadius="@dimen/_5sdp"
@@ -16,6 +16,7 @@
         android:paddingBottom="@dimen/_5sdp"
         android:paddingRight="@dimen/_5sdp"
         android:paddingLeft="@dimen/_5sdp"
+        android:paddingTop="5dp"
         android:background="@color/bgcolor"
         android:orientation="vertical">
 

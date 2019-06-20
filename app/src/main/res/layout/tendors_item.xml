@@ -2,12 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="@dimen/_120sdp"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/_120sdp"
     android:background="@color/bgcolor"
     app:cardElevation="@dimen/_5sdp"
     app:cardCornerRadius="@dimen/_5sdp"
-    android:layout_margin="@dimen/_10sdp">
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginBottom="6dp"
+    >
 
     <LinearLayout
         android:id="@+id/llTendorItem"
@@ -23,20 +26,24 @@
             android:layout_height="wrap_content"
             android:text="T00001"
             android:textSize="@dimen/_15sdp"
+            android:singleLine="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:layout_gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_button"
-            android:padding="@dimen/_5sdp"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Start Survey"
             android:textColor="@android:color/white"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_5sdp"/>
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
+            android:layout_marginTop="@dimen/_10sdp"/>
 
     </LinearLayout>
 

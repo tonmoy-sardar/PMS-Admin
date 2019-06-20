@@ -47,7 +47,9 @@
                 android:background="@drawable/rectangle_border_solid_white"
                 android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
                 android:padding="@dimen/_10sdp"
-                android:text="Select Unit" />
+                android:hint="Select Unit"
+                android:textSize="18dp"
+                />
 
             <LinearLayout
                 android:id="@+id/llDropDown"
@@ -86,14 +88,16 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/rectangle_border_solid_white"
                 android:hint="Description"
-                android:padding="@dimen/_10sdp" />
+                android:padding="@dimen/_10sdp"
+                android:gravity="start"
+                />
 
             <Button
                 android:id="@+id/btSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:background="@drawable/rounded_corner_button"
                 android:text="Save"

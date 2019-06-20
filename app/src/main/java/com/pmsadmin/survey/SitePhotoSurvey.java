@@ -137,6 +137,7 @@ public class SitePhotoSurvey extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_site_photo_survey, null);
         addContentView(view);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
 
 //        a_token = LoginShared.getLoginToken(this);
@@ -241,8 +242,6 @@ public class SitePhotoSurvey extends BaseActivity {
         rvSiteImages.setItemAnimator(new DefaultItemAnimator());
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         rvSiteImages.setLayoutManager(mLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rvSiteImages.addItemDecoration(decoration);
         ItemOffsetDecoration itemOffset = new ItemOffsetDecoration(SitePhotoSurvey.this, 2);
         rvSiteImages.addItemDecoration(itemOffset);
     }

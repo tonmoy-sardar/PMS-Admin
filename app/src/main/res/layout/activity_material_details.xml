@@ -35,7 +35,10 @@
             android:textSize="@dimen/_12sdp"
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_corner_button"
-            android:padding="@dimen/_5sdp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:layout_gravity="right"
             android:gravity="center"/>
 

@@ -57,7 +57,7 @@ public class StartSurveyHome extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_start_survey_home2, null);
         addContentView(view);
-        //setContentView(R.layout.activity_start_survey_home2);
+        System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
         tv_universal_header = findViewById(R.id.tv_universal_header);
         tv_universal_header.setText("Start Survey");
