@@ -31,8 +31,8 @@
             android:paddingBottom="@dimen/_15sdp"
             android:textSize="@dimen/_10sdp"
             android:gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </RelativeLayout>

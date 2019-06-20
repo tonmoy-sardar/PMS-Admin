@@ -76,7 +76,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.pmsadmin.apilist.ApiList.BASE_URL;
 
-public class CrusherDetailsActivity extends BaseActivity {
+public class CrusherDetailsActivity extends BaseActivity implements AssignedCrusherListAdapter.OnItemClickListener {
 
     public View view;
     private LoadingData loader;
@@ -90,6 +90,7 @@ public class CrusherDetailsActivity extends BaseActivity {
     int user_type = 0;
     TextView tv_contact_person, tv_save_crusher, tv_contact_person_no;
     String external_user = "", tender_survey_material = "", external_user_mapping = "";
+    String external_user_from_list = "", external_user_mapping_from_list = "";
 
     public List<Address> addresses;
     Geocoder geocoder;
@@ -99,13 +100,14 @@ public class CrusherDetailsActivity extends BaseActivity {
     private SimpleLocation location;
 
     private int PICK_PDF_REQUEST = 1;
+    private int ADD_MORE_FILE = 222;
     private static final int STORAGE_PERMISSION_CODE = 123;
     public static String a_token;
     File file;
     JSONArray array_add_documents = new JSONArray();
     int count = 0;
     NestedScrollView nsv_assign_crusher;
-    String is_check="";
+    String is_check = "";
 
 
     @Override
@@ -144,6 +146,7 @@ public class CrusherDetailsActivity extends BaseActivity {
 
         arrayList = new ArrayList<JSONObject>();
         assignedCrusherListAdapter = new AssignedCrusherListAdapter(CrusherDetailsActivity.this, arrayList);
+        assignedCrusherListAdapter.setOnItemClickListener(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rv_assigned_crusher_list.setLayoutManager(layoutManager);
         rv_assigned_crusher_list.setHasFixedSize(true);
@@ -189,7 +192,6 @@ public class CrusherDetailsActivity extends BaseActivity {
                 } else {
                     add_external_user_mapping_add();
                 }
-
             }
         });
 
@@ -228,6 +230,14 @@ public class CrusherDetailsActivity extends BaseActivity {
                 }
                 crusherAddedDocumentListAdapter.notifyDataSetChanged();
                 count = arrayList_added_document_list.size() - 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == ADD_MORE_FILE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            try {
+                file = FileUtil.from(this, data.getData());
+                System.out.println("filePath: " + file.getName());
+                AddMoreDocuments(file,file.getName().substring(0, file.getName().indexOf(".")));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -270,6 +280,7 @@ public class CrusherDetailsActivity extends BaseActivity {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
@@ -346,7 +357,7 @@ public class CrusherDetailsActivity extends BaseActivity {
                                 arrayList.add(result.getJSONObject(i));
                             }
                             assignedCrusherListAdapter.notifyDataSetChanged();
-                            if (is_check.equalsIgnoreCase("1")){
+                            if (is_check.equalsIgnoreCase("1")) {
                                 nsv_assign_crusher.fullScroll(View.FOCUS_DOWN);
                                 is_check = "";
                             }
@@ -406,12 +417,18 @@ public class CrusherDetailsActivity extends BaseActivity {
                             JSONObject jsonObject = new JSONObject(responseString);
                             if (jsonObject != null) {
                                 external_user_mapping = jsonObject.getJSONObject("mapping_details").getString("id");
-                                UploadDocuments();
-                               /* tv_contact_person.setText("");
-                                tv_contact_person_no.setText("");
-                                external_user = "";
-                                get_materials_external_user_mapping_list();*/
-                                //Toast.makeText(CrusherDetailsActivity.this, "Crusher Assigned successfully.", Toast.LENGTH_LONG).show();
+                                if (arrayList_added_document_list.size() > 0) {
+                                    UploadDocuments();
+                                } else {
+                                    tv_contact_person.setText("");
+                                    tv_contact_person_no.setText("");
+                                    external_user = "";
+                                    get_materials_external_user_mapping_list();
+                                    arrayList_added_document_list.clear();
+                                    array_add_documents = new JSONArray();
+                                    crusherAddedDocumentListAdapter.notifyDataSetChanged();
+                                    Toast.makeText(CrusherDetailsActivity.this, "Crusher Assigned successfully.", Toast.LENGTH_LONG).show();
+                                }
                             } else {
                                 Toast.makeText(CrusherDetailsActivity.this, "Something went wrong, Please try again.", Toast.LENGTH_LONG).show();
                             }
@@ -442,7 +459,8 @@ public class CrusherDetailsActivity extends BaseActivity {
             RequestBody requestFile = null;
             requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), new File(arrayList_added_document_list.get(count).getString("file_path")));
             RequestBody document_name = RequestBody.create(MediaType.parse("multipart/form-data"), arrayList_added_document_list.get(count).getString("file_name"));
-            MultipartBody.Part pdf = MultipartBody.Part.createFormData("document", file.getName(), requestFile);
+            MultipartBody.Part pdf = MultipartBody.Part.createFormData("document",
+                    new File(arrayList_added_document_list.get(count).getString("file_path")).getName(), requestFile);
             RequestBody external_user_id = RequestBody.create(MediaType.parse("multipart/form-data"), external_user);
             RequestBody external_user_mapping_id = RequestBody.create(MediaType.parse("multipart/form-data"), external_user_mapping);
 
@@ -472,7 +490,7 @@ public class CrusherDetailsActivity extends BaseActivity {
                             String responseString = response.body().string();
                             Log.d("responseString", responseString);
                             System.out.println("respons_save_data===========>>>" + responseString);
-                            if (is_check.equalsIgnoreCase("")){
+                            if (is_check.equalsIgnoreCase("")) {
                                 count--;
                                 is_check = "1";
                             }
@@ -507,6 +525,61 @@ public class CrusherDetailsActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+    }
+
+
+    void AddMoreDocuments(final File file, String file_name) {
+            loader.show_with_label("Please wait");
+
+            System.out.println("=================================");
+            RequestBody requestFile = null;
+            requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part pdf = MultipartBody.Part.createFormData("document", file.getName(), requestFile);
+            RequestBody document_name = RequestBody.create(MediaType.parse("multipart/form-data"), file_name);
+            RequestBody external_user_id = RequestBody.create(MediaType.parse("multipart/form-data"), external_user_from_list);
+            RequestBody external_user_mapping_id = RequestBody.create(MediaType.parse("multipart/form-data"), external_user_mapping_from_list);
+
+
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+
+            //creating retrofit object
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(getUnsafeOkHttpClient())
+                    .build();
+            ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+            final Call<ResponseBody> register = apiInterface.call_add_external_user_mapping_document(pdf, external_user_id, external_user_mapping_id, document_name);
+
+            register.enqueue(new Callback<ResponseBody>() {
+
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
+                    try {
+                        if (response.code() == 200 || response.code() == 201) {
+                            String responseString = response.body().string();
+                            Log.d("responseString", responseString);
+                            System.out.println("respons_save_data===========>>>" + responseString);
+                            get_materials_external_user_mapping_list();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+//                loader.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
+                }
+            });
 
     }
 
@@ -633,6 +706,18 @@ public class CrusherDetailsActivity extends BaseActivity {
     }
 
 
+    private void AddMoreFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), ADD_MORE_FILE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == STORAGE_PERMISSION_CODE) {
@@ -642,5 +727,18 @@ public class CrusherDetailsActivity extends BaseActivity {
                 Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void OnItemClick(int position) {
+        try {
+            System.out.println("one object====>>" + arrayList.get(position).toString());
+            external_user_from_list = arrayList.get(position).getString("external_user");
+            external_user_mapping_from_list = arrayList.get(position).getString("id");
+            AddMoreFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

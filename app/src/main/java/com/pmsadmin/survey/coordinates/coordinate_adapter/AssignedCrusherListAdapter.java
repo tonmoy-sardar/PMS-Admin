@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class AssignedCrusherListAdapter extends RecyclerView.Adapter<AssignedCru
     ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
     ArrayList<JSONObject> arrayList_crusher_doc_list;
     AssignedCrusherDocListAdapter assignedCrusherDocListAdapter;
+    OnItemClickListener itemClickListener;
+
 
     public AssignedCrusherListAdapter(CrusherDetailsActivity context, ArrayList<JSONObject> arrayList) {
         this.context = context;
@@ -55,6 +58,15 @@ public class AssignedCrusherListAdapter extends RecyclerView.Adapter<AssignedCru
             holder.rv_assigned_crusher_document_list.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
             holder.rv_assigned_crusher_document_list.setHasFixedSize(true);
             holder.rv_assigned_crusher_document_list.setAdapter(assignedCrusherDocListAdapter);
+
+            holder.iv_add_more_doc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.OnItemClick(position);
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -72,12 +84,23 @@ public class AssignedCrusherListAdapter extends RecyclerView.Adapter<AssignedCru
 
         TextView tv_crusher_name,tv_crusher_no;
         RecyclerView rv_assigned_crusher_document_list;
+        ImageView iv_add_more_doc;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_crusher_name = itemView.findViewById(R.id.tv_crusher_name);
             tv_crusher_no = itemView.findViewById(R.id.tv_crusher_no);
             rv_assigned_crusher_document_list = itemView.findViewById(R.id.rv_assigned_crusher_document_list);
+            iv_add_more_doc = itemView.findViewById(R.id.iv_add_more_doc);
         }
+    }
+
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
     }
 }

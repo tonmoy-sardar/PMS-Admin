@@ -327,7 +327,7 @@ public class MethodUtils {
 
         {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
-            dashBoardModelImage.setItem("UPDATE DAILY\nPROGRESS");
+            dashBoardModelImage.setItem("UPDATE DAILY PROGRESS");
             dashBoardModelImage.setImageId(R.drawable.add_daily_data);
             list.add(dashBoardModelImage);
         }
