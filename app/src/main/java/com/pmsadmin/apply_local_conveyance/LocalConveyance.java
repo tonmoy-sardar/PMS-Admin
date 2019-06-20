@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +31,11 @@ import com.pmsadmin.apply_local_conveyance.dialog_fragment.Dialog_Fragment_job_a
 import com.pmsadmin.apply_local_conveyance.dialog_fragment.Dialog_Fragment_project_list;
 import com.pmsadmin.dashboard.BaseActivity;
 import com.pmsadmin.dialog.AddChkInDialogue;
+import com.pmsadmin.dialog.AddContractorVendorDialogue;
 import com.pmsadmin.leavesection.LeaveActivity;
 import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
+import com.pmsadmin.networking.NetworkCheck;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.coordinates.CrusherDetailsActivity;
 import com.pmsadmin.tenders_list.TendorsListing;
@@ -77,6 +80,8 @@ public class LocalConveyance extends BaseActivity {
     DatePickerDialog picker;
     private static int SPLASH_TIME_OUT = 3000;
 
+    private ImageView ivViewList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,7 @@ public class LocalConveyance extends BaseActivity {
         tv_conveyance_to_place = findViewById(R.id.tv_conveyance_to_place);
         tv_conveyance_date = findViewById(R.id.tv_conveyance_date);
         tv_conveyance_project = findViewById(R.id.tv_conveyance_project);
+        ivViewList = findViewById(R.id.ivViewList);
 
 
         tv_universal_header.setText("New Conveyance");
@@ -190,6 +196,9 @@ public class LocalConveyance extends BaseActivity {
         get_manpower_list_wo_pagination();
 
 
+        clickListners();
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -227,6 +236,24 @@ public class LocalConveyance extends BaseActivity {
             }
         }, SPLASH_TIME_OUT);
 
+    }
+
+    private void clickListners() {
+
+        ivViewList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (NetworkCheck.getInstant(LocalConveyance.this).isConnectingToInternet()) {
+                    Intent intent = new Intent(LocalConveyance.this, MyConveyanceHistory.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else {
+                    MethodUtils.errorMsg(LocalConveyance.this, "Please check Network connection");
+                }
+
+            }
+        });
     }
 
 
