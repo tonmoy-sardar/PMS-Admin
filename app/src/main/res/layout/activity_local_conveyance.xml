@@ -11,223 +11,219 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        >
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:paddingTop="20dp"
-            >
+            android:paddingRight="15dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/tv_conveyance_name"
-                android:textColor="@color/color_black"
-                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Jhone deo"
-                />
+                android:textColor="@color/color_black"
+                android:textSize="15dp"
+                android:layout_centerVertical="true"/>
+
+
+                <ImageView
+                    android:id="@+id/ivViewList"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_view_list_black_24dp"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_centerVertical="true"/>
+
+
+            </RelativeLayout>
 
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/tv_conveyance_department"
-                android:textColor="@color/color_black"
-                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Department "
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                />
+                android:textColor="@color/color_black"
+                android:textSize="15dp"
+                android:visibility="gone" />
 
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/tv_conveyance_grade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Grade "
                 android:textColor="@color/color_black"
                 android:textSize="15dp"
-                android:text="Grade "
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                />
-
+                android:visibility="gone" />
 
 
             <TextView
+                android:id="@+id/tv_conveyance_eligibility"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_conveyance_eligibility"
+                android:layout_marginTop="5dp"
+                android:text="Eligibility"
                 android:textColor="@color/color_black"
                 android:textSize="15dp"
-                android:text="Eligibility"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray_view_color"
                 android:layout_marginTop="30dp"
-                />
+                android:background="@color/gray_view_color" />
 
 
             <TextView
                 android:id="@+id/tv_conveyance_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
                 android:hint="Date"
                 android:inputType="text"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="30dp"
-                />
+                android:textSize="15dp" />
 
 
             <TextView
                 android:id="@+id/tvSearchLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
                 android:hint="From(Place)"
                 android:inputType="text"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="10dp"
-                />
+                android:textSize="15dp" />
 
 
             <TextView
                 android:id="@+id/tv_conveyance_to_place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
                 android:hint="To(Place)"
                 android:inputType="text"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="10dp"
-                />
+                android:textSize="15dp" />
 
 
             <EditText
                 android:id="@+id/tv_vehicle_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
                 android:hint="Vehicle Type"
                 android:inputType="text"
                 android:padding="@dimen/_10sdp"
-                android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="10dp"
                 android:singleLine="true"
-                />
+                android:textColor="@color/color_black"
+                android:textSize="15dp" />
 
 
             <EditText
                 android:id="@+id/tv_conveyance_purpose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
                 android:hint="Purpose"
                 android:inputType="text"
                 android:padding="@dimen/_10sdp"
-                android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="10dp"
                 android:singleLine="true"
-                />
+                android:textColor="@color/color_black"
+                android:textSize="15dp" />
 
 
             <TextView
                 android:id="@+id/tv_conveyance_job_alloted_by"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
+                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
                 android:hint="Job Alloted by"
                 android:inputType="text"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="10dp"
-                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-                />
+                android:textSize="15dp" />
 
 
             <TextView
                 android:id="@+id/tv_conveyance_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
+                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
                 android:hint="Select project"
                 android:inputType="text"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="10dp"
-                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-                />
-
+                android:textSize="15dp" />
 
 
             <EditText
                 android:id="@+id/tv_conveyance_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_border_solid_white"
                 android:cursorVisible="true"
                 android:hint="Amount"
                 android:inputType="number"
                 android:padding="@dimen/_10sdp"
-                android:textColor="@color/color_black"
-                android:textSize="15dp"
-                android:background="@drawable/rectangle_border_solid_white"
-                android:layout_marginTop="10dp"
                 android:singleLine="true"
-                />
+                android:textColor="@color/color_black"
+                android:textSize="15dp" />
 
 
             <TextView
                 android:id="@+id/tv_submit_for_approval"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corner_button"
-                android:padding="@dimen/_10sdp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
-                android:text="submit for approval"
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textAllCaps="true"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="30dp"
-                />
-
+                android:background="@drawable/rounded_corner_button"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="submit for approval"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
 
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
-
 
 
 </RelativeLayout>

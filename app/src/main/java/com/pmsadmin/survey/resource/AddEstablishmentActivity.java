@@ -236,9 +236,32 @@ public class AddEstablishmentActivity extends BaseActivity {
             try {
                 file = FileUtil.from(this, data.getData());
                 System.out.println("filePath: "+file.getName());
-                ivSelect.setVisibility(View.GONE);
-                ivPdf.setVisibility(View.VISIBLE);
-                is_file_added = "1";
+                /*ivSelect.setVisibility(View.GONE);
+                ivPdf.setVisibility(View.VISIBLE);*/
+
+                if (file != null) {
+                    /*ivSelect.setVisibility(View.GONE);
+                    ivPdf.setVisibility(View.VISIBLE);*/
+                    is_file_added = "1";
+                    ivSelect.setVisibility(View.GONE);
+                    ivPdf.setVisibility(View.VISIBLE);
+                    String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")+ 1);
+                    System.out.println("extension: "+extension);
+
+
+                    if (extension.equals("pdf")) {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                    }else {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                        ivPdf.setImageResource(R.drawable.ic_image_blue_24dp);
+                    }
+
+
+                }
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -249,7 +272,7 @@ public class AddEstablishmentActivity extends BaseActivity {
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
+        intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         try {

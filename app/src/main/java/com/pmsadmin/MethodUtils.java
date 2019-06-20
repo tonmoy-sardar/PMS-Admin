@@ -242,31 +242,31 @@ public class MethodUtils {
         {
             SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
             surveyStaticModel.setItem("MATERIAL");
-            surveyStaticModel.setImageId(R.drawable.site_photo);
+            surveyStaticModel.setImageId(R.drawable.material);
             list.add(surveyStaticModel);
         }
         {
             SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
             surveyStaticModel.setItem("ESTABLISHMENT");
-            surveyStaticModel.setImageId(R.drawable.coordinates);
+            surveyStaticModel.setImageId(R.drawable.establishment);
             list.add(surveyStaticModel);
         }
         {
             SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
             surveyStaticModel.setItem("HYDROLOGIAL DATA");
-            surveyStaticModel.setImageId(R.drawable.resource);
+            surveyStaticModel.setImageId(R.drawable.hydrological_data);
             list.add(surveyStaticModel);
         }
         {
             SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
             surveyStaticModel.setItem("CONTRACTORS/VENDORS");
-            surveyStaticModel.setImageId(R.drawable.resource);
+            surveyStaticModel.setImageId(R.drawable.contractors_vendors);
             list.add(surveyStaticModel);
         }
         {
             SurveyStaticModel surveyStaticModel = new SurveyStaticModel();
             surveyStaticModel.setItem("CONTACT DETAILS");
-            surveyStaticModel.setImageId(R.drawable.resource);
+            surveyStaticModel.setImageId(R.drawable.contact_details);
             list.add(surveyStaticModel);
         }
 

@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +96,8 @@ public class MachineryAddActivity extends BaseActivity {
     private int PICK_PDF_REQUEST = 1;
     private TextView tv_universal_header;
 
+    private LinearLayout ll_add_document_fields,llImage,llUploadFile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,8 +113,8 @@ public class MachineryAddActivity extends BaseActivity {
         tvSubmit = findViewById(R.id.tvSubmit);
         tvSubmit.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
 
-        tvUpload = findViewById(R.id.tvUpload);
-        tvUpload.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
+        //tvUpload = findViewById(R.id.tvUpload);
+        //tvUpload.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
 
         etPMType = findViewById(R.id.etPMType);
         etPMType.setTypeface(MethodUtils.getNormalFont(MachineryAddActivity.this));
@@ -130,6 +133,10 @@ public class MachineryAddActivity extends BaseActivity {
 
         ivSelect = findViewById(R.id.ivSelect);
         ivPdf = findViewById(R.id.ivPdf);
+
+        ll_add_document_fields = findViewById(R.id.ll_add_document_fields);
+        llImage = findViewById(R.id.llImage);
+        llUploadFile = findViewById(R.id.llUploadFile);
 
         loader = new LoadingData(MachineryAddActivity.this);
 
@@ -263,7 +270,7 @@ public class MachineryAddActivity extends BaseActivity {
         });
 
 
-        ivSelect.setOnClickListener(new View.OnClickListener() {
+        llImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -272,7 +279,7 @@ public class MachineryAddActivity extends BaseActivity {
         });
 
 
-        tvUpload.setOnClickListener(new View.OnClickListener() {
+        llUploadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -340,9 +347,19 @@ public class MachineryAddActivity extends BaseActivity {
                         MethodUtils.errorMsg(MachineryAddActivity.this, "Now you can upload Document.");
 
                         moduleID = addMachineryResponsePojo.getId();
-                        tvSubmit.setClickable(false);
+                        /*tvSubmit.setClickable(false);
                         tvSubmit.setVisibility(View.INVISIBLE);
-                        tvUpload.setVisibility(View.VISIBLE);
+                        tvUpload.setVisibility(View.VISIBLE);*/
+
+
+
+                        tvSubmit.setClickable(false);
+                        tvSubmit.setText("Saved");
+                        etPMType.setEnabled(false);
+                        etPMmake.setEnabled(false);
+                        etHire.setEnabled(false);
+                        etKhoraki.setEnabled(false);
+                        ll_add_document_fields.setVisibility(View.VISIBLE);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -391,8 +408,25 @@ public class MachineryAddActivity extends BaseActivity {
                 System.out.println("filePath: " + String.valueOf(file));
                 pdfFilePath = String.valueOf(file);
                 if (file != null) {
+                    /*ivSelect.setVisibility(View.GONE);
+                    ivPdf.setVisibility(View.VISIBLE);*/
+
                     ivSelect.setVisibility(View.GONE);
                     ivPdf.setVisibility(View.VISIBLE);
+                    String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")+ 1);
+                    System.out.println("extension: "+extension);
+
+
+                    if (extension.equals("pdf")) {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                    }else {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                        ivPdf.setImageResource(R.drawable.ic_image_blue_24dp);
+                    }
+
+
                 }
 
                 String str = String.valueOf(file);

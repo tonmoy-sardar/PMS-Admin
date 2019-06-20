@@ -117,6 +117,7 @@ public class ApiList {
     public static final String EMPLOYEE_CONVEYANCE_ADD="employee_conveyance_add/";
     public static final String GET_PROJECTS_LIST="projects_list_wp/";
     public static final String MANPOWER_LIST_WO_PAGINATION="manpower_list_wo_pagination/1/";
+    public static final String GET_EMPLOYEE_CONVEYANCE_LIST="employee_conveyance_list/?";
 
 
 

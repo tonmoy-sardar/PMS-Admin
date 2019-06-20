@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,9 @@ public class EstablishmentDocumentListAdapter extends RecyclerView.Adapter<Estab
     Context context;
     ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
 
+    String uri = "";
+    String extension = "";
+
     public EstablishmentDocumentListAdapter(EstablishmentDetails context, ArrayList<JSONObject> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
@@ -45,6 +49,28 @@ public class EstablishmentDocumentListAdapter extends RecyclerView.Adapter<Estab
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         try {
             holder.tv_doc_name.setText(arrayList.get(position).getString("document_name"));
+            System.out.println("adap: "+arrayList.get(position).getString("document_name"));
+
+            if (arrayList.get(position).getString("document")!= null){
+                uri = arrayList.get(position).getString("document");
+                extension = uri.substring(uri.lastIndexOf(".") + 1);
+
+                System.out.println("extension: "+extension);
+
+
+                if (extension.equals("pdf")){
+
+                    //holder.ivDoc.setVisibility(View.VISIBLE);
+                    holder.iv_pdf_document.setImageResource(R.drawable.ic_picture_as_pdf_blue_24dp);
+                    //holder.ivImage.setVisibility(View.GONE);
+
+                }else {
+                    holder.iv_pdf_document.setImageResource(R.drawable.ic_image_blue_24dp);
+                    //holder.ivDoc.setVisibility(View.GONE);
+                    //holder.ivImage.setVisibility(View.VISIBLE);
+                }
+            }
+
 
             holder.ll_doc_view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,11 +100,13 @@ public class EstablishmentDocumentListAdapter extends RecyclerView.Adapter<Estab
 
         TextView tv_doc_name;
         LinearLayout ll_doc_view;
+        ImageView iv_pdf_document;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_doc_name = itemView.findViewById(R.id.tv_doc_name);
             ll_doc_view = itemView.findViewById(R.id.ll_doc_view);
+            iv_pdf_document = itemView.findViewById(R.id.iv_pdf_document);
         }
     }
 }
