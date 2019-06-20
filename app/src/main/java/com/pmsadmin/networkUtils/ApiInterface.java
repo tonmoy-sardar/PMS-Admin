@@ -28,6 +28,7 @@ import static com.pmsadmin.apilist.ApiList.ADD_HYDROLOGICAL_DOC;
 import static com.pmsadmin.apilist.ApiList.ADD_SITE_PHOTOSF;
 import static com.pmsadmin.apilist.ApiList.EMPLOYEE_CONVEYANCE_ADD;
 import static com.pmsadmin.apilist.ApiList.GET_ALL_UNIT;
+import static com.pmsadmin.apilist.ApiList.GET_EMPLOYEE_CONVEYANCE_LIST;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_MAPPING_LIST;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_ADD;
 import static com.pmsadmin.apilist.ApiList.GET_EXTERNAL_USER_LIST;
@@ -430,6 +431,11 @@ public interface ApiInterface {
     Call<ResponseBody> call_get_contact_designations(@Header("Authorization") String Bearer,
                                                      @Header("Content-Type") String Content_type,
                                                      @Query("tender") Integer tender);
+
+    @GET(GET_EMPLOYEE_CONVEYANCE_LIST)
+    Call<ResponseBody> call_get_conveyance_list(@Header("Authorization") String Bearer,
+                                                     @Header("Content-Type") String Content_type,
+                                                     @Query("employee") Integer employee);
 
     @GET(GET_ALL_UNIT)
     Call<ResponseBody> call_get_unit(@Header("Authorization") String Bearer,

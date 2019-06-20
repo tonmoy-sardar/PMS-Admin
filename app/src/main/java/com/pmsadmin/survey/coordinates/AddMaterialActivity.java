@@ -228,7 +228,7 @@ public class AddMaterialActivity extends BaseActivity {
 
         niceString = data.replaceFirst("^,", "");
         if (niceString.equals("")){
-            tvSelectUnit.setText("Select");
+            tvSelectUnit.setText("Select Unit");
         }else {
             tvSelectUnit.setText(niceString);
         }

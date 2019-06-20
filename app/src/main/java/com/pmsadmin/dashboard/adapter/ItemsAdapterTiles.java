@@ -61,7 +61,8 @@ public class ItemsAdapterTiles extends RecyclerView.Adapter<ItemsAdapterTiles.It
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     //MethodUtils.errorMsg(activity, "This section is under development");
-                }else if (items.get(i).getItem().equals("UPDATE DAILY PROGRESS")){
+                //}else if (items.get(i).getItem().equals("UPDATE DAILY PROGRESS")){
+                }else if (items.get(i).getItem().equals("UPDATE DAILY\nPROGRESS")){
 
                     Intent intent = new Intent(activity, AddDailyData.class);
                     activity.startActivity(intent);

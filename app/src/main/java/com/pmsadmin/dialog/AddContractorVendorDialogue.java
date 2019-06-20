@@ -32,6 +32,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.resource.AddEstablishmentActivity;
 import com.pmsadmin.survey.resource.contractor_vendor.ContractorsVendorsActivity;
 import com.pmsadmin.survey.resource.contractor_vendor.contract_vendor_pojo.AddContractVendorResponse;
+import com.pmsadmin.survey.resource.hydrological_data.AddHydrologicalData;
 import com.pmsadmin.utils.progressloader.LoadingData;
 
 import java.io.File;
@@ -87,7 +89,7 @@ public class AddContractorVendorDialogue extends BaseActivity {
     private SimpleLocation location;
     private LoadingData loader;
 
-    private ImageView ivSelect,ivPdf;
+    private ImageView ivSelect,ivPdf,iv_upload_file;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private int PICK_PDF_REQUEST = 1;
 
@@ -102,6 +104,8 @@ public class AddContractorVendorDialogue extends BaseActivity {
     public View view;
 
     private TextView tv_universal_header;
+    private LinearLayout ll_add_document_fields,llImage,llUploadFile;
+
 
 
     @Override
@@ -132,8 +136,13 @@ public class AddContractorVendorDialogue extends BaseActivity {
         tvSubmit.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
         ivSelect = findViewById(R.id.ivSelect);
         ivPdf = findViewById(R.id.ivPdf);
-        tvUpload = findViewById(R.id.tvUpload);
-        tvUpload.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
+        //tvUpload = findViewById(R.id.tvUpload);
+        //tvUpload.setTypeface(MethodUtils.getNormalFont(AddContractorVendorDialogue.this));
+
+
+        ll_add_document_fields = findViewById(R.id.ll_add_document_fields);
+        llImage = findViewById(R.id.llImage);
+        llUploadFile = findViewById(R.id.llUploadFile);
 
 
         loader = new LoadingData(AddContractorVendorDialogue.this);
@@ -217,7 +226,15 @@ public class AddContractorVendorDialogue extends BaseActivity {
         });
 
 
-        ivSelect.setOnClickListener(new View.OnClickListener() {
+        /*ivSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showFileChooser();
+            }
+        });*/
+
+        llImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -226,7 +243,9 @@ public class AddContractorVendorDialogue extends BaseActivity {
         });
 
 
-        tvUpload.setOnClickListener(new View.OnClickListener() {
+
+
+        llUploadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -234,10 +253,13 @@ public class AddContractorVendorDialogue extends BaseActivity {
 
                 if (moduleID != 0) {
 
-                    if (!pdfFilePath.equals("")){
+                    if (pdfFilePath.equals("")) {
+                        MethodUtils.errorMsg(AddContractorVendorDialogue.this, "Please select any Document");
+                    } else if (etDocumentName.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(AddContractorVendorDialogue.this, "Please enter Document name");
+                    } else {
+
                         UploadDocuments(file);
-                    }else {
-                        MethodUtils.errorMsg(getApplicationContext(), "Please select any Document");
                     }
 
                 }
@@ -314,6 +336,21 @@ public class AddContractorVendorDialogue extends BaseActivity {
                 if (file!= null){
                     ivSelect.setVisibility(View.GONE);
                     ivPdf.setVisibility(View.VISIBLE);
+                    String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")+ 1);
+                    System.out.println("extension: "+extension);
+
+
+                    if (extension.equals("pdf")) {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                    }else {
+                        ivSelect.setVisibility(View.GONE);
+                        ivPdf.setVisibility(View.VISIBLE);
+                        ivPdf.setImageResource(R.drawable.ic_image_blue_24dp);
+                    }
+                    //is_file_added = "1";
+
+
                 }
 
                 String str = String.valueOf(file);
@@ -378,9 +415,18 @@ public class AddContractorVendorDialogue extends BaseActivity {
                         MethodUtils.errorMsg(getApplicationContext(),"Now you can upload Document.");
 
                         moduleID = addContractVendorResponse.getId();
-                        tvUpload.setVisibility(View.VISIBLE);
+                        /*tvUpload.setVisibility(View.VISIBLE);
                         tvSubmit.setClickable(false);
-                        tvSubmit.setVisibility(View.INVISIBLE);
+                        tvSubmit.setVisibility(View.INVISIBLE);*/
+
+                        tvSubmit.setClickable(false);
+                        tvSubmit.setText("Saved");
+                        etContractType.setEnabled(false);
+                        etDescription.setEnabled(false);
+                        ll_add_document_fields.setVisibility(View.VISIBLE);
+
+
+
                         //finish();
                     } catch (IOException e) {
                         e.printStackTrace();

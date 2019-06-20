@@ -50,6 +50,9 @@ public class MaterialsDocumentsAdapter extends RecyclerView.Adapter<MaterialsDoc
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
+
+
+
         holder.tvDoc.setText(documentDetails.get(position).getDocumentName());
 
         if (documentDetails.get(position).getDocument()!= null){
