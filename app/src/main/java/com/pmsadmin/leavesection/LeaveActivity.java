@@ -318,8 +318,6 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener 
         //LinearLayoutManager mLayoutManager = new LinearLayoutManager(LeaveActivity.this);
         mLayoutManager = new LinearLayoutManager(LeaveActivity.this);
         rv_items.setLayoutManager(mLayoutManager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rv_items.addItemDecoration(decoration);
         rv_items.setAdapter(adapter);
 
 
