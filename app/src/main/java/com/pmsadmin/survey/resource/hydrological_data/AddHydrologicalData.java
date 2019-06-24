@@ -471,6 +471,7 @@ public class AddHydrologicalData extends BaseActivity {
     public void UploadDocuments(final File file) {
         // loader.show_with_label("Loading");
 //        loader.show();
+        loader.show_with_label("Please wait");
         System.out.println("=================================");
 //        File file = new File(pdf_path);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -502,6 +503,9 @@ public class AddHydrologicalData extends BaseActivity {
 //                if (loader != null && loader.isShowing())
 //                    loader.dismiss();
 //                System.out.println("///////////////////////");
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
                 try {
                     Toast.makeText(getApplicationContext(), String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
                     if (response.code() == 200 || response.code() == 201) {

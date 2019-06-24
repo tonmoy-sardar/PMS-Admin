@@ -104,6 +104,12 @@ public class MyConveyanceHistoryAdapter extends RecyclerView.Adapter<MyConveyanc
         }
 
 
+        if (resultList.get(position).getJob_alloted_by_name()!= null){
+
+            holder.tvJobAllotedBy.setText("Job Alloted by:  "+resultList.get(position).getJob_alloted_by_name());
+        }
+
+
     }
 
     @Override
@@ -113,7 +119,7 @@ public class MyConveyanceHistoryAdapter extends RecyclerView.Adapter<MyConveyanc
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvDate,tvFrom,tvTo,tvVehicleType,tvPurpose,tvAmount;
+        TextView tvDate,tvFrom,tvTo,tvVehicleType,tvPurpose,tvAmount,tvJobAllotedBy;
         Button btStatus;
 
         public MyViewHolder(@NonNull View itemView, Activity activity) {
@@ -134,6 +140,9 @@ public class MyConveyanceHistoryAdapter extends RecyclerView.Adapter<MyConveyanc
 
             tvAmount = itemView.findViewById(R.id.tvAmount);
             tvAmount.setTypeface(MethodUtils.getNormalFont(activity));
+
+            tvJobAllotedBy = itemView.findViewById(R.id.tvJobAllotedBy);
+            tvJobAllotedBy.setTypeface(MethodUtils.getNormalFont(activity));
 
             btStatus = itemView.findViewById(R.id.btStatus);
             btStatus.setTypeface(MethodUtils.getNormalFont(activity));

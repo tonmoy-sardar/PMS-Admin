@@ -62,12 +62,14 @@ import com.pmsadmin.networkUtils.ApiInterface;
 import com.pmsadmin.networkUtils.AppConfig;
 import com.pmsadmin.sharedhandler.LoginShared;
 import com.pmsadmin.survey.coordinates.CheckInActivity;
+import com.pmsadmin.survey.resource.contractor_vendor.ContractVendorReplica;
 import com.pmsadmin.survey.site_photo_pojo.Result;
 import com.pmsadmin.survey.site_photo_pojo.SitePhotoPojo;
 import com.pmsadmin.tenders_list.TendorsListing;
 import com.pmsadmin.utils.ItemOffsetDecoration;
 import com.pmsadmin.utils.MediaUtils;
 import com.pmsadmin.utils.SpacesItemDecoration;
+import com.pmsadmin.utils.progressloader.LoadingData;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -130,6 +132,8 @@ public class SitePhotoSurvey extends BaseActivity {
     SitePhotoAdapter sitePhotoAdapter;
 
     private RecyclerView rvSiteImages;
+    private LoadingData loader;
+
 
 
     @Override
@@ -150,6 +154,8 @@ public class SitePhotoSurvey extends BaseActivity {
         tvSave = findViewById(R.id.tvSave);
         tv_universal_header.setText("Site Photos");
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(SitePhotoSurvey.this));
+        loader = new LoadingData(SitePhotoSurvey.this);
+
 
         etAdditionalInformation = findViewById(R.id.etAdditionalInformation);
 
@@ -248,6 +254,7 @@ public class SitePhotoSurvey extends BaseActivity {
 
     private void getSitePhotoList() {
 
+        loader.show_with_label("Please wait");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -261,6 +268,9 @@ public class SitePhotoSurvey extends BaseActivity {
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
 
                 if (response.code() == 201 || response.code() == 200) {
 
@@ -287,6 +297,8 @@ public class SitePhotoSurvey extends BaseActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
             }
         });
 
@@ -537,6 +549,7 @@ public class SitePhotoSurvey extends BaseActivity {
     {
 
 
+        loader.show_with_label("Please wait");
 
         File file = new File(imagePath);
 
@@ -575,6 +588,10 @@ public class SitePhotoSurvey extends BaseActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 //                if (loader != null && loader.isShowing())
 //                    loader.dismiss();
+
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
                 try{
 
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
