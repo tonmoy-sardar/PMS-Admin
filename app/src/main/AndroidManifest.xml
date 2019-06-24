@@ -35,7 +35,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".apply_local_conveyance.MyConveyanceHistory"></activity>
+
+        <activity
+            android:name=".new_requisition.SubmitNewRequisition"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".apply_local_conveyance.MyConveyanceHistory"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Main3Activity"
             android:label="@string/title_activity_main3"
