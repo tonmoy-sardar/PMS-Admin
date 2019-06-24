@@ -339,6 +339,13 @@ public class MethodUtils {
             list.add(dashBoardModelImage);
         }
 
+        {
+            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
+            dashBoardModelImage.setItem("NEW REQUISITION");
+            dashBoardModelImage.setImageId(R.drawable.pre_execution_icon);
+            list.add(dashBoardModelImage);
+        }
+
 
         /*{
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
@@ -346,12 +353,7 @@ public class MethodUtils {
             dashBoardModelImage.setImageId(R.drawable.tender_icon);
             list.add(dashBoardModelImage);
         }
-        {
-            DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();
-            dashBoardModelImage.setItem("PRE EXECUTION");
-            dashBoardModelImage.setImageId(R.drawable.pre_execution_icon);
-            list.add(dashBoardModelImage);
-        }
+
 
         {
             DashBoardModelImage dashBoardModelImage = new DashBoardModelImage();

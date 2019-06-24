@@ -60,6 +60,7 @@ import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import im.delight.android.location.SimpleLocation;
 import okhttp3.ResponseBody;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -100,15 +101,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         viewBind();
         clickEvent();
         setFont();
-          //et_login.setText("mangal.das@shyamfuture.com");
-            // et_password.setText("mangal@123");
 
-       // et_login.setText("admin");//local
-       // et_password.setText("Shyam2019");
-        /*et_login.setText("santanu.pal@shyamfuture.com");
-        et_password.setText("hvNzeqhkTR");*/
-        et_login.setText("");
-        et_password.setText("");
+        //et_login.setText("mangal.das@shyamfuture.com");
+        // et_password.setText("mangal@123");
+
+        // et_login.setText("admin");//local
+        // et_password.setText("Shyam2019");
+
+        et_login.setText("santanu.pal@shyamfuture.com");
+        et_password.setText("hvNzeqhkTR");
+
+        /*et_login.setText("");
+        et_password.setText("");*/
+
         /*et_login.setText("admin");
         et_password.setText("admin");*/
 
@@ -178,10 +183,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-
-
-
     private void callLoginApi() {
 
 
@@ -226,7 +227,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> register = apiInterface.call_loginApi("application/json",object);
+        final Call<ResponseBody> register = apiInterface.call_loginApi("application/json", object);
         register.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -236,7 +237,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //String responseString = response.body().string();
                     if (response.code() == 200) {
                         String responseString = response.body().string();
-                        Log.d("responsestring",responseString);
+                        Log.d("responsestring", responseString);
                         Gson gson = new Gson();
                         LoginModel loginModel;
                         JSONObject jsonObject = new JSONObject(responseString);
@@ -276,7 +277,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 } catch (Exception e) {
 
-                    System.out.println("exception: "+e.toString());
+                    System.out.println("exception: " + e.toString());
                     et_login.setText("");
                     et_password.setText("");
                     errorMsg(LoginActivity.this, LoginActivity.this.getString(R.string.error_occurred));
@@ -306,13 +307,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //object.addProperty("login_longitude", gpsTracker.getLongitude());
         object.addProperty("login_longitude", currentLng);
         //object.addProperty("user_project_id", 1);
-        if(addresses!=null) {
+        if (addresses != null) {
             if (addresses.size() > 0) {
                 object.addProperty("login_address", addresses.get(0).getLocality() + "," + addresses.get(0).getAdminArea());
             } else {
                 object.addProperty("login_address", "");
             }
-        }else{
+        } else {
             object.addProperty("login_address", "");
         }
         //object.addProperty("justification", "");
@@ -340,9 +341,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             LoginShared.setAttendanceAddDataModel(LoginActivity.this, loginModel);
                             LoginShared.setAttendanceFirstLoginTime(LoginActivity.this, "1");
                             //MethodUtils.errorMsg(DashBoardActivity.this, jsonObject.optString("msg"));
-                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 startForegroundService(new Intent(LoginActivity.this, BackgroundLocationService.class));
-                            }else{
+                            } else {
                                 startService(new Intent(LoginActivity.this, BackgroundLocationService.class));
                             }
 
@@ -433,7 +434,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-
 
 
     private String getTodaysDate() {
