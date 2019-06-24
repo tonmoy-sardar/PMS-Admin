@@ -45,6 +45,9 @@ public class Result implements Serializable
     @SerializedName("ammount")
     @Expose
     private String ammount;
+    @SerializedName("job_alloted_by_name")
+    @Expose
+    private String job_alloted_by_name;
     @SerializedName("created_by")
     @Expose
     private Integer createdBy;
@@ -176,4 +179,11 @@ public class Result implements Serializable
         this.employeeDetails = employeeDetails;
     }
 
+    public String getJob_alloted_by_name() {
+        return job_alloted_by_name;
+    }
+
+    public void setJob_alloted_by_name(String job_alloted_by_name) {
+        this.job_alloted_by_name = job_alloted_by_name;
+    }
 }

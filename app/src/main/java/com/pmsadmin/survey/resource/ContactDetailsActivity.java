@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,6 +45,8 @@ public class ContactDetailsActivity extends BaseActivity {
     ContactDesignationListAdapter contactDesignationListAdapter;
     ArrayList<JSONObject> arrayList;
 
+    private ImageView ivAdd;
+
 
 
     @Override
@@ -54,7 +57,8 @@ public class ContactDetailsActivity extends BaseActivity {
         System.out.println("Current CLASS===>>>" + getClass().getSimpleName());
 
         rvDesignationList = findViewById(R.id.rvDesignationList);
-        tvAddContact = findViewById(R.id.tvAddContact);
+        ivAdd = findViewById(R.id.ivAdd);
+        //tvAddContact = findViewById(R.id.tvAddContact);
 
 
 
@@ -62,7 +66,17 @@ public class ContactDetailsActivity extends BaseActivity {
         tv_universal_header.setText("Contact Details");
         tv_universal_header.setTypeface(MethodUtils.getNormalFont(ContactDetailsActivity.this));
 
-        tvAddContact.setOnClickListener(new View.OnClickListener() {
+        /*tvAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactDetailsActivity.this, AddContactActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });*/
+
+
+        ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ContactDetailsActivity.this, AddContactActivity.class);
@@ -70,8 +84,6 @@ public class ContactDetailsActivity extends BaseActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-
-
 
 
         arrayList = new ArrayList<JSONObject>();

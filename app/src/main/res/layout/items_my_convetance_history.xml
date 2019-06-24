@@ -65,6 +65,15 @@
             android:layout_marginTop="@dimen/_3sdp"/>
 
         <TextView
+            android:id="@+id/tvJobAllotedBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Job"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/textcolor"
+            android:layout_marginTop="@dimen/_3sdp"/>
+
+        <TextView
             android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

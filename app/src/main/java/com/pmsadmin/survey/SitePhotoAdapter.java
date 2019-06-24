@@ -53,8 +53,8 @@ public class SitePhotoAdapter extends RecyclerView.Adapter<SitePhotoAdapter.MyVi
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .error(R.mipmap.ic_launcher_round);
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.loading);
             Glide.with(activity).load(url).apply(options).into(holder.ivTenderItem);
         }
 

@@ -391,6 +391,8 @@ public class AddEstablishmentActivity extends BaseActivity {
 
 
     public void UploadDocuments(final File file) {
+
+        loader.show_with_label("Please wait");
         // loader.show_with_label("Loading");
 //        loader.show();
         System.out.println("=================================");
@@ -421,6 +423,9 @@ public class AddEstablishmentActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
 //                if (loader != null && loader.isShowing())
 //                    loader.dismiss();
 //                System.out.println("///////////////////////");
